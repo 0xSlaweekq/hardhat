@@ -2,7 +2,6 @@ const farmedByDay = 100;
 
 let totalLP = 0;
 let totalWeight = 0;
-let startTotalWeight = 0;
 
 let started = false;
 
@@ -164,7 +163,7 @@ const reInvest = () => {
     season: season,
     startTime: reinvestTime,
     reinvestTime: time,
-    startTotalWeight: startTotalWeight,
+    startTotalWeight: ReinvestInfo[season].startTotalWeightЖReinvestInfo,
     endTotalWeight: totalWeight,
     totalFarmed: currentFarmed,
     totalLP: totalLP
