@@ -44,15 +44,15 @@ const updateInfo = (type, id, amountLP, time) => {
     const availibleToClaim = percent * (totalFarmed - UserInfo[id].lastTotalFarmed);
     console.log(availibleToClaim);
 
-    const newWeight =
-      UserInfo[id].weight + UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
+    // const newWeight =
+    //   UserInfo[id].weight + UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
 
     newAmountLP += availibleToClaim;
     totalLP += availibleToClaim;
 
     UserInfo[id] = {
       amountLP: newAmountLP,
-      weight: newWeight,
+      weight: weight, // newWeight,
       lastTotalWeight: totalWeight,
       lastTotalFarmed: totalFarmed,
       lastTotalLP: totalLP
