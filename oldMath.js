@@ -7,7 +7,6 @@ let totalFarmed = 0;
 let started = false;
 let startTime = 0;
 
-let season = 0;
 let reinvestTime = 0;
 let lastUpdateTime = 0;
 
