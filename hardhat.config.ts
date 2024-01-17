@@ -22,7 +22,7 @@ const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY } = envConfig.pa
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
-  version: '0.8.9',
+  version: '0.8.22',
   settings: {
     optimizer: {
       enabled: true,
@@ -34,7 +34,6 @@ const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
     evmVersion: 'shanghai'
   }
 };
-
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   paths: {
@@ -64,7 +63,30 @@ const config: HardhatUserConfig = {
     customChains: customChains
   },
   solidity: {
-    compilers: [DEFAULT_COMPILER_SETTINGS]
+    compilers: [
+      DEFAULT_COMPILER_SETTINGS,
+      {
+        version: '0.8.16',
+        settings: {
+          optimizer: { enabled: true, runs: 1_000 },
+          metadata: { bytecodeHash: 'none' }
+        }
+      },
+      {
+        version: '0.8.0',
+        settings: {
+          optimizer: { enabled: true, runs: 1_000 },
+          metadata: { bytecodeHash: 'none' }
+        }
+      },
+      {
+        version: '0.6.0',
+        settings: {
+          optimizer: { enabled: true, runs: 1_000 },
+          metadata: { bytecodeHash: 'none' }
+        }
+      }
+    ]
   },
   contractSizer: {
     alphaSort: false,
@@ -75,15 +97,15 @@ const config: HardhatUserConfig = {
     deployer: 0,
     admin: 1
   },
-  abiExporter: {
-    path: './build/abis',
-    runOnCompile: true,
-    clear: true,
-    flat: true,
-    only: [],
-    spacing: 2,
-    pretty: true
-  },
+  // abiExporter: {
+  //   path: './build/abis',
+  //   runOnCompile: true,
+  //   clear: true,
+  //   flat: true,
+  //   only: [],
+  //   spacing: 2,
+  //   pretty: true
+  // },
   gasReporter: {
     enabled: REPORT_GAS === ('true' || true) ? true : false,
     noColors: true,
