@@ -17,7 +17,16 @@ dotenv.config({ path: __dirname + '/.env' });
 /**
  * @type import('hardhat/config').HardhatUserConfig
  * */
-const { REPORT_GAS, TOKEN, GAS_PRICE_API, INFURA_API_KEY, FORKING_BLOCKNUMBER, ETHERSCAN_API_KEY, COINMARKETCAP_API_KEY, MNEMONIC } = process.env;
+const {
+  REPORT_GAS,
+  TOKEN,
+  GAS_PRICE_API,
+  INFURA_API_KEY,
+  FORKING_BLOCKNUMBER,
+  ETHERSCAN_API_KEY,
+  COINMARKETCAP_API_KEY,
+  MNEMONIC
+} = process.env;
 
 const DEFAULT_COMPILER_SETTINGS = {
   version: '0.8.22',

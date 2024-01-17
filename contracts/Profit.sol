@@ -65,10 +65,13 @@ contract DynamicWeightedLP {
         }
     }
 
-    function _updateInfo(address user, uint256 typeF, uint256 curAmountLP, uint256 amountLP, uint256 time)
-        internal
-        returns (bool)
-    {
+    function _updateInfo(
+        address user,
+        uint256 typeF,
+        uint256 curAmountLP,
+        uint256 amountLP,
+        uint256 time
+    ) internal returns (bool) {
         if (!started) {
             startTime = time;
             started = true;
@@ -124,7 +127,7 @@ contract DynamicWeightedLP {
     }
 
     function reinvest() external onlyOwner returns (bool) {
-        (uint256 currentFarmed) = _getCurrentFarmed();
+        uint256 currentFarmed = _getCurrentFarmed();
         totalLP += currentFarmed;
         totalFarmed += currentFarmed;
         currentFarmed = 0;
