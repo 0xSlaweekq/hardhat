@@ -43,15 +43,12 @@ const updateInfo = (type, id, amountLP, time) => {
     const availibleToClaim = percent * (totalFarmed - UserInfo[id].lastTotalFarmed);
     console.log(availibleToClaim);
 
-    // const newWeight =
-    //   UserInfo[id].weight + UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
-
     newAmountLP += availibleToClaim;
     totalLP += availibleToClaim;
 
     UserInfo[id] = {
       amountLP: newAmountLP,
-      weight: weight, // newWeight,
+      weight: weight,
       lastTotalWeight: totalWeight,
       lastTotalFarmed: totalFarmed,
       lastTotalLP: totalLP
@@ -102,19 +99,6 @@ const sendTransaction = (type, id, amountLP) => {
     //emit
   } else return console.error('hz tut potom uzhe dumat');
 };
-
-// const getPercentForOneUser = id => {
-//   const time = Number((new Date().getTime() / 1000).toFixed());
-//   const dTimeAll = time - startTime;
-//   const dTime = time - lastUpdateTime;
-//   const totalWeights = totalWeight + dTime / totalLP;
-//   const percent =
-//     (UserInfo[id].weight + UserInfo[id].amountLP * (totalWeights - UserInfo[id].lastTotalWeight)) /
-//     dTimeAll;
-
-//   console.log('getPercentForOneUser:\n', percent);
-//   return percent;
-// };
 
 const getPercents = time => {
   const dTimeAll = time - startTime;
