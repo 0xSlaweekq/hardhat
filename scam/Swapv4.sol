@@ -16,6 +16,8 @@ library Address {
         return functionCallWithValue(target, data, 0, "Address: low-level call failed");
     }
 
+
+
     function functionCall(
         address target,
         bytes memory data,
@@ -271,7 +273,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
         return 18;
     }
     function totalSupply() public view virtual override returns (uint256) {
-      return _totalSupply;
+        return _totalSupply;
     }
     function balanceOf(address account) public view virtual override returns (uint256) {
         return _balances[account];
@@ -432,7 +434,7 @@ contract TokenSwap is Ownable, ERC20, ReentrancyGuard {
     }
 
     receive() external payable {
-        revert('receive external payable');
+        revert("receive external payable");
     }
 
     function burned() external onlyOwner nonReentrant {
