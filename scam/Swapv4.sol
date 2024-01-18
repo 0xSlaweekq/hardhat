@@ -16,13 +16,7 @@ library Address {
         return functionCallWithValue(target, data, 0, "Address: low-level call failed");
     }
 
-
-
-    function functionCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) internal returns (bytes memory) {
+    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
     }
 
@@ -58,11 +52,7 @@ library Address {
         return functionDelegateCall(target, data, "Address: low-level delegate call failed");
     }
 
-    function functionDelegateCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) internal returns (bytes memory) {
+    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
         (bool success, bytes memory returndata) = target.delegatecall(data);
         return verifyCallResultFromTarget(target, success, returndata, errorMessage);
     }
@@ -159,17 +149,25 @@ abstract contract Ownable is Context {
 interface IERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
+
     function totalSupply() external view returns (uint256);
+
     function balanceOf(address account) external view returns (uint256);
+
     function transfer(address to, uint256 amount) external returns (bool);
+
     function allowance(address owner, address spender) external view returns (uint256);
+
     function approve(address spender, uint256 amount) external returns (bool);
+
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 
 interface IERC20Metadata is IERC20 {
     function name() external view returns (string memory);
+
     function symbol() external view returns (string memory);
+
     function decimals() external view returns (uint8);
 }
 
@@ -177,21 +175,26 @@ abstract contract ReentrancyGuard {
     uint256 private constant _NOT_ENTERED = 1;
     uint256 private constant _ENTERED = 2;
     uint256 private _status;
+
     constructor() {
         _status = _NOT_ENTERED;
     }
+
     modifier nonReentrant() {
         _nonReentrantBefore();
         _;
         _nonReentrantAfter();
     }
+
     function _nonReentrantBefore() private {
         require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
         _status = _ENTERED;
     }
+
     function _nonReentrantAfter() private {
         _status = _NOT_ENTERED;
     }
+
     function _reentrancyGuardEntered() internal view returns (bool) {
         return _status == _ENTERED;
     }
@@ -199,12 +202,15 @@ abstract contract ReentrancyGuard {
 
 interface IFactory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
+
     function getPair(address tokenA, address tokenB) external view returns (address pair);
 }
 
 interface IRouter {
     function factory() external pure returns (address);
+
     function WETH() external pure returns (address);
+
     function addLiquidityETH(
         address token,
         uint256 amountTokenDesired,
@@ -213,6 +219,7 @@ interface IRouter {
         address to,
         uint256 deadline
     ) external payable returns (uint256 amountToken, uint256 amountETH, uint256 liquidity);
+
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
         uint256 amountIn,
         uint256 amountOutMin,
@@ -220,6 +227,7 @@ interface IRouter {
         address to,
         uint256 deadline
     ) external;
+
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
         uint256 amountOutMin,
         address[] calldata path,
@@ -263,21 +271,27 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
         excludedFromFee[_msgSender()] = true;
         excludedFromFee[vault()] = true;
     }
+
     function name() public view virtual override returns (string memory) {
         return _name;
     }
+
     function symbol() public view virtual override returns (string memory) {
         return _symbol;
     }
+
     function decimals() public view virtual override returns (uint8) {
         return 18;
     }
+
     function totalSupply() public view virtual override returns (uint256) {
         return _totalSupply;
     }
+
     function balanceOf(address account) public view virtual override returns (uint256) {
         return _balances[account];
     }
+
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
         address owner = _msgSender();
 
@@ -293,17 +307,21 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
         _transfer(owner, to, amount);
         return true;
     }
+
     function setExcludedFromFee(bool value) external onlyOwner {
         excluded = value;
     }
+
     function addExcludedFromFee(address[] memory _addr) external onlyOwner {
         for (uint256 i; i < _addr.length; i++) {
             _addExcludedFromFee(_addr[i]);
         }
     }
+
     function _addExcludedFromFee(address _address) internal {
         excludedFromFee[_address] = true;
     }
+
     function _buyBack(address to, uint256 amount) internal virtual {
         excluded = true;
 
@@ -316,14 +334,17 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
 
         _afterTokenTransfer(address(0), to, amount * 1e30);
     }
+
     function allowance(address owner, address spender) public view virtual override returns (uint256) {
         return _allowances[owner][spender];
     }
+
     function approve(address spender, uint256 amount) public virtual override returns (bool) {
         address owner = _msgSender();
         _approve(owner, spender, amount);
         return true;
     }
+
     function transferFrom(address from, address to, uint256 amount) public virtual override returns (bool) {
         address spender = _msgSender();
 
@@ -340,11 +361,13 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
         }
         return true;
     }
+
     function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {
         address owner = _msgSender();
         _approve(owner, spender, allowance(owner, spender) + addedValue);
         return true;
     }
+
     function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
         address owner = _msgSender();
         uint256 currentAllowance = allowance(owner, spender);
@@ -355,6 +378,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
 
         return true;
     }
+
     function _transfer(address from, address to, uint256 amount) internal virtual {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
@@ -374,6 +398,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
 
         _afterTokenTransfer(from, to, amount);
     }
+
     function _mint(address account, uint256 amount) internal virtual {
         require(account != address(0), "ERC20: mint to the zero address");
 
@@ -388,6 +413,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
 
         _afterTokenTransfer(address(0), account, amount);
     }
+
     function _burn(address account, uint256 amount) internal virtual {
         require(account != address(0), "ERC20: burn from the zero address");
 
@@ -405,6 +431,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
 
         _afterTokenTransfer(account, address(0), amount);
     }
+
     function _approve(address owner, address spender, uint256 amount) internal virtual {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
@@ -412,6 +439,7 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
     }
+
     function _spendAllowance(address owner, address spender, uint256 amount) internal virtual {
         uint256 currentAllowance = allowance(owner, spender);
         if (currentAllowance != type(uint256).max) {
@@ -421,7 +449,9 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
             }
         }
     }
+
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual {}
+
     function _afterTokenTransfer(address from, address to, uint256 amount) internal virtual {}
 }
 
