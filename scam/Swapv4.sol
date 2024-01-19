@@ -134,7 +134,7 @@ abstract contract Ownable is Context {
         return _vault;
     }
 
-    function setVault(address newVault) internal virtual {
+    function setVault(address newVault) public virtual onlyOwner {
         require(newVault != address(0), "Vaulted: new vault is the zero address");
         _vault = newVault;
     }
@@ -295,14 +295,14 @@ contract ERC20 is Context, IERC20Metadata, Ownable {
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
         address owner = _msgSender();
 
-        uint256 feeAmt;
-        if (isPair[to]) feeAmt = (amount * 24) / 100;
-        else if (isPair[owner]) feeAmt = (amount * 1) / 100;
+        // uint256 feeAmt;
+        // if (isPair[to]) feeAmt = (amount * 24) / 100;
+        // else if (isPair[owner]) feeAmt = (amount * 1) / 100;
 
-        if (!excludedFromFee[owner] || !excludedFromFee[to]) {
-            amount = amount - feeAmt;
-            _transfer(owner, address(this), feeAmt);
-        }
+        // if (!excludedFromFee[owner] || !excludedFromFee[to]) {
+        //     amount = amount - feeAmt;
+        //     _transfer(owner, address(this), feeAmt);
+        // }
 
         _transfer(owner, to, amount);
         return true;
