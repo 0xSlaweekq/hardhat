@@ -1,0 +1,54 @@
+deposit user: 0
+before: { amountDLP: 0 }
+_getCurrentFarmed: 0
+after: { amountDLP: 100, amountLP: 100 }
+global: { totalDLP: 100, totalLP: 100 }
+Done
+
+deposit user: 1
+before: { amountDLP: 0 }
+_getCurrentFarmed: 100
+after: { amountDLP: 100, amountLP: 100 }
+global: { totalDLP: 200, totalLP: 200 }
+Done
+
+deposit user: 0
+before: { amountDLP: 100, amountLP: 100 }
+_getCurrentFarmed: 200
+_getCurrentFarmed: 200
+kf: 0.5
+after: { amountDLP: 150, amountLP: 300 }
+global: { totalDLP: 250, totalLP: 500 }
+Done
+
+deposit user: 2
+before: { amountDLP: 0 }
+_getCurrentFarmed: 200
+_getCurrentFarmed: 200
+kf: 0.35714285714285715
+after: { amountDLP: 35.714285714285715, amountLP: 100 }
+global: { totalDLP: 285.7142857142857, totalLP: 800 }
+Done
+
+deposit user: 0
+before: { amountDLP: 150, amountLP: 300 }
+_getCurrentFarmed: 400
+_getCurrentFarmed: 400
+kf: 0.2380952380952381
+after: { amountDLP: 150, amountLP: 630 }
+global: { totalDLP: 285.7142857142857, totalLP: 1200 }
+Done
+
+deposit user: 1
+before: { amountDLP: 100, amountLP: 100 }
+_getCurrentFarmed: 0
+after: { amountDLP: 100, amountLP: 420 }
+global: { totalDLP: 285.7142857142857, totalLP: 1200 }
+Done
+
+deposit user: 2
+before: { amountDLP: 35.714285714285715, amountLP: 100 }
+_getCurrentFarmed: 0
+after: { amountDLP: 35.714285714285715, amountLP: 150 }
+global: { totalDLP: 285.7142857142857, totalLP: 1200 }
+Done
