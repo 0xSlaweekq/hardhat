@@ -3,7 +3,7 @@ import path from 'path';
 const envConfig = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 /** @type import('hardhat/config').HardhatUserConfig */
-const { INFURA_API_KEY, MNEMONIC, NODE_HOST, BLOCKNUMBER, PORT, NETWORK_ID } =
+const { INFURA_API_KEY, MNEMONIC, NODE_HOST, FORKINKG_BLOCKNUMBER, PORT, FORKING_NETWORK_ID } =
   envConfig.parsed || {};
 
 const str = '1000000000000000000000000000000000000000000000000000000000000000';
@@ -17,10 +17,10 @@ const networks = {
     //   url: 'https://polygon-rpc.com',
     //   blockNumber: 34298636
     // },
-    chainId: Number(NETWORK_ID),
+    chainId: Number(FORKING_NETWORK_ID),
     forking: {
       url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
-      blockNumber: Number(BLOCKNUMBER)
+      blockNumber: Number(FORKINKG_BLOCKNUMBER)
     },
     accounts: {
       count: 100,
@@ -28,12 +28,12 @@ const networks = {
     }
   },
   localhost: {
-    chainId: Number(NETWORK_ID),
+    chainId: Number(FORKING_NETWORK_ID),
     url: `http://${NODE_HOST}:${PORT}`,
     // accounts: [`${PRIVATE_KEY1}`, `${PRIVATE_KEY2}`, `${PRIVATE_KEY3}`],
     accounts: { mnemonic: MNEMONIC || str }
   },
-  eth: {
+  ethereum: {
     url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
     chainId: 1,
     accounts: { mnemonic: MNEMONIC || str }

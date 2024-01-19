@@ -17,7 +17,7 @@ services:
     entrypoint:
       - anvil
       - --prune-history
-      - --host=${FORKING_NODE_HOST}
+      - --host=${NODE_HOST}
       - -m=${MNEMONIC}
       - --order=fifo
       - -f=${FORKING_URL}

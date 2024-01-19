@@ -7,7 +7,7 @@ const { POLYGONSCAN_API_KEY, BSCSCAN_API_KEY, ETHERSCAN_API_KEY } = envConfig.pa
 const apiKeys = {
   hardhat: ETHERSCAN_API_KEY || 'API_KEY_WEB',
   localhost: ETHERSCAN_API_KEY || 'API_KEY_WEB',
-  mainnet: ETHERSCAN_API_KEY || 'API_KEY_WEB',
+  ethereum: ETHERSCAN_API_KEY || 'API_KEY_WEB',
   goerli: ETHERSCAN_API_KEY || 'API_KEY_WEB',
   // binance smart chain
   bsc: BSCSCAN_API_KEY || 'API_KEY_WEB',
