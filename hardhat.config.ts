@@ -20,7 +20,7 @@ import networks from './config/networks';
 const envConfig = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY } = envConfig.parsed || {};
 
-/** @type import('hardhat/types').SolcUserConfig */
+/** @type import('hardhat/config').HardhatUserConfig */
 const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
   version: '0.8.22',
   settings: {
@@ -34,7 +34,6 @@ const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
     evmVersion: 'shanghai'
   }
 };
-/** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   paths: {
@@ -55,7 +54,7 @@ const config: HardhatUserConfig = {
     apiKey: {
       hardhat: apiKeys.hardhat,
       localhost: apiKeys.localhost,
-      ethereum: apiKeys.ethereum,
+      mainnet: apiKeys.mainnet,
       goerli: apiKeys.goerli,
       bsc: apiKeys.bsc,
       bscTestnet: apiKeys.bscTestnet,
