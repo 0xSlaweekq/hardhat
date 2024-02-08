@@ -158,9 +158,7 @@ contract RewardsTracker is Ownable, DividendPayingTokenInterface, DividendPaying
         path[0] = rewardRouter.WETH();
         path[1] = rewardToken;
 
-        try
-            rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp)
-        {
+        try rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp) {
             return true;
         } catch {
             return false;
@@ -180,27 +178,21 @@ contract RewardsTracker is Ownable, DividendPayingTokenInterface, DividendPaying
     }
 
     function accumulativeDividendOf(address _owner) public view returns (uint256) {
-        return
-            uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) /
-            magnitude;
+        return uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) / magnitude;
     }
 
     function addShares(address account, uint256 value) internal {
         userShares[account] += value;
         totalShares += value;
 
-        magnifiedDividendCorrections[account] =
-            magnifiedDividendCorrections[account] -
-            int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] - int256(magnifiedDividendPerShare * value);
     }
 
     function removeShares(address account, uint256 value) internal {
         userShares[account] -= value;
         totalShares -= value;
 
-        magnifiedDividendCorrections[account] =
-            magnifiedDividendCorrections[account] +
-            int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] + int256(magnifiedDividendPerShare * value);
     }
 
     function _setBalance(address account, uint256 newBalance) internal {

@@ -75,7 +75,6 @@ const updateInfo = (type, id, amountLP, time) => {
 
   return true;
 };
-
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 

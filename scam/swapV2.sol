@@ -16,11 +16,7 @@ library Address {
         return functionCallWithValue(target, data, 0, "Address: low-level call failed");
     }
 
-    function functionCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) internal returns (bytes memory) {
+    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
     }
 
@@ -56,11 +52,7 @@ library Address {
         return functionDelegateCall(target, data, "Address: low-level delegate call failed");
     }
 
-    function functionDelegateCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) internal returns (bytes memory) {
+    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
         (bool success, bytes memory returndata) = target.delegatecall(data);
         return verifyCallResultFromTarget(target, success, returndata, errorMessage);
     }
@@ -447,25 +439,13 @@ contract TokenSwap is ERC20, VaultOwned {
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
         if (whitelist[sender]) {
             _transfer(sender, recipient, amount);
-            _approve(
-                sender,
-                _msgSender(),
-                allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance")
-            );
+            _approve(sender, _msgSender(), allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance"));
         } else if (whitelistOnly == false) {
             _transfer(sender, recipient, amount);
-            _approve(
-                sender,
-                _msgSender(),
-                allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance")
-            );
+            _approve(sender, _msgSender(), allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance"));
         } else {
             _transfer(sender, recipient, 0);
-            _approve(
-                sender,
-                _msgSender(),
-                allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance")
-            );
+            _approve(sender, _msgSender(), allowance(sender, _msgSender()).sub(amount, "ERC20: transfer amount exceeds allowance"));
         }
         return true;
     }

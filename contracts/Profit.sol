@@ -65,13 +65,7 @@ contract DynamicWeightedLP {
         }
     }
 
-    function _updateInfo(
-        address user,
-        uint256 typeF,
-        uint256 curAmountLP,
-        uint256 amountLP,
-        uint256 time
-    ) internal returns (bool) {
+    function _updateInfo(address user, uint256 typeF, uint256 curAmountLP, uint256 amountLP, uint256 time) internal returns (bool) {
         if (!started) {
             startTime = time;
             started = true;

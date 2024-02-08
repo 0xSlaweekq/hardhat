@@ -34,12 +34,7 @@ interface ISafeSwapTradeRouter {
 
     function swapTokensForExactTokensWithFeeAmount(Trade calldata trade) external payable;
 
-    function getSwapFee(
-        uint256 amountIn,
-        uint256 _amountOut,
-        address tokenA,
-        address tokenB
-    ) external view returns (uint256 _fee);
+    function getSwapFee(uint256 amountIn, uint256 _amountOut, address tokenA, address tokenB) external view returns (uint256 _fee);
 
     function getFees(
         address[] memory _path,

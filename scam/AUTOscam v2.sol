@@ -207,12 +207,7 @@ contract DividendDistributor is IDividendDistributor, ReentrancyGuard {
         path[0] = WETH;
         path[1] = address(EP);
 
-        router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: msg.value}(
-            0,
-            path,
-            address(this),
-            block.timestamp
-        );
+        router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: msg.value}(0, path, address(this), block.timestamp);
 
         uint256 amount = EP.balanceOf(address(this)).sub(balanceBefore);
 
@@ -243,9 +238,7 @@ contract DividendDistributor is IDividendDistributor, ReentrancyGuard {
     }
 
     function shouldDistribute(address shareholder) internal view returns (bool) {
-        return
-            shareholderClaims[shareholder] + minPeriod < block.timestamp &&
-            getUnpaidEarnings(shareholder) > minDistribution;
+        return shareholderClaims[shareholder] + minPeriod < block.timestamp && getUnpaidEarnings(shareholder) > minDistribution;
     }
 
     function distributeDividend(address shareholder) internal nonReentrant {
@@ -455,8 +448,7 @@ contract ETHPP is IBEP20, Auth {
         checkTxLimit(sender, amount);
 
         // Max wallet check excluding pair and router
-        if (!isSell && !_isFree[recipient])
-            require((_balances[recipient] + amount) < _maxWallet, "Max wallet has been triggered");
+        if (!isSell && !_isFree[recipient]) require((_balances[recipient] + amount) < _maxWallet, "Max wallet has been triggered");
 
         // No swapping on buy and tx
         if (isSell) {
@@ -543,13 +535,7 @@ contract ETHPP is IBEP20, Auth {
         path[1] = WETH;
         uint256 balanceBefore = address(this).balance;
 
-        router.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            amountToSwap,
-            0,
-            path,
-            address(this),
-            block.timestamp
-        );
+        router.swapExactTokensForETHSupportingFeeOnTransferTokens(amountToSwap, 0, path, address(this), block.timestamp);
 
         uint256 amountETH = address(this).balance.sub(balanceBefore);
 
