@@ -21,20 +21,20 @@ const updateInfo = (type, id, amountLP, time) => {
     started = true;
   }
   const dTime = time - lastUpdateTime;
-  if (dTime != 0 && totalLP != 0) totalWeight += dTime / totalLP;
+  if (dTime !== 0 && totalLP !== 0) totalWeight += dTime / totalLP;
   const weight =
     UserInfo[id].weight + UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
 
   let newAmountLP = UserInfo[id].amountLP;
-  if (type == 'deposit') {
+  if (type === 'deposit') {
     newAmountLP += amountLP;
     totalLP += amountLP;
   }
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     newAmountLP -= amountLP;
     totalLP -= amountLP;
   }
-  if (totalFarmed != 0 && UserInfo[id].lastTotalFarmed != totalFarmed) {
+  if (totalFarmed !== 0 && UserInfo[id].lastTotalFarmed !== totalFarmed) {
     const dTimeAll = time - startTime;
     const percent = weight / dTimeAll;
     const availibleToClaim = percent * (totalFarmed - UserInfo[id].lastTotalFarmed);
@@ -60,8 +60,8 @@ const updateInfo = (type, id, amountLP, time) => {
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 
-  if (type == 'deposit') {
-    if (UserInfo[id] == undefined || UserInfo[id].amountLP <= 0) {
+  if (type === 'deposit') {
+    if (UserInfo[id] === undefined || UserInfo[id].amountLP <= 0) {
       UserInfo[id] = {
         amountLP: 0,
         weight: 0,
@@ -76,7 +76,7 @@ const sendTransaction = (type, id, amountLP) => {
   console.log(type + ' user:', id);
   console.log('before:', user);
 
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     if (!user || user.amountLP <= 0) return console.error('You dont using this pool');
     if (user.amountLP < amountLP) return console.error('Insufficient LP amount');
   }
@@ -98,7 +98,7 @@ const sendTransaction = (type, id, amountLP) => {
 // };
 
 const _getCurrentFarmed = time => {
-  let dTime = reinvestTime == 0 ? time - startTime : time - reinvestTime;
+  let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
   console.log('_getCurrentFarmed:\n', currentFarmed);
   return currentFarmed;

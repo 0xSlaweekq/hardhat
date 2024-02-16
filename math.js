@@ -31,23 +31,23 @@ const updateInfo = (type, id, amountLP, time) => {
     started = true;
   }
   const dTime = time - lastUpdateTime;
-  if (dTime != 0 && totalLP != 0) totalWeight += dTime / totalLP;
+  if (dTime !== 0 && totalLP !== 0) totalWeight += dTime / totalLP;
 
   const weight =
     UserInfo[id].weight + UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
   let newAmountLP = UserInfo[id].amountLP;
-  if (type == 'deposit') {
+  if (type === 'deposit') {
     newAmountLP += amountLP;
     totalLP += amountLP;
   }
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     newAmountLP -= amountLP;
     totalLP -= amountLP;
   }
 
-  if (UserInfo[id].season != season) {
+  if (UserInfo[id].season !== season) {
     for (let i = UserInfo[id].season; i < ReinvestInfo.length; i++) {
-      if (i + 1 != season) {
+      if (i + 1 !== season) {
         const poolInfo = ReinvestInfo[i];
         const weightSeason =
           UserInfo[id].weight +
@@ -69,7 +69,7 @@ const updateInfo = (type, id, amountLP, time) => {
         const currentWeight =
           UserInfo[id].weight +
           UserInfo[id].amountLP * (totalWeight - UserInfo[id].lastTotalWeight);
-        if (type == 'deposit') {
+        if (type === 'deposit') {
           UserInfo[id] = {
             amountLP: UserInfo[id].amountLP + amountLP,
             weight: currentWeight,
@@ -77,7 +77,7 @@ const updateInfo = (type, id, amountLP, time) => {
             season
           };
         }
-        if (type == 'withdraw') {
+        if (type === 'withdraw') {
           UserInfo[id] = {
             amountLP: UserInfo[id].amountLP - amountLP,
             weight: currentWeight,
@@ -106,8 +106,8 @@ const updateInfo = (type, id, amountLP, time) => {
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 
-  if (type == 'deposit') {
-    if (UserInfo[id] == undefined || UserInfo[id].amountLP <= 0) {
+  if (type === 'deposit') {
+    if (UserInfo[id] === undefined || UserInfo[id].amountLP <= 0) {
       UserInfo[id] = {
         amountLP: 0,
         weight: 0,
@@ -120,7 +120,7 @@ const sendTransaction = (type, id, amountLP) => {
   console.log(type + ' user:', id);
   console.log('before:', UserInfo[id]);
 
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     if (!UserInfo[id] || UserInfo[id].amountLP <= 0)
       return console.error('You dont using this pool');
     if (UserInfo[id].amountLP < amountLP) return console.error('Insufficient LP amount');
@@ -146,7 +146,7 @@ const getPercents = time => {
 };
 
 const _getCurrentFarmed = time => {
-  let dTime = reinvestTime == 0 ? time - startTime : time - reinvestTime;
+  let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
   console.log('_getCurrentFarmed:\n', currentFarmed);
   return currentFarmed;

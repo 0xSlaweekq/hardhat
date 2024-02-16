@@ -20,7 +20,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // };
 
 const _getCurrentFarmed = time => {
-  let dTime = reinvestTime == 0 ? time - startTime : time - reinvestTime;
+  let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
   console.log('_getCurrentFarmed:', currentFarmed);
   return currentFarmed;
@@ -54,12 +54,12 @@ const updateInfo = (type, id, amountLP, time) => {
   }
 
   let newAmountDLP = UserInfo[id].amountDLP;
-  if (type == 'deposit') {
+  if (type === 'deposit') {
     newAmountDLP += amountLP * kf;
     totalLP += amountLP;
     totalDLP += amountLP * kf;
   }
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     newAmountDLP -= amountLP * kf;
     totalLP -= amountLP;
     totalDLP -= amountLP * kf;
@@ -78,8 +78,8 @@ const updateInfo = (type, id, amountLP, time) => {
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 
-  if (type == 'deposit') {
-    if (UserInfo[id] == undefined || UserInfo[id].amountDLP <= 0) {
+  if (type === 'deposit') {
+    if (UserInfo[id] === undefined || UserInfo[id].amountDLP <= 0) {
       UserInfo[id] = {
         amountDLP: 0
       };
@@ -90,7 +90,7 @@ const sendTransaction = (type, id, amountLP) => {
   console.log(type + ' user:', id);
   console.log('before:', user);
 
-  if (type == 'withdraw') {
+  if (type === 'withdraw') {
     if (!user || user.amountLP <= 0) return console.error('You dont using this pool');
     if (user.amountLP < amountLP) return console.error('Insufficient LP amount');
   }
