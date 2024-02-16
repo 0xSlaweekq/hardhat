@@ -47,8 +47,8 @@ const updateInfo = (type, id, amountLP, time) => {
     weight,
     lastTotalWeight: totalWeight,
     lastTotalFarmed: totalFarmed,
-    lastTotalLP: totalLP,
-    lastUpdateTime
+    lastTotalLP: totalLP
+    // lastUpdateTime
   };
 
   lastUpdateTime = time;
@@ -135,21 +135,9 @@ sleep(1000).then(async () => {
   await sleep(3000);
   sendTransaction('deposit', 0, 0);
   await sleep(1000);
-  // sendTransaction('deposit', 2, 0);
+  sendTransaction('deposit', 2, 0);
   await sleep(1000);
   reInvest();
-  await sleep(10000);
-  reInvest();
-  await sleep(10000);
-  reInvest();
-  await sleep(10000);
-  reInvest();
-  await sleep(1000);
-  sendTransaction('deposit', 0, 0);
-  sendTransaction('deposit', 1, 0);
-  await sleep(10000);
-  reInvest();
-  await sleep(1000);
   sendTransaction('deposit', 0, 0);
   sendTransaction('deposit', 1, 0);
   sendTransaction('deposit', 2, 0);
