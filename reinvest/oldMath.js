@@ -11,7 +11,7 @@ let reinvestTime = 0;
 let lastUpdateTime = 0;
 
 let UserInfo = [];
-let percents = [];
+// let percents = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
