@@ -11,13 +11,8 @@ let startTime = 0;
 let reinvestTime = 0;
 
 let UserInfo = [];
-let percents = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-// const getPercents = time => {
-//   console.log('getPercents:\n', percents);
-// };
 
 const _getCurrentFarmed = time => {
   let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
@@ -29,7 +24,6 @@ const _getCurrentFarmed = time => {
 const reInvest = () => {
   const time = Number((new Date().getTime() / 1000).toFixed());
   try {
-    // getPercents(time);
     const currentFarmed = _getCurrentFarmed(time);
     reinvestTime = time;
     totalLP += currentFarmed;
@@ -40,7 +34,7 @@ const reInvest = () => {
   }
 };
 
-const updateInfo = (type, id, amountLP, time) => {
+const updateUserInfo = (type, id, amountLP, time) => {
   if (!started) {
     startTime = time;
     started = true;
@@ -54,15 +48,18 @@ const updateInfo = (type, id, amountLP, time) => {
   }
 
   let newAmountDLP = UserInfo[id].amountDLP;
-  if (type === 'deposit') {
-    newAmountDLP += amountLP * kf;
-    totalLP += amountLP;
-    totalDLP += amountLP * kf;
-  }
-  if (type === 'withdraw') {
-    newAmountDLP -= amountLP * kf;
-    totalLP -= amountLP;
-    totalDLP -= amountLP * kf;
+
+  if (amountLP !== 0) {
+    if (type === 'deposit') {
+      newAmountDLP += amountLP * kf;
+      totalLP += amountLP;
+      totalDLP += amountLP * kf;
+    }
+    if (type === 'withdraw') {
+      newAmountDLP -= amountLP * kf;
+      totalLP -= amountLP;
+      totalDLP -= amountLP * kf;
+    }
   }
 
   UserInfo[id] = {
@@ -70,35 +67,38 @@ const updateInfo = (type, id, amountLP, time) => {
     amountLP: (newAmountDLP * totalLP) / totalDLP
   };
 
-  console.log('after:', UserInfo[id]);
-  console.log('global:', { totalDLP, totalLP });
-
+  console.log('User Info after update:', UserInfo[id]);
+  console.log('Global Info:', { totalDLP, totalLP });
   return true;
 };
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 
-  if (type === 'deposit') {
-    if (UserInfo[id] === undefined || UserInfo[id].amountDLP <= 0) {
-      UserInfo[id] = {
-        amountDLP: 0
-      };
-    }
+  if (type === 'deposit' && (!UserInfo[id] || UserInfo[id].amountDLP <= 0)) {
+    UserInfo[id] = {
+      amountDLP: 0,
+      amountLP: 0
+    };
   }
+
   const user = UserInfo[id];
 
-  console.log(type + ' user:', id);
-  console.log('before:', user);
+  console.log(`${type} user: ${id}`);
+  console.log('User Info before:', user);
 
   if (type === 'withdraw') {
-    if (!user || user.amountLP <= 0) return console.error('You dont using this pool');
-    if (user.amountLP < amountLP) return console.error('Insufficient LP amount');
+    if (!user || user.amountLP <= 0) {
+      return console.error('You are not using this pool');
+    }
+    if (user.amountLP < amountLP) {
+      return console.error('Insufficient LP amount');
+    }
   }
-  if (updateInfo(type, id, amountLP, time)) {
-    //tranfer
-    console.log('Done\n');
-    //emit
-  } else return console.error('hz tut potom uzhe dumat');
+  if (updateUserInfo(type, id, amountLP, time)) {
+    console.log('Transaction Done\n');
+  } else {
+    return console.error('Unknown transaction type');
+  }
 };
 
 sendTransaction('deposit', 0, 100);
