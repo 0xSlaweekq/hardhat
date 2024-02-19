@@ -14,7 +14,7 @@ let UserInfo = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const updateInfo = (type, id, amountLP, time) => {
+const updateUserInfo = (type, id, amountLP, time) => {
   if (!started) {
     startTime = time;
     started = true;
@@ -30,14 +30,16 @@ const updateInfo = (type, id, amountLP, time) => {
 
   let newAmountLP = UserInfo[id].amountLP;
 
-  if (type === 'deposit') {
-    newAmountLP += amountLP;
-    totalLP += amountLP;
-  }
+  if (amountLP !== 0) {
+    if (type === 'deposit') {
+      newAmountLP += amountLP;
+      totalLP += amountLP;
+    }
 
-  if (type === 'withdraw') {
-    newAmountLP -= amountLP;
-    totalLP -= amountLP;
+    if (type === 'withdraw') {
+      newAmountLP -= amountLP;
+      totalLP -= amountLP;
+    }
   }
 
   if (totalFarmed !== 0 && UserInfo[id].lastTotalFarmed !== totalFarmed) {
@@ -58,51 +60,49 @@ const updateInfo = (type, id, amountLP, time) => {
   };
 
   lastUpdateTime = time;
-  console.log('after:', UserInfo[id]);
-  console.log('global:', { totalLP, totalWeight });
+  console.log('User Info after update:', UserInfo[id]);
+  console.log('Global Info:', { totalLP, totalWeight });
   return true;
 };
 
 const sendTransaction = (type, id, amountLP) => {
   const time = Number((new Date().getTime() / 1000).toFixed());
 
-  if (type === 'deposit') {
-    if (!UserInfo[id] || UserInfo[id].amountLP <= 0) {
-      UserInfo[id] = {
-        amountLP: 0,
-        weight: 0,
-        lastTotalWeight: 0,
-        lastTotalFarmed: 0,
-        lastTotalLP: 0
-      };
-    }
+  if (type === 'deposit' && (!UserInfo[id] || UserInfo[id].amountLP <= 0)) {
+    UserInfo[id] = {
+      amountLP: 0,
+      weight: 0,
+      lastTotalWeight: 0,
+      lastTotalFarmed: 0,
+      lastTotalLP: 0
+    };
   }
 
   const user = UserInfo[id];
 
-  console.log(type + ' user:', id);
-  console.log('before:', user);
+  console.log(`${type} user: ${id}`);
+  console.log('User Info before:', user);
 
   if (type === 'withdraw') {
     if (!user || user.amountLP <= 0) {
-      return console.error('You dont using this pool');
+      return console.error('You are not using this pool');
     }
     if (user.amountLP < amountLP) {
       return console.error('Insufficient LP amount');
     }
   }
 
-  if (updateInfo(type, id, amountLP, time)) {
-    console.log('Done\n');
+  if (updateUserInfo(type, id, amountLP, time)) {
+    console.log('Transaction Done\n');
   } else {
-    return console.error('hz tut potom uzhe dumat');
+    return console.error('Unknown transaction type');
   }
 };
 
 const _getCurrentFarmed = time => {
   const dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
-  console.log('_getCurrentFarmed:\n', currentFarmed);
+  console.log('_getCurrentFarmed:', currentFarmed);
   return currentFarmed;
 };
 
@@ -116,6 +116,7 @@ const reInvest = () => {
   return true;
 };
 
+// Example usage
 sendTransaction('deposit', 0, 20);
 
 sleep(1000).then(async () => {
