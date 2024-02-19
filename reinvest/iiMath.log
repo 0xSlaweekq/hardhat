@@ -1,0 +1,165 @@
+deposit user: 0
+User Info before: {
+  amountLP: 0,
+  weight: 0,
+  lastTotalWeight: 0,
+  lastTotalFarmed: 0,
+  lastTotalLP: 0
+}
+User Info after update: {
+  amountLP: 20,
+  weight: 0,
+  lastTotalWeight: 0,
+  lastTotalFarmed: 0,
+  lastTotalLP: 20
+}
+Global Info: { totalLP: 20, totalWeight: 0 }
+Transaction Done
+
+deposit user: 2
+User Info before: {
+  amountLP: 0,
+  weight: 0,
+  lastTotalWeight: 0,
+  lastTotalFarmed: 0,
+  lastTotalLP: 0
+}
+User Info after update: {
+  amountLP: 100,
+  weight: 0,
+  lastTotalWeight: 0.05,
+  lastTotalFarmed: 0,
+  lastTotalLP: 120
+}
+Global Info: { totalLP: 120, totalWeight: 0.05 }
+Transaction Done
+
+deposit user: 1
+User Info before: {
+  amountLP: 0,
+  weight: 0,
+  lastTotalWeight: 0,
+  lastTotalFarmed: 0,
+  lastTotalLP: 0
+}
+User Info after update: {
+  amountLP: 20,
+  weight: 0,
+  lastTotalWeight: 0.06666666666666667,
+  lastTotalFarmed: 0,
+  lastTotalLP: 140
+}
+Global Info: { totalLP: 140, totalWeight: 0.06666666666666667 }
+Transaction Done
+
+withdraw user: 0
+User Info before: {
+  amountLP: 20,
+  weight: 0,
+  lastTotalWeight: 0,
+  lastTotalFarmed: 0,
+  lastTotalLP: 20
+}
+User Info after update: {
+  amountLP: 12,
+  weight: 1.7619047619047619,
+  lastTotalWeight: 0.08809523809523809,
+  lastTotalFarmed: 0,
+  lastTotalLP: 132
+}
+Global Info: { totalLP: 132, totalWeight: 0.08809523809523809 }
+Transaction Done
+
+withdraw user: 0
+User Info before: {
+  amountLP: 12,
+  weight: 1.7619047619047619,
+  lastTotalWeight: 0.08809523809523809,
+  lastTotalFarmed: 0,
+  lastTotalLP: 132
+}
+User Info after update: {
+  amountLP: 5,
+  weight: 1.9437229437229437,
+  lastTotalWeight: 0.10324675324675324,
+  lastTotalFarmed: 0,
+  lastTotalLP: 125
+}
+Global Info: { totalLP: 125, totalWeight: 0.10324675324675324 }
+Transaction Done
+
+_getCurrentFarmed: 900
+User Info after update: {
+  amountLP: 203.3722943722944,
+  weight: 1.9837229437229438,
+  lastTotalWeight: 0.11124675324675323,
+  lastTotalFarmed: 900,
+  lastTotalLP: 323.3722943722944
+}
+Global Info: { totalLP: 323.3722943722944, totalWeight: 0.11124675324675323 }
+User Info after update: {
+  amountLP: 109.16017316017312,
+  weight: 0.8916017316017313,
+  lastTotalWeight: 0.11124675324675323,
+  lastTotalFarmed: 900,
+  lastTotalLP: 412.53246753246754
+}
+Global Info: { totalLP: 412.53246753246754, totalWeight: 0.11124675324675323 }
+User Info after update: {
+  amountLP: 712.4675324675322,
+  weight: 6.124675324675323,
+  lastTotalWeight: 0.11124675324675323,
+  lastTotalFarmed: 900,
+  lastTotalLP: 1024.9999999999998
+}
+Global Info: { totalLP: 1024.9999999999998, totalWeight: 0.11124675324675323 }
+_getCurrentFarmed: 700
+User Info after update: {
+  amountLP: 350.9238464787246,
+  weight: 3.3726069052898335,
+  lastTotalWeight: 0.11807602153943617,
+  lastTotalFarmed: 1600,
+  lastTotalLP: 1172.5515521064299
+}
+Global Info: { totalLP: 1172.5515521064299, totalWeight: 0.11807602153943617 }
+User Info after update: {
+  amountLP: 180.78267870341037,
+  weight: 1.63708584098828,
+  lastTotalWeight: 0.11807602153943617,
+  lastTotalFarmed: 1600,
+  lastTotalLP: 1244.1740576496672
+}
+Global Info: { totalLP: 1244.1740576496672, totalWeight: 0.11807602153943617 }
+User Info after update: {
+  amountLP: 1193.293474817865,
+  weight: 10.99030725372189,
+  lastTotalWeight: 0.11807602153943617,
+  lastTotalFarmed: 1600,
+  lastTotalLP: 1725
+}
+Global Info: { totalLP: 1725, totalWeight: 0.11807602153943617 }
+_getCurrentFarmed: 500
+User Info after update: {
+  amountLP: 455.442357783329,
+  weight: 4.389777474793384,
+  lastTotalWeight: 0.12097457226407385,
+  lastTotalFarmed: 2100,
+  lastTotalLP: 1829.5185113046043
+}
+Global Info: { totalLP: 1829.5185113046043, totalWeight: 0.12097457226407385 }
+User Info after update: {
+  amountLP: 232.2372883545054,
+  weight: 2.1610936053459917,
+  lastTotalWeight: 0.12097457226407385,
+  lastTotalFarmed: 2100,
+  lastTotalLP: 1880.9731209556994
+}
+Global Info: { totalLP: 1880.9731209556994, totalWeight: 0.12097457226407385 }
+User Info after update: {
+  amountLP: 1537.3203538621658,
+  weight: 14.44912891986063,
+  lastTotalWeight: 0.12097457226407385,
+  lastTotalFarmed: 2100,
+  lastTotalLP: 2225
+}
+Global Info: { totalLP: 2225, totalWeight: 0.12097457226407385 }

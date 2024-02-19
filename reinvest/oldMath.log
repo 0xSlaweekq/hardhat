@@ -1,279 +1,236 @@
 deposit user: 0
-before: {
+User Info before: {
   amountLP: 0,
   weight: 0,
   lastTotalWeight: 0,
   lastTotalFarmed: 0,
   lastTotalLP: 0
 }
-after: {
+User Info after update: {
   amountLP: 20,
   weight: 0,
   lastTotalWeight: 0,
   lastTotalFarmed: 0,
   lastTotalLP: 20
 }
-global: { totalLP: 20, totalWeight: 0 }
-Done
+Global Info: { totalLP: 20, totalWeight: 0 }
+Transaction Done
 
 deposit user: 2
-before: {
+User Info before: {
   amountLP: 0,
   weight: 0,
   lastTotalWeight: 0,
   lastTotalFarmed: 0,
   lastTotalLP: 0
 }
-after: {
+User Info after update: {
   amountLP: 100,
   weight: 0,
   lastTotalWeight: 0.05,
   lastTotalFarmed: 0,
   lastTotalLP: 120
 }
-global: { totalLP: 120, totalWeight: 0.05 }
-Done
+Global Info: { totalLP: 120, totalWeight: 0.05 }
+Transaction Done
 
 deposit user: 1
-before: {
+User Info before: {
   amountLP: 0,
   weight: 0,
   lastTotalWeight: 0,
   lastTotalFarmed: 0,
   lastTotalLP: 0
 }
-after: {
+User Info after update: {
   amountLP: 20,
   weight: 0,
   lastTotalWeight: 0.06666666666666667,
   lastTotalFarmed: 0,
   lastTotalLP: 140
 }
-global: { totalLP: 140, totalWeight: 0.06666666666666667 }
-Done
+Global Info: { totalLP: 140, totalWeight: 0.06666666666666667 }
+Transaction Done
 
 withdraw user: 0
-before: {
+User Info before: {
   amountLP: 20,
   weight: 0,
   lastTotalWeight: 0,
   lastTotalFarmed: 0,
   lastTotalLP: 20
 }
-after: {
+User Info after update: {
   amountLP: 12,
   weight: 1.7619047619047619,
   lastTotalWeight: 0.08809523809523809,
   lastTotalFarmed: 0,
   lastTotalLP: 132
 }
-global: { totalLP: 132, totalWeight: 0.08809523809523809 }
-Done
+Global Info: { totalLP: 132, totalWeight: 0.08809523809523809 }
+Transaction Done
 
 withdraw user: 0
-before: {
+User Info before: {
   amountLP: 12,
   weight: 1.7619047619047619,
   lastTotalWeight: 0.08809523809523809,
   lastTotalFarmed: 0,
   lastTotalLP: 132
 }
-after: {
+User Info after update: {
   amountLP: 5,
   weight: 1.9437229437229437,
   lastTotalWeight: 0.10324675324675324,
   lastTotalFarmed: 0,
   lastTotalLP: 125
 }
-global: { totalLP: 125, totalWeight: 0.10324675324675324 }
-Done
+Global Info: { totalLP: 125, totalWeight: 0.10324675324675324 }
+Transaction Done
 
-getPercents:
- [ 0.22041366041366042, 0.09906685906685903, 0.6805194805194803 ]
-_getCurrentFarmed:
- 900
-reinvest:
- availibleFarmedLP [ 198.3722943722944, 89.16017316017312, 612.4675324675322 ]
-reinvest:
- availibleUserInvestedLP [ 5, 20, 100 ]
-reinvest:
- availibleUserInvestedLpPlusFarmedLp [ 203.3722943722944, 109.16017316017312, 712.4675324675322 ]
+_getCurrentFarmed: 900
 deposit user: 1
-before: {
+User Info before: {
   amountLP: 20,
   weight: 0,
   lastTotalWeight: 0.06666666666666667,
   lastTotalFarmed: 0,
   lastTotalLP: 140
 }
-0.09906685906685903
-89.16017316017312
-after: {
+User Info after update: {
   amountLP: 109.16017316017312,
   weight: 0.8916017316017313,
   lastTotalWeight: 0.11124675324675323,
   lastTotalFarmed: 900,
   lastTotalLP: 214.16017316017312
 }
-global: { totalLP: 214.16017316017312, totalWeight: 0.11124675324675323 }
-Done
+Global Info: { totalLP: 214.16017316017312, totalWeight: 0.11124675324675323 }
+Transaction Done
 
 deposit user: 0
-before: {
+User Info before: {
   amountLP: 5,
   weight: 1.9437229437229437,
   lastTotalWeight: 0.10324675324675324,
   lastTotalFarmed: 0,
   lastTotalLP: 125
 }
-0.1500327143303548
-135.02944289731934
-after: {
+User Info after update: {
   amountLP: 140.02944289731934,
   weight: 2.1004580006249673,
   lastTotalWeight: 0.1345937646271579,
   lastTotalFarmed: 900,
   lastTotalLP: 349.18961605749246
 }
-global: { totalLP: 349.18961605749246, totalWeight: 0.1345937646271579 }
-Done
+Global Info: { totalLP: 349.18961605749246, totalWeight: 0.1345937646271579 }
+Transaction Done
 
-getPercents:
- [ 0.18140520256959913, 0.25408659864882593, 0.5645081987815748 ]
-_getCurrentFarmed:
- 700
-reinvest:
- availibleFarmedLP [ 126.98364179871939, 177.86061905417816, 395.15573914710234 ]
-reinvest:
- availibleUserInvestedLP [ 140.02944289731934, 109.16017316017312, 100 ]
-reinvest:
- availibleUserInvestedLpPlusFarmedLp [ 267.01308469603873, 287.0207922143513, 495.15573914710234 ]
+_getCurrentFarmed: 700
 deposit user: 1
-before: {
+User Info before: {
   amountLP: 109.16017316017312,
   weight: 0.8916017316017313,
   lastTotalWeight: 0.11124675324675323,
   lastTotalFarmed: 900,
   lastTotalLP: 214.16017316017312
 }
-0.25408659864882593
-177.86061905417816
-after: {
+User Info after update: {
   amountLP: 287.0207922143513,
   weight: 4.065385578381215,
   lastTotalWeight: 0.14032131180505197,
   lastTotalFarmed: 1600,
   lastTotalLP: 527.0502351116706
 }
-global: { totalLP: 527.0502351116706, totalWeight: 0.14032131180505197 }
-Done
+Global Info: { totalLP: 527.0502351116706, totalWeight: 0.14032131180505197 }
+Transaction Done
 
 deposit user: 0
-before: {
+User Info before: {
   amountLP: 140.02944289731934,
   weight: 2.1004580006249673,
   lastTotalWeight: 0.1345937646271579,
   lastTotalFarmed: 900,
   lastTotalLP: 349.18961605749246
 }
-0.1947125693181818
-136.29879852272725
-after: {
+User Info after update: {
   amountLP: 276.3282414200466,
   weight: 3.699538817045454,
   lastTotalWeight: 0.1460133688427732,
   lastTotalFarmed: 1600,
   lastTotalLP: 663.3490336343979
 }
-global: { totalLP: 663.3490336343979, totalWeight: 0.1460133688427732 }
-Done
+Global Info: { totalLP: 663.3490336343979, totalWeight: 0.1460133688427732 }
+Transaction Done
 
 deposit user: 2
-before: {
+User Info before: {
   amountLP: 100,
   weight: 0,
   lastTotalWeight: 0.05,
   lastTotalFarmed: 0,
   lastTotalLP: 120
 }
-0.4876043542522928
-780.1669668036685
-after: {
+User Info after update: {
   amountLP: 880.1669668036685,
   weight: 9.752087085045856,
   lastTotalWeight: 0.14752087085045856,
   lastTotalFarmed: 1600,
   lastTotalLP: 1443.5160004380664
 }
-global: { totalLP: 1443.5160004380664, totalWeight: 0.14752087085045856 }
-Done
+Global Info: { totalLP: 1443.5160004380664, totalWeight: 0.14752087085045856 }
+Transaction Done
 
-getPercents:
- [ 0.2051205431602927, 0.30145920124442055, 0.4934202555952869 ]
-_getCurrentFarmed:
- 500
-reinvest:
- availibleFarmedLP [ 102.56027158014635, 150.72960062221028, 246.71012779764345 ]
-reinvest:
- availibleUserInvestedLP [ 276.3282414200466, 287.0207922143513, 880.1669668036685 ]
-reinvest:
- availibleUserInvestedLpPlusFarmedLp [ 378.8885130001929, 437.75039283656156, 1126.877094601312 ]
+_getCurrentFarmed: 500
 deposit user: 0
-before: {
+User Info before: {
   amountLP: 276.3282414200466,
   weight: 3.699538817045454,
   lastTotalWeight: 0.1460133688427732,
   lastTotalFarmed: 1600,
   lastTotalLP: 663.3490336343979
 }
-0.2051205431602927
-102.56027158014635
-after: {
+User Info after update: {
   amountLP: 378.8885130001929,
   weight: 4.307531406366147,
   lastTotalWeight: 0.14821362382285133,
   lastTotalFarmed: 2100,
   lastTotalLP: 1546.0762720182126
 }
-global: { totalLP: 1546.0762720182126, totalWeight: 0.14821362382285133 }
-Done
+Global Info: { totalLP: 1546.0762720182126, totalWeight: 0.14821362382285133 }
+Transaction Done
 
 deposit user: 1
-before: {
+User Info before: {
   amountLP: 287.0207922143513,
   weight: 4.065385578381215,
   lastTotalWeight: 0.14032131180505197,
   lastTotalFarmed: 1600,
   lastTotalLP: 527.0502351116706
 }
-0.30145920124442055
-150.72960062221028
-after: {
+User Info after update: {
   amountLP: 437.75039283656156,
   weight: 6.330643226132832,
   lastTotalWeight: 0.14821362382285133,
   lastTotalFarmed: 2100,
   lastTotalLP: 1696.8058726404229
 }
-global: { totalLP: 1696.8058726404229, totalWeight: 0.14821362382285133 }
-Done
+Global Info: { totalLP: 1696.8058726404229, totalWeight: 0.14821362382285133 }
+Transaction Done
 
 deposit user: 2
-before: {
+User Info before: {
   amountLP: 880.1669668036685,
   weight: 9.752087085045856,
   lastTotalWeight: 0.14752087085045856,
   lastTotalFarmed: 1600,
   lastTotalLP: 1443.5160004380664
 }
-0.4934202555952869
-246.71012779764345
-after: {
+User Info after update: {
   amountLP: 1126.877094601312,
   weight: 10.361825367501025,
   lastTotalWeight: 0.14821362382285133,
   lastTotalFarmed: 2100,
   lastTotalLP: 1943.5160004380664
 }
-global: { totalLP: 1943.5160004380664, totalWeight: 0.14821362382285133 }
-Done
+Global Info: { totalLP: 1943.5160004380664, totalWeight: 0.14821362382285133 }
+Transaction Done
