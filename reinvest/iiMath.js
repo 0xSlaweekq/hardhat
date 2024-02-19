@@ -113,6 +113,13 @@ const reInvest = () => {
   totalFarmed += currentFarmed;
   reinvestTime = time;
 
+  // Update UserInfo for all users
+  for (let userId in UserInfo) {
+    if (UserInfo.hasOwnProperty(userId)) {
+      updateUserInfo('reinvest', userId, 0, time);
+    }
+  }
+
   return true;
 };
 
@@ -127,18 +134,6 @@ sleep(1000).then(async () => {
   sendTransaction('withdraw', 0, 8);
   await sleep(2000);
   sendTransaction('withdraw', 0, 7);
-  await sleep(1000);
-  reInvest();
-  sendTransaction('deposit', 1, 0);
-  await sleep(5000);
-  sendTransaction('deposit', 0, 0);
-  await sleep(2000);
-  reInvest();
-  sendTransaction('deposit', 1, 0);
-  await sleep(3000);
-  sendTransaction('deposit', 0, 0);
-  await sleep(1000);
-  sendTransaction('deposit', 2, 0);
   await sleep(1000);
   reInvest();
   sendTransaction('deposit', 0, 0);
