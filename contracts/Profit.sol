@@ -43,15 +43,13 @@ contract Profit {
 
     function sendTransaction(uint256 typeF, uint256 amountLP) public {
         // typeF 0-deposit, 1-withdraw, 2-reinvest
-        address user = msg.sender;
+        address id = msg.sender;
 
         uint256 time = block.timestamp;
-        uint256 curAmountLP = userInfo[user].amountLP;
+        uint256 curAmountLP = userInfo[id].amountLP;
 
-        if (typeF == 0) {
-            if (curAmountLP <= 0) {
-                userInfo[user] = UserInfo(0, 0, 0, 0, 0);
-            }
+        if (typeF == 0 && curAmountLP <= 0) {
+            userInfo[id] = UserInfo(0, 0, 0, 0, 0);
         }
 
         if (typeF == 1) {
@@ -59,14 +57,14 @@ contract Profit {
             require(curAmountLP >= amountLP, "Insufficient LP amount");
         }
 
-        if (_updateInfo(user, typeF, curAmountLP, amountLP, time)) {
-            emit SendTransaction(typeF, userInfo[user]);
+        if (_updateUserInfo(typeF, id, amountLP, time)) {
+            emit SendTransaction(typeF, userInfo[id]);
         } else {
-            revert("hz tut potom uzhe dumat");
+            revert("Unknown transaction type");
         }
     }
 
-    function _updateUserInfo(address user, uint256 typeF, uint256 curAmountLP, uint256 amountLP, uint256 time) internal returns (bool) {
+    function _updateUserInfo(uint256 typeF, address id, uint256 amountLP, uint256 time) internal returns (bool) {
         if (!started) {
             startTime = time;
             started = true;
@@ -75,33 +73,46 @@ contract Profit {
         uint256 dTime = time - lastUpdateTime;
         if (dTime != 0 && totalLP != 0) {
             totalWeight += dTime.div(totalLP);
-            lastUpdateTime = time;
         }
 
-        uint256 weight = userInfo[user].weight.add(curAmountLP.mul(totalWeight.sub(userInfo[user].lastTotalWeight)));
+        uint256 weight = userInfo[id].weight.add(userInfo[id].amountLP.mul(totalWeight.sub(userInfo[id].lastTotalWeight)));
 
-        if (typeF == 0) {
-            curAmountLP += amountLP;
-            totalLP += amountLP;
+        uint256 newAmountLP = userInfo[id].amountLP;
+
+        if (amountLP != 0) {
+            if (typeF == 0) {
+                newAmountLP += amountLP;
+                totalLP += amountLP;
+            }
+
+            if (typeF == 1) {
+                newAmountLP -= amountLP;
+                totalLP -= amountLP;
+            }
         }
 
-        if (typeF == 1) {
-            curAmountLP -= amountLP;
-            totalLP -= amountLP;
+        if (totalFarmed != 0 && userInfo[id].lastTotalFarmed != totalFarmed) {
+            uint256 dTimeAll = time.sub(startTime);
+            uint256 percent = weight.div(dTimeAll);
+            uint256 availibleToClaim = percent.mul(totalFarmed.sub(userInfo[id].lastTotalFarmed));
+            newAmountLP += availibleToClaim;
+
+            userInfo[id] = UserInfo(newAmountLP, weight, totalWeight, totalFarmed, totalLP);
         }
 
-        if (totalFarmed != 0 && userInfo[user].lastTotalFarmed != totalFarmed) {
-            uint256 dTimeAll = time - startTime;
-            uint256 percent = weight / dTimeAll;
-            userInfo[user] = UserInfo(curAmountLP, weight, totalWeight, percent * totalFarmed, totalFarmed);
-        } else {
-            userInfo[user] = UserInfo(curAmountLP, weight, totalWeight, 0, 0);
-        }
-
+        lastUpdateTime = time;
         return true;
     }
 
-    function getPercentForUser(address userAddr) external view returns (uint256) {
+    function _getCurrentFarmed() internal view returns (uint256) {
+        uint256 time = block.timestamp;
+        uint256 dTime;
+        if (reinvestTime != 0) dTime = time - reinvestTime;
+        else dTime = time - startTime;
+        return farmedByDay * dTime;
+    }
+
+    function _getPercentForUser(address userAddr) external view returns (uint256) {
         UserInfo memory user = userInfo[userAddr];
         uint256 time = block.timestamp;
         uint256 dTimeAll = time - startTime;
@@ -113,24 +124,16 @@ contract Profit {
         return percent;
     }
 
-    function _getCurrentFarmed() internal view returns (uint256) {
-        uint256 time = block.timestamp;
-        uint256 dTime;
-        if (reinvestTime != 0) dTime = time - reinvestTime;
-        else dTime = time - startTime;
-        return 100 * dTime;
-    }
-
     function reinvest() external onlyOwner returns (bool) {
         uint256 currentFarmed = _getCurrentFarmed();
         totalFarmed += currentFarmed;
         reinvestTime = block.timestamp;
 
-        for(uint256 userId in userInfo) {
-            if (UserInfo.hasOwnProperty(userId)) {
-            _updateUserInfo('reinvest', userId, 0, block.timestamp);
-            }
-        }
+        // for(uint256 userId in userInfo) {
+        //     if (UserInfo.hasOwnProperty(userId)) {
+        //     _updateUserInfo('reinvest', userId, 0, block.timestamp);
+        //     }
+        // }
         return true;
     }
 }
