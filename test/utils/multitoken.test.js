@@ -1,19 +1,21 @@
-import { artifacts, network, web3 } from 'hardhat';
-import chai, { use } from 'chai';
-const { assert } = chai;
+const { artifacts, network, web3 } = require('hardhat');
+const chai = require('chai');
+const { assert, use } = chai;
 
 const BN = web3.utils.BN;
 
-import {
+const {
   verifyProposal,
   verifyFlags,
+  verifyBalance,
   verifyInternalBalance,
   verifyInternalBalances,
   verifyBalances,
+  verifyAllowance,
   verifySubmitVote,
   verifyProcessProposal,
   verifyMember
-} from './test-utils';
+} = require('./test-utils');
 
 use(require('chai-as-promised')).should();
 

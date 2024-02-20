@@ -213,8 +213,7 @@ const verifyMember = async ({
     'member address by delegate key incorrect'
   );
 };
-
-Object.assign(exports, {
+module.exports = {
   verifyProposal,
   verifyFlags,
   verifyBalance,
@@ -225,4 +224,16 @@ Object.assign(exports, {
   verifySubmitVote,
   verifyProcessProposal,
   verifyMember
-});
+};
+// Object.assign(exports, {
+//   verifyProposal,
+//   verifyFlags,
+//   verifyBalance,
+//   verifyInternalBalance,
+//   verifyInternalBalances,
+//   verifyBalances,
+//   verifyAllowance,
+//   verifySubmitVote,
+//   verifyProcessProposal,
+//   verifyMember
+// });
