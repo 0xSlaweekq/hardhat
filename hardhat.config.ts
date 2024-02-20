@@ -9,21 +9,22 @@ import 'solidity-coverage';
 import 'hardhat-contract-sizer';
 import '@chainlink/hardhat-chainlink';
 import 'hardhat-gui';
-import * as tdly from '@tenderly/hardhat-tenderly';
 
 import { HardhatUserConfig } from 'hardhat/config';
 import { SolcUserConfig } from 'hardhat/types';
 import path from 'path';
+
+// import * as tdly from '@tenderly/hardhat-tenderly';
+
+// tdly.setup({ automaticVerifications: false });
 
 import apiKeys from './config/apiKeys';
 import customChains from './config/customChains';
 import networks from './config/networks';
 
 const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
-const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY, TENDERLY_API_KEY } =
+const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY, TENDERLY_ACCESS_KEY } =
   envConfig.parsed || {};
-
-tdly.setup({ automaticVerifications: true });
 
 /** @type import('hardhat/types').SolcUserConfig */
 const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
@@ -57,14 +58,14 @@ const config: HardhatUserConfig = {
     localhost: networks.localhost,
     tenderly: networks.tenderly
   },
-  tenderly: {
-    project: 'project',
-    username: 'slaweekq',
-    forkNetwork: '1',
-    privateVerification: true,
-    deploymentsDir: './build/deployments',
-    accessKey: TENDERLY_API_KEY
-  },
+  // tenderly: {
+  //   project: 'project',
+  //   username: 'slaweekq',
+  //   forkNetwork: '1',
+  //   privateVerification: false,
+  //   deploymentsDir: './build/deployments',
+  //   accessKey: TENDERLY_ACCESS_KEY
+  // },
   etherscan: {
     apiKey: {
       hardhat: apiKeys.hardhat,
@@ -108,7 +109,7 @@ const config: HardhatUserConfig = {
     disambiguatePaths: false,
     runOnCompile: true,
     strict: true,
-    only: [':ERC20$']
+    outputFile: './build/contractSizer.md'
   },
   namedAccounts: {
     deployer: 0,
