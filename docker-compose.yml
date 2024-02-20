@@ -5,19 +5,19 @@ services:
     hostname: anvil
     image: ghcr.io/foundry-rs/foundry:nightly
     ports:
-      - "8545:8545"
+      - "${PORT}:${PORT}"
     restart: on-failure
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:
-      test: wget http://localhost:8545
+      test: wget http://${NODE_HOST}:${PORT}
       interval: 2s
       timeout: 5s
       retries: 30
     entrypoint:
       - anvil
       - --prune-history
-      - --host=${FORKING_NODE_HOST}
+      - --host=${NODE_HOST}
       - -m=${MNEMONIC}
       - --order=fifo
       - -f=${FORKING_URL}

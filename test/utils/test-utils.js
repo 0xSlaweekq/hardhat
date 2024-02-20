@@ -205,9 +205,8 @@ const verifyMember = async ({
     'highest index yes vote incorrect'
   );
 
-  const newMemberAddressByDelegateKey = await moloch.memberAddressByDelegateKey(
-    expectedDelegateKey
-  );
+  const newMemberAddressByDelegateKey =
+    await moloch.memberAddressByDelegateKey(expectedDelegateKey);
   assert.equal(
     newMemberAddressByDelegateKey,
     expectedMemberAddressByDelegateKey,

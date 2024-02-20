@@ -4,10 +4,11 @@ import 'hardhat-gas-reporter';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import '@nomiclabs/hardhat-etherscan';
-// import '@openzeppelin/hardhat-upgrades';
 import '@typechain/hardhat';
 import 'solidity-coverage';
 import 'hardhat-contract-sizer';
+import '@chainlink/hardhat-chainlink';
+import 'hardhat-gui';
 
 import { HardhatUserConfig } from 'hardhat/config';
 import { SolcUserConfig } from 'hardhat/types';
@@ -17,10 +18,10 @@ import apiKeys from './config/apiKeys';
 import customChains from './config/customChains';
 import networks from './config/networks';
 
-const envConfig = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
 const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY } = envConfig.parsed || {};
 
-/** @type import('hardhat/config').HardhatUserConfig */
+/** @type import('hardhat/types').SolcUserConfig */
 const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
   version: '0.8.22',
   settings: {
@@ -34,6 +35,7 @@ const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
     evmVersion: 'shanghai'
   }
 };
+/** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   paths: {
@@ -89,31 +91,33 @@ const config: HardhatUserConfig = {
     ]
   },
   contractSizer: {
-    alphaSort: false,
-    disambiguatePaths: true,
-    runOnCompile: false
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true,
+    strict: true,
+    only: [':ERC20$']
   },
   namedAccounts: {
     deployer: 0,
     admin: 1
   },
-  // abiExporter: {
-  //   path: './build/abis',
-  //   runOnCompile: true,
-  //   clear: true,
-  //   flat: true,
-  //   only: [],
-  //   spacing: 2,
-  //   pretty: true
-  // },
+  abiExporter: {
+    path: './build/abis',
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    only: [],
+    spacing: 2,
+    format: 'json'
+  },
   gasReporter: {
     enabled: REPORT_GAS === ('true' || true) ? true : false,
-    noColors: true,
     outputFile: 'reports/gas_usage/summary.txt',
     currency: 'USD',
     coinmarketcap: COINMARKETCAP_API_KEY,
     token: TOKEN,
     gasPriceApi: GAS_PRICE_API,
+    showTimeSpent: true,
     maxMethodDiff: 10
   },
   mocha: {

@@ -1,6 +1,6 @@
 import path from 'path';
 
-const envConfig = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
 /** @type import('hardhat/config').HardhatUserConfig */
 const { POLYGONSCAN_API_KEY, BSCSCAN_API_KEY, ETHERSCAN_API_KEY } = envConfig.parsed || {};
 

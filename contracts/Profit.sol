@@ -3,9 +3,9 @@ pragma solidity ^0.8.22;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../libs/SafeMathUint.sol";
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
-contract DynamicWeightedLP {
+contract Profit {
     using SafeMath for uint256;
     using SafeMathUint for uint256;
 
