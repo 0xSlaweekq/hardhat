@@ -1,5 +1,5 @@
 // import fs from 'fs';
-import { ethers, run } from 'hardhat';
+import { ethers, run, tenderly } from 'hardhat';
 
 async function main() {
   // const currentTimestampInSeconds = Math.round(Date.now() / 1000);

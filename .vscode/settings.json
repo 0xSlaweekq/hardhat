@@ -1,0 +1,239 @@
+{
+  // tips alt settings
+  "[dockerfile]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[js]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.insertSpaces": true,
+    "editor.rulers": [
+      {
+        "color": "#1e751633",
+        "column": 72
+      },
+      {
+        "color": "#c2790b99",
+        "column": 80
+      },
+      {
+        "color": "#a10d2d99",
+        "column": 132
+      }
+    ],
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true
+  },
+  "[solidity]": {
+    "editor.defaultFormatter": "JuanBlanco.solidity",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.minimap.maxColumn": 140,
+    "editor.rulers": [
+      {
+        "color": "#1e751633",
+        "column": 73
+      },
+      {
+        "color": "#c2790b99",
+        "column": 82
+      }
+    ],
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 2,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true
+  },
+  "[ts]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.editor.fontFamily": "JetBrains Mono",
+  "conventionalCommits.lineBreak": "\\n",
+  "debug.onTaskErrors": "abort",
+  "diffEditor.ignoreTrimWhitespace": false,
+  // editor settings
+  "editor.acceptSuggestionOnEnter": "off", // tab or enter choose
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.codeLensFontFamily": "JetBrains Mono",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.detectIndentation": false,
+  "editor.foldingImportsByDefault": true,
+  "editor.foldingMaximumRegions": 65000,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontLigatures": true,
+  "editor.fontVariations": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": "active", // color helpers for bracket pairss
+  "editor.inlayHints.fontFamily": "JetBrains Mono",
+  "editor.inlineSuggest.enabled": true,
+  "editor.largeFileOptimizations": false,
+  "editor.lineNumbers": "interval",
+  "editor.minimap.enabled": false,
+  "editor.minimap.maxColumn": 140,
+  "editor.mouseWheelZoom": true,
+  "editor.renderWhitespace": "none",
+  "editor.scrollBeyondLastColumn": 0,
+  "editor.suggest.preview": true,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.tabCompletion": "on",
+  "editor.tabSize": 2,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
+  },
+  "editor.unicodeHighlight.ambiguousCharacters": false, // useful for russian symbols
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 140,
+  // explorer settings
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  // work on files
+  "files.associations": {
+    "*.svg": "html",
+    "*.xml": "html"
+  },
+  "files.autoSave": "onFocusChange",
+  "files.defaultLanguage": "markdown",
+  // git settings
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "never",
+  "gpttoolbox.apiKey": "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",
+  "haselerdev.aiquickfix.apiKey": "zEIGlN5CZXPbwzN5yGV1nO5M",
+  //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 API openai
+  // helper tips js
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "markdown.extension.print.theme": "dark",
+  "nginx-conf-hint.format.align": true,
+  "notebook.formatOnSave.enabled": true,
+  //prettier settings
+  "prettier.arrowParens": "avoid",
+  "prettier.bracketSameLine": false,
+  "prettier.bracketSpacing": true,
+  "prettier.embeddedLanguageFormatting": "auto",
+  "prettier.endOfLine": "auto",
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 140,
+  "prettier.proseWrap": "always",
+  "prettier.quoteProps": "as-needed",
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "none",
+  "prettier.useTabs": false,
+  "projectManager.any.ignoredFolders": [
+    "node_modules",
+    "out",
+    "typings",
+    "build",
+    "build",
+    ".env",
+    ".git"
+  ],
+  "projectManager.git.ignoredFolders": [
+    "node_modules",
+    "out",
+    "typings",
+    "build",
+    "build",
+    ".git",
+    ".env"
+  ],
+  "redhat.telemetry.enabled": true,
+  "scm.inputFontFamily": "JetBrains Mono",
+  // Solidity settings
+  "solidity.compileUsingRemoteVersion": "0.8.22",
+  "solidity.compilerOptimization": 1000,
+  "solidity.defaultCompiler": "remote",
+  "solidity.enabledAsYouTypeCompilationErrorCheck": true,
+  "solidity.formatter": "prettier",
+  "solidity.linter": "solhint",
+  "solidity.packageDefaultDependenciesDirectory": "node_modules",
+  "solidity.solhintRules": {
+    "avoid-low-level-calls": "off",
+    "avoid-tx-origin": "off",
+    "compiler-version": "off",
+    "const-name-snakecase": "off",
+    "contract-name-camelcase": "off",
+    "custom-errors": "off",
+    "explicit-types": "off",
+    "func-name-mixedcase": "off",
+    "func-visibility": [
+      "warn",
+      {
+        "ignoreConstructors": true
+      }
+    ],
+    "max-states-count": "off",
+    "no-console": "off",
+    "no-empty-blocks": "off",
+    "no-global-import": "off",
+    "no-inline-assembly": "off",
+    "not-rely-on-time": "off",
+    "prettier/prettier": "error",
+    "quotes": "off",
+    "reason-string": [
+      "warn",
+      {
+        "maxLength": 64
+      }
+    ],
+    "state-visibility": "off",
+    "var-name-mixedcase": "off"
+  },
+  "solidity.validationDelay": 500,
+  "tabnine.experimentalAutoImports": true,
+  // terminal settings
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.windows": "shell",
+  "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.tabs.location": "left",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.confirmSaveUntitledWorkspace": false,
+  // workbench settings
+  "workbench.colorCustomizations": {
+    "tab.activeBackground": "#89ff892d"
+  },
+  "workbench.editor.limit.value": 5,
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "none"
+}

@@ -1,12 +1,14 @@
-import 'hardhat-deploy';
-import 'hardhat-abi-exporter';
-import 'hardhat-gas-reporter';
+import '@typechain/hardhat';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import '@nomiclabs/hardhat-etherscan';
-import '@typechain/hardhat';
-import 'solidity-coverage';
 import 'hardhat-contract-sizer';
+import 'hardhat-abi-exporter';
+import 'hardhat-gas-reporter';
+import 'solidity-coverage';
+import '@openzeppelin/hardhat-upgrades';
+import 'hardhat-change-network';
+import 'hardhat-deploy';
 import '@chainlink/hardhat-chainlink';
 import 'hardhat-gui';
 
@@ -109,7 +111,7 @@ const config: HardhatUserConfig = {
     disambiguatePaths: false,
     runOnCompile: true,
     strict: true,
-    outputFile: './build/contractSizer.md'
+    outputFile: './build/reports/contractSizer.txt'
   },
   namedAccounts: {
     deployer: 0,
@@ -126,13 +128,13 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     enabled: REPORT_GAS === ('true' || true) ? true : false,
-    outputFile: 'reports/gas_usage/summary.txt',
     currency: 'USD',
     coinmarketcap: COINMARKETCAP_API_KEY,
     token: TOKEN,
     gasPriceApi: GAS_PRICE_API,
     showTimeSpent: true,
-    maxMethodDiff: 10
+    // maxMethodDiff: 10,
+    outputFile: './build/reports/gas_usage/summary.txt'
   },
   mocha: {
     timeout: 100000

@@ -13,8 +13,8 @@ contract Profit {
         uint256 amountLP;
         uint256 weight;
         uint256 lastTotalWeight;
-        uint256 availibleToClaim;
         uint256 lastTotalFarmed;
+        uint256 lastTotalLP;
     }
 
     mapping(address => UserInfo) public userInfo;
@@ -25,9 +25,10 @@ contract Profit {
     uint256 public startTime;
     uint256 public totalLP;
     uint256 public totalWeight;
-    uint256 public lastUpdateTime;
     uint256 public totalFarmed;
     uint256 public reinvestTime;
+    uint256 public lastUpdateTime;
+    uint256 public farmedByDay = 100;
 
     event SendTransaction(uint256 typeF, UserInfo userInfo);
 
@@ -65,7 +66,7 @@ contract Profit {
         }
     }
 
-    function _updateInfo(address user, uint256 typeF, uint256 curAmountLP, uint256 amountLP, uint256 time) internal returns (bool) {
+    function _updateUserInfo(address user, uint256 typeF, uint256 curAmountLP, uint256 amountLP, uint256 time) internal returns (bool) {
         if (!started) {
             startTime = time;
             started = true;
@@ -122,10 +123,14 @@ contract Profit {
 
     function reinvest() external onlyOwner returns (bool) {
         uint256 currentFarmed = _getCurrentFarmed();
-        totalLP += currentFarmed;
         totalFarmed += currentFarmed;
-        currentFarmed = 0;
         reinvestTime = block.timestamp;
+
+        for(uint256 userId in userInfo) {
+            if (UserInfo.hasOwnProperty(userId)) {
+            _updateUserInfo('reinvest', userId, 0, block.timestamp);
+            }
+        }
         return true;
     }
 }
