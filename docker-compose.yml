@@ -25,4 +25,4 @@ services:
       - --fork-block-number=${FORKING_BLOCKNUMBER}
       - --fork-chain-id=${FORKING_NETWORK_ID}
       - --auto-impersonate
-      - --hardfork=shanghai
+      - --hardfork=london
