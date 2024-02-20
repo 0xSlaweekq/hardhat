@@ -46,14 +46,14 @@
     "@uniswap/v3-core": "^1.0.1",
     "@uniswap/v3-periphery": "^1.4.4",
     "@uniswap/v3-staker": "^1.0.2",
-    "chai": "^5.1.0",
+    "chai": "4.3.4",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.1.0",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.7.2",
@@ -65,10 +65,12 @@
     "hardhat-contract-sizer": "^2.10.0",
     "hardhat-deploy": "0.11.4",
     "hardhat-gas-reporter": "1.0.10",
+    "openzeppelin-test-helpers": "^0.5.1",
     "path": "^0.12.7",
     "prettier": "^3.2.5",
     "prettier-plugin-solidity": "^1.3.1",
     "solhint": "^4.1.1",
+    "solhint-community": "^3.7.0",
     "solhint-plugin-prettier": "^0.1.0",
     "solidity-coverage": "^0.8.7",
     "standard-version": "^9.5.0",
@@ -80,8 +82,9 @@
   "directories": {
     "build": "build",
     "contracts": "contracts",
+    "deployments": "deployments",
     "scripts": "scripts",
-    "test": "test"
+    "tests": "tests"
   },
   "homepage": "https://github.com/NarcoNik/hardhat#readme",
   "license": "MIT",
@@ -94,17 +97,20 @@
   "scripts": {
     "clean": "rm -r node_modules package-lock.json",
     "compile": "npx hardhat compile",
+    "coverage:Profit": "npx hardhat coverage ./tests/Profit.test.ts --network localhost --show-stack-traces",
     "deploy:hardhat": "npx hardhat run scripts/deploy.ts --network hardhat",
     "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost --show-stack-traces",
     "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
     "format": "npx prettier --write ./ && eslint --fix ./",
     "gui": "npx hardhat gui",
-    "lint": "npx solhint contracts/*.sol contracts/**/*.sol interfaces/*.sol interfaces/**/*.sol dividend/*.sol  dividend/**/*.sol libs/*.sol  libs/**/*.sol test/**/*.sol",
+    "lint": "npx solhint contracts/*.sol contracts/**/*.sol interfaces/* dividend/* libs/*.sol libs/**/*.sol test/**/*.sol",
     "ln": "docker compose --file ./docker-compose.yaml up -d",
     "ln-stop": "docker compose --file ./docker-compose.yaml down -v && docker-compose --file ./docker-compose.yaml rm -v",
     "push": "git add ./ && git commit -m 'refactoring' -a && git push origin",
     "test": "npx hardhat test --network localhost",
-    "verify": "npx hardhat run scripts/verify.ts"
+    "test:Profit": "npx hardhat test ./tests/Profit.test.ts --network localhost --show-stack-traces",
+    "verify": "npx hardhat run scripts/verify.ts",
+    "verify:tenderly": "npx hardhat tenderly:verify --network tenderly"
   },
   "version": "0.9.7"
 }

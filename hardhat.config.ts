@@ -13,43 +13,29 @@ import '@chainlink/hardhat-chainlink';
 import 'hardhat-gui';
 
 import { HardhatUserConfig } from 'hardhat/config';
-import { SolcUserConfig } from 'hardhat/types';
-import path from 'path';
 
 // import * as tdly from '@tenderly/hardhat-tenderly';
-
 // tdly.setup({ automaticVerifications: false });
 
-import apiKeys from './config/apiKeys';
-import customChains from './config/customChains';
-import networks from './config/networks';
+import {
+  apiKeys,
+  customChains,
+  networks,
+  REPORT_GAS,
+  TOKEN,
+  GAS_PRICE_API,
+  COINMARKETCAP_API_KEY,
+  DEFAULT_COMPILER_SETTINGS
+} from './config';
 
-const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
-const { REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY, TENDERLY_ACCESS_KEY } =
-  envConfig.parsed || {};
-
-/** @type import('hardhat/types').SolcUserConfig */
-const DEFAULT_COMPILER_SETTINGS: SolcUserConfig = {
-  version: '0.8.22',
-  settings: {
-    optimizer: {
-      enabled: true,
-      runs: 1_000
-    },
-    metadata: {
-      bytecodeHash: 'none'
-    },
-    evmVersion: 'london'
-  }
-};
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   paths: {
-    tests: './test',
+    tests: './tests',
     artifacts: './build/artifacts',
     cache: './build/cache',
-    deployments: './build/deployments'
+    deployments: 'deployments'
   },
   typechain: {
     outDir: './build/typechain',
@@ -65,8 +51,8 @@ const config: HardhatUserConfig = {
   //   username: 'slaweekq',
   //   forkNetwork: '1',
   //   privateVerification: false,
-  //   deploymentsDir: './build/deployments',
-  //   accessKey: TENDERLY_ACCESS_KEY
+  //   deploymentsDir: 'deployments',
+  //   accessKey: process.env.TENDERLY_ACCESS_KEY
   // },
   etherscan: {
     apiKey: {
@@ -80,38 +66,13 @@ const config: HardhatUserConfig = {
     },
     customChains: customChains
   },
-  solidity: {
-    compilers: [
-      DEFAULT_COMPILER_SETTINGS,
-      {
-        version: '0.8.16',
-        settings: {
-          optimizer: { enabled: true, runs: 1_000 },
-          metadata: { bytecodeHash: 'none' }
-        }
-      },
-      {
-        version: '0.8.0',
-        settings: {
-          optimizer: { enabled: true, runs: 1_000 },
-          metadata: { bytecodeHash: 'none' }
-        }
-      },
-      {
-        version: '0.6.0',
-        settings: {
-          optimizer: { enabled: true, runs: 1_000 },
-          metadata: { bytecodeHash: 'none' }
-        }
-      }
-    ]
-  },
+  solidity: DEFAULT_COMPILER_SETTINGS,
   contractSizer: {
     alphaSort: true,
     disambiguatePaths: false,
     runOnCompile: true,
     strict: true,
-    outputFile: './build/reports/contractSizer.txt'
+    outputFile: './build/contractSizer.md'
   },
   namedAccounts: {
     deployer: 0,
@@ -133,8 +94,9 @@ const config: HardhatUserConfig = {
     token: TOKEN,
     gasPriceApi: GAS_PRICE_API,
     showTimeSpent: true,
-    // maxMethodDiff: 10,
-    outputFile: './build/reports/gas_usage/summary.txt'
+    maxMethodDiff: 10,
+    src: './build/reports',
+    outputFile: './build/gas_usage.md'
   },
   mocha: {
     timeout: 100000

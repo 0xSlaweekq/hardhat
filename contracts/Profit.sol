@@ -10,6 +10,7 @@ contract Profit {
     using SafeMathUint for uint256;
 
     struct UserInfo {
+        uint256 id;
         uint256 amountLP;
         uint256 weight;
         uint256 lastTotalWeight;
@@ -18,10 +19,12 @@ contract Profit {
     }
 
     mapping(address => UserInfo) public userInfo;
+    mapping(uint256 => address) public userAddresses;
     bool public started;
 
     address owner;
 
+    uint256 public userCount;
     uint256 public startTime;
     uint256 public totalLP;
     uint256 public totalWeight;
@@ -43,13 +46,15 @@ contract Profit {
 
     function sendTransaction(uint256 typeF, uint256 amountLP) public {
         // typeF 0-deposit, 1-withdraw, 2-reinvest
-        address id = msg.sender;
+        address addr = msg.sender;
 
         uint256 time = block.timestamp;
-        uint256 curAmountLP = userInfo[id].amountLP;
+        uint256 curAmountLP = userInfo[addr].amountLP;
 
         if (typeF == 0 && curAmountLP <= 0) {
-            userInfo[id] = UserInfo(0, 0, 0, 0, 0);
+            userCount++;
+            userInfo[addr] = UserInfo(userCount, 0, 0, 0, 0, 0);
+            userAddresses[userCount] = addr;
         }
 
         if (typeF == 1) {
@@ -57,14 +62,14 @@ contract Profit {
             require(curAmountLP >= amountLP, "Insufficient LP amount");
         }
 
-        if (_updateUserInfo(typeF, id, amountLP, time)) {
-            emit SendTransaction(typeF, userInfo[id]);
+        if (_updateUserInfo(typeF, addr, amountLP, time)) {
+            emit SendTransaction(typeF, userInfo[addr]);
         } else {
             revert("Unknown transaction type");
         }
     }
 
-    function _updateUserInfo(uint256 typeF, address id, uint256 amountLP, uint256 time) internal returns (bool) {
+    function _updateUserInfo(uint256 typeF, address addr, uint256 amountLP, uint256 time) internal returns (bool) {
         if (!started) {
             startTime = time;
             started = true;
@@ -75,9 +80,11 @@ contract Profit {
             totalWeight += dTime.div(totalLP);
         }
 
-        uint256 weight = userInfo[id].weight.add(userInfo[id].amountLP.mul(totalWeight.sub(userInfo[id].lastTotalWeight)));
+        UserInfo memory user = userInfo[addr];
 
-        uint256 newAmountLP = userInfo[id].amountLP;
+        uint256 weight = user.weight.add(user.amountLP.mul(totalWeight.sub(user.lastTotalWeight)));
+
+        uint256 newAmountLP = user.amountLP;
 
         if (amountLP != 0) {
             if (typeF == 0) {
@@ -91,13 +98,13 @@ contract Profit {
             }
         }
 
-        if (totalFarmed != 0 && userInfo[id].lastTotalFarmed != totalFarmed) {
+        if (totalFarmed != 0 && user.lastTotalFarmed != totalFarmed) {
             uint256 dTimeAll = time.sub(startTime);
             uint256 percent = weight.div(dTimeAll);
-            uint256 availibleToClaim = percent.mul(totalFarmed.sub(userInfo[id].lastTotalFarmed));
+            uint256 availibleToClaim = percent.mul(totalFarmed.sub(user.lastTotalFarmed));
             newAmountLP += availibleToClaim;
 
-            userInfo[id] = UserInfo(newAmountLP, weight, totalWeight, totalFarmed, totalLP);
+            userInfo[addr] = UserInfo(user.id, newAmountLP, weight, totalWeight, totalFarmed, totalLP);
         }
 
         lastUpdateTime = time;
@@ -112,28 +119,17 @@ contract Profit {
         return farmedByDay * dTime;
     }
 
-    function _getPercentForUser(address userAddr) external view returns (uint256) {
-        UserInfo memory user = userInfo[userAddr];
-        uint256 time = block.timestamp;
-        uint256 dTimeAll = time - startTime;
-        uint256 dTime = time - lastUpdateTime;
-        uint256 totalWeights = totalWeight.add(dTime.div(totalLP));
-
-        uint256 percent = user.weight.add(user.amountLP.mul(totalWeights.sub(user.lastTotalWeight))).div(dTimeAll);
-
-        return percent;
-    }
-
     function reinvest() external onlyOwner returns (bool) {
         uint256 currentFarmed = _getCurrentFarmed();
         totalFarmed += currentFarmed;
         reinvestTime = block.timestamp;
 
-        // for(uint256 userId in userInfo) {
-        //     if (UserInfo.hasOwnProperty(userId)) {
-        //     _updateUserInfo('reinvest', userId, 0, block.timestamp);
-        //     }
-        // }
+        for (uint256 i; i <= userCount; i++) {
+            address addr = userAddresses[i];
+            if (userInfo[addr].lastTotalFarmed != totalFarmed) {
+                _updateUserInfo(2, addr, 0, reinvestTime);
+            }
+        }
         return true;
     }
 }

@@ -1,5 +1,5 @@
 // import fs from 'fs';
-import { ethers, run, tenderly } from 'hardhat';
+import { ethers, run } from 'hardhat';
 
 async function main() {
   // const currentTimestampInSeconds = Math.round(Date.now() / 1000);
@@ -15,12 +15,7 @@ async function main() {
   // const address = await token.getAddress();
   console.log('Token deployed to', address);
 
-  //verify Token
-  // await new Promise(r => setTimeout(r, 5000));
-  // await tenderly.verify({ address, name: 'Profit' });
-  // await run('verify:verify', { address, constructorArguments: [] });
-
-  // const newData = { ...Data, Profit: address };
+  // const newData = { ...Data, token: address };
   // fs.writeFileSync(`./scripts/data.json`, JSON.stringify(newData, null, 2));
 }
 

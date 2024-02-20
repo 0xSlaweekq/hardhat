@@ -10,7 +10,11 @@ const {
   TENDERLY_API_KEY,
   FORKING_BLOCKNUMBER,
   PORT,
-  FORKING_NETWORK_ID
+  FORKING_NETWORK_ID,
+  REPORT_GAS,
+  TOKEN,
+  GAS_PRICE_API,
+  COINMARKETCAP_API_KEY
 } = envConfig.parsed || {};
 const str = '1000000000000000000000000000000000000000000000000000000000000000';
 
@@ -213,4 +217,4 @@ const networks = {
     accounts: { mnemonic: MNEMONIC || str }
   }
 };
-export default networks;
+export { networks, REPORT_GAS, TOKEN, GAS_PRICE_API, COINMARKETCAP_API_KEY, str };

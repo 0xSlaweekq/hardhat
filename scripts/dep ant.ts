@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { ethers, run } from 'hardhat';
 
-import Data from './data.json';
+// import Data from './data.json';
 
 async function main() {
-  // let Data = JSON.parse(fs.readFileSync(`./data.json`));
+  let Data = JSON.parse(fs.readFileSync(`./scripts/data.json`));
   //deploy token
   const Token = await ethers.getContractFactory('Test');
   const token = await Token.deploy(
@@ -29,7 +29,7 @@ async function main() {
       Data[0].markAddr
     ]
   });
-  const newData = await Data.map(obj => {
+  const newData = await Data.map((obj: any) => {
     return {
       token: token.address,
       name: obj.name,

@@ -16,6 +16,7 @@
         "ignoreConstructors": true
       }
     ],
+    "gas-small-strings": "warn",
     "max-states-count": "off",
     "no-console": "off",
     "no-empty-blocks": "off",

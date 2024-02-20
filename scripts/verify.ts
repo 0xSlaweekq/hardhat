@@ -5,7 +5,11 @@ async function main() {
   let Data = require(`./data.json`);
   let data = Data[0];
   //verify Token
-  await new Promise(r => setTimeout(r, 3000));
+  await new Promise(r => setTimeout(r, 5000));
+  // await tenderly.verify({
+  //   address: data.token,
+  //   name: 'Profit'
+  // });
   await run('verify:verify', {
     address: data.token,
     constructorArguments: []

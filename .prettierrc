@@ -2,12 +2,13 @@
   "$schema": "http://json.schemastore.org/prettierrc",
   "overrides": [
     {
-      "files": ["*.sol"],
+      "files": "*.sol",
       "options": {
         "arrowParens": "avoid",
         "bracketSpacing": false,
         "embeddedLanguageFormatting": "auto",
         "endOfLine": "auto",
+        "parser": "solidity-parse",
         "printWidth": 132,
         "proseWrap": "always",
         "semi": true,
@@ -34,5 +35,6 @@
         "useTabs": false
       }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-solidity"]
 }

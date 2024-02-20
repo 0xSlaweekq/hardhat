@@ -18,7 +18,7 @@ npm i @openzeppelin/contracts@4.9.2 \
   @uniswap/v2-periphery \
   @uniswap/v3-core \
   @uniswap/v3-periphery  --save-dev --legacy-peer-deps
-  #   @uniswap/v2-core@1.0.1 \
+  # @uniswap/v2-core@1.0.1 \
   # @uniswap/v2-periphery@1.1.0-beta.0 \
   # @uniswap/v3-core@1.0.1 \
   # @uniswap/v3-periphery@1.4.3  --save-dev --legacy-peer-deps
