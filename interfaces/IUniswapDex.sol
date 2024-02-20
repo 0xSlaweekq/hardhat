@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.19;
 
 interface IFactory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
@@ -9,10 +8,6 @@ interface IFactory {
 }
 
 interface IRouter {
-    function factory() external pure returns (address);
-
-    function WETH() external pure returns (address);
-
     function addLiquidityETH(
         address token,
         uint256 amountTokenDesired,
@@ -36,4 +31,8 @@ interface IRouter {
         address to,
         uint256 deadline
     ) external payable;
+
+    function factory() external pure returns (address factory);
+
+    function wETH() external pure returns (address wETH);
 }

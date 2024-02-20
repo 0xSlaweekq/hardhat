@@ -1,15 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.19;
 
 contract InvestorsManager {
     //INVESTORS DATA
-    uint64 private nInvestors = 0;
-    uint64 private totalReferralsUses = 0;
-    uint256 private totalReferralsGreens = 0;
-    mapping(address => investor) private investors; //Investor data mapped by address
-    mapping(uint64 => address) private investors_addresses; //Investors addresses mapped by index
 
-    struct investor {
+    struct Investor {
         address investorAddress; //Investor address
         uint256 investment; //Total investor investment on miner (real BNB, presales/airdrops not taken into account)
         uint256 withdrawal; //Total investor withdraw BNB from the miner
@@ -25,104 +20,109 @@ contract InvestorsManager {
         uint256 referralUses; //Number of addresses that used his referral address
     }
 
-    function initializeInvestor(address adr) internal {
-        if (investors[adr].investorAddress != adr) {
-            investors_addresses[nInvestors] = adr;
-            investors[adr].investorAddress = adr;
-            investors[adr].sellsTimestamp = block.timestamp;
-            nInvestors++;
+    uint64 private _nInvestors = 0;
+    uint64 private _totalReferralsUses = 0;
+    uint256 private _totalReferralsGreens = 0;
+
+    mapping(address => Investor) private _investors; //Investor data mapped by address
+    mapping(uint64 => address) private _investorsAddresses; //Investors addresses mapped by index
+
+    function getNumberInvestors() public view returns (uint64 nInvestor) {
+        return _nInvestors;
+    }
+
+    function getTotalReferralsUses() public view returns (uint64 totalReferralsUse) {
+        return _totalReferralsUses;
+    }
+
+    function getTotalReferralsGreens() public view returns (uint256 totalReferralsGreen) {
+        return _totalReferralsGreens;
+    }
+
+    function getInvestorData(uint64 investorIndex) public view returns (Investor memory investorData) {
+        return _investors[_investorsAddresses[investorIndex]];
+    }
+
+    function getInvestorData(address addr) public view returns (Investor memory investorData) {
+        return _investors[addr];
+    }
+
+    function getInvestorMachines(address addr) public view returns (uint256 hiredMachines) {
+        return _investors[addr].hiredMachines;
+    }
+
+    function getReferralData(address addr) public view returns (Investor memory referral) {
+        return _investors[_investors[addr].referral];
+    }
+
+    function getReferralUses(address addr) public view returns (uint256 referralUses) {
+        return _investors[addr].referralUses;
+    }
+
+    function _initializeInvestor(address adr) internal {
+        if (_investors[adr].investorAddress != adr) {
+            _investorsAddresses[_nInvestors] = adr;
+            _investors[adr].investorAddress = adr;
+            _investors[adr].sellsTimestamp = block.timestamp;
+            _nInvestors++;
         }
     }
 
-    function getNumberInvestors() public view returns (uint64) {
-        return nInvestors;
+    function _setInvestorAddress(address addr) internal {
+        _investors[addr].investorAddress = addr;
     }
 
-    function getTotalReferralsUses() public view returns (uint64) {
-        return totalReferralsUses;
+    function _addInvestorInvestment(address addr, uint256 investment) internal {
+        _investors[addr].investment += investment;
     }
 
-    function getTotalReferralsGreens() public view returns (uint256) {
-        return totalReferralsGreens;
+    function _addInvestorWithdrawal(address addr, uint256 withdrawal) internal {
+        _investors[addr].withdrawal += withdrawal;
     }
 
-    function getInvestorData(uint64 investor_index) public view returns (investor memory) {
-        return investors[investors_addresses[investor_index]];
+    function _setInvestorHiredMachines(address addr, uint256 hiredMachines) internal {
+        _investors[addr].hiredMachines = hiredMachines;
     }
 
-    function getInvestorData(address addr) public view returns (investor memory) {
-        return investors[addr];
+    function _setInvestorClaimedGreens(address addr, uint256 claimedGreens) internal {
+        _investors[addr].claimedGreens = claimedGreens;
     }
 
-    function getInvestorMachines(address addr) public view returns (uint256) {
-        return investors[addr].hiredMachines;
-    }
-
-    function getReferralData(address addr) public view returns (investor memory) {
-        return investors[investors[addr].referral];
-    }
-
-    function getReferralUses(address addr) public view returns (uint256) {
-        return investors[addr].referralUses;
-    }
-
-    function setInvestorAddress(address addr) internal {
-        investors[addr].investorAddress = addr;
-    }
-
-    function addInvestorInvestment(address addr, uint256 investment) internal {
-        investors[addr].investment += investment;
-    }
-
-    function addInvestorWithdrawal(address addr, uint256 withdrawal) internal {
-        investors[addr].withdrawal += withdrawal;
-    }
-
-    function setInvestorHiredMachines(address addr, uint256 hiredMachines) internal {
-        investors[addr].hiredMachines = hiredMachines;
-    }
-
-    function setInvestorClaimedGreens(address addr, uint256 claimedGreens) internal {
-        investors[addr].claimedGreens = claimedGreens;
-    }
-
-    function setInvestorGreensByReferral(address addr, uint256 greens) internal {
+    function _setInvestorGreensByReferral(address addr, uint256 greens) internal {
         if (addr != address(0)) {
-            totalReferralsGreens += greens;
-            totalReferralsGreens -= investors[addr].referralGreens;
+            _totalReferralsGreens += greens;
+            _totalReferralsGreens -= _investors[addr].referralGreens;
         }
-        investors[addr].referralGreens = greens;
+        _investors[addr].referralGreens = greens;
     }
 
-    function setInvestorLastHire(address addr, uint256 lastHire) internal {
-        investors[addr].lastHire = lastHire;
+    function _setInvestorLastHire(address addr, uint256 lastHire) internal {
+        _investors[addr].lastHire = lastHire;
     }
 
-    function setInvestorSellsTimestamp(address addr, uint256 sellsTimestamp) internal {
-        investors[addr].sellsTimestamp = sellsTimestamp;
+    function _setInvestorSellsTimestamp(address addr, uint256 sellsTimestamp) internal {
+        _investors[addr].sellsTimestamp = sellsTimestamp;
     }
 
-    function setInvestorNsells(address addr, uint256 nSells) internal {
-        investors[addr].nSells = nSells;
+    function _setInvestorNsells(address addr, uint256 nSells) internal {
+        _investors[addr].nSells = nSells;
     }
 
-    function setInvestorReferral(address addr, address referral) internal {
-        investors[addr].referral = referral;
-        investors[referral].referralUses++;
-        totalReferralsUses++;
+    function _setInvestorReferral(address addr, address referral) internal {
+        _investors[addr].referral = referral;
+        _investors[referral].referralUses++;
+        _totalReferralsUses++;
     }
 
-    function setInvestorLastSell(address addr, uint256 amount) internal {
-        investors[addr].lastSellAmount = amount;
+    function _setInvestorLastSell(address addr, uint256 amount) internal {
+        _investors[addr].lastSellAmount = amount;
     }
 
-    function setInvestorCustomSellTaxes(address addr, uint256 customTax) internal {
-        investors[addr].customSellTaxes = customTax;
+    function _setInvestorCustomSellTaxes(address addr, uint256 customTax) internal {
+        _investors[addr].customSellTaxes = customTax;
     }
 
-    function increaseReferralUses(address addr) internal {
-        investors[addr].referralUses++;
+    function _increaseReferralUses(address addr) internal {
+        _investors[addr].referralUses++;
     }
-
-    constructor() {}
 }

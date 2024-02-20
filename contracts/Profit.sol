@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../libs/SafeMathUint.sol";
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 contract Profit {
     using SafeMath for uint256;
@@ -20,9 +20,10 @@ contract Profit {
 
     mapping(address => UserInfo) public userInfo;
     mapping(uint256 => address) public userAddresses;
+
     bool public started;
 
-    address owner;
+    address public owner;
 
     uint256 public userCount;
     uint256 public startTime;
@@ -35,13 +36,13 @@ contract Profit {
 
     event SendTransaction(uint256 typeF, UserInfo userInfo);
 
-    constructor() {
-        owner = msg.sender;
-    }
-
     modifier onlyOwner() {
         require(msg.sender == owner, "Caller not owner");
         _;
+    }
+
+    constructor() {
+        owner = msg.sender;
     }
 
     function sendTransaction(uint256 typeF, uint256 amountLP) public {
@@ -69,7 +70,26 @@ contract Profit {
         }
     }
 
-    function _updateUserInfo(uint256 typeF, address addr, uint256 amountLP, uint256 time) internal returns (bool) {
+    function reinvest() public onlyOwner returns (bool result) {
+        uint256 currentFarmed = _getCurrentFarmed();
+        totalFarmed += currentFarmed;
+        reinvestTime = block.timestamp;
+
+        for (uint256 i; i <= userCount; i++) {
+            address addr = userAddresses[i];
+            if (userInfo[addr].lastTotalFarmed != totalFarmed) {
+                _updateUserInfo(2, addr, 0, reinvestTime);
+            }
+        }
+        return true;
+    }
+
+    function _updateUserInfo(
+        uint256 typeF,
+        address addr,
+        uint256 amountLP,
+        uint256 time
+    ) internal returns (bool result) {
         if (!started) {
             startTime = time;
             started = true;
@@ -111,25 +131,11 @@ contract Profit {
         return true;
     }
 
-    function _getCurrentFarmed() internal view returns (uint256) {
+    function _getCurrentFarmed() internal view returns (uint256 currentFarmed) {
         uint256 time = block.timestamp;
         uint256 dTime;
         if (reinvestTime != 0) dTime = time - reinvestTime;
         else dTime = time - startTime;
         return farmedByDay * dTime;
-    }
-
-    function reinvest() external onlyOwner returns (bool) {
-        uint256 currentFarmed = _getCurrentFarmed();
-        totalFarmed += currentFarmed;
-        reinvestTime = block.timestamp;
-
-        for (uint256 i; i <= userCount; i++) {
-            address addr = userAddresses[i];
-            if (userInfo[addr].lastTotalFarmed != totalFarmed) {
-                _updateUserInfo(2, addr, 0, reinvestTime);
-            }
-        }
-        return true;
     }
 }

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -13,7 +13,7 @@ import "../interfaces/DividendPayingTokenOptionalInterface.sol";
 /// @dev A contract that allows anyone to pay and distribute ethers to users as shares.
 /// @notice This contract is based on erc1726 by Roger-Wu (https://github.com/Roger-Wu/erc1726-dividend-paying-token)
 
-contract RewardsTracker is Ownable, DividendPayingTokenInterface, DividendPayingTokenOptionalInterface {
+contract RewardsTracker is Ownable {
     mapping(address => uint256) public userShares;
     mapping(address => int256) internal magnifiedDividendCorrections;
     mapping(address => uint256) internal withdrawnDividends;
@@ -155,10 +155,12 @@ contract RewardsTracker is Ownable, DividendPayingTokenInterface, DividendPaying
 
     function swapEthForCustomToken(address user, uint256 amt) internal returns (bool) {
         address[] memory path = new address[](2);
-        path[0] = rewardRouter.WETH();
+        path[0] = rewardRouter.wETH();
         path[1] = rewardToken;
 
-        try rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp) {
+        try
+            rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp)
+        {
             return true;
         } catch {
             return false;
@@ -178,21 +180,27 @@ contract RewardsTracker is Ownable, DividendPayingTokenInterface, DividendPaying
     }
 
     function accumulativeDividendOf(address _owner) public view returns (uint256) {
-        return uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) / magnitude;
+        return
+            uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) /
+            magnitude;
     }
 
     function addShares(address account, uint256 value) internal {
         userShares[account] += value;
         totalShares += value;
 
-        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] - int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] =
+            magnifiedDividendCorrections[account] -
+            int256(magnifiedDividendPerShare * value);
     }
 
     function removeShares(address account, uint256 value) internal {
         userShares[account] -= value;
         totalShares -= value;
 
-        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] + int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] =
+            magnifiedDividendCorrections[account] +
+            int256(magnifiedDividendPerShare * value);
     }
 
     function _setBalance(address account, uint256 newBalance) internal {

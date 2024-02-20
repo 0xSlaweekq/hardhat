@@ -2,28 +2,62 @@
   "extends": "solhint:recommended",
   "plugins": ["prettier"],
   "rules": {
-    "avoid-low-level-calls": "off",
-    "avoid-tx-origin": "off",
-    "compiler-version": "off",
-    "const-name-snakecase": "off",
-    "contract-name-camelcase": "off",
-    "custom-errors": "off",
-    "explicit-types": "off",
-    "func-name-mixedcase": "off",
+    "avoid-call-value": "warn",
+    "avoid-low-level-calls": "warn",
+    "avoid-sha3": "warn",
+    "avoid-suicide": "warn",
+    "avoid-throw": "warn",
+    "avoid-tx-origin": "warn",
+    "check-send-result": "warn",
+    "code-complexity": ["warn", 7],
+    "compiler-version": ["off"],
+    "const-name-snakecase": "warn",
+    "constructor-syntax": "warn",
+    "contract-name-camelcase": "warn",
+    "custom-errors": "warn",
+    "event-name-camelcase": "warn",
+    "explicit-types": ["warn", "explicit"],
+    "foundry-test-functions": ["off", ["setUp"]],
+    "func-name-mixedcase": "warn",
+    "func-named-parameters": ["warn", 6],
+    "func-param-name-mixedcase": "warn",
     "func-visibility": [
       "warn",
       {
         "ignoreConstructors": true
       }
     ],
-    "gas-small-strings": "warn",
-    "max-states-count": "off",
-    "no-console": "off",
-    "no-empty-blocks": "off",
+    "function-max-lines": ["warn", 50],
+    "immutable-vars-naming": [
+      "warn",
+      {
+        "immutablesAsConstants": true
+      }
+    ],
+    "imports-on-top": "warn",
+    "max-line-length": ["error", 120],
+    "max-states-count": ["warn", 15],
+    "modifier-name-mixedcase": "warn",
+    "named-parameters-mapping": "off",
+    "no-complex-fallback": "warn",
+    "no-console": "warn",
+    "no-empty-blocks": "warn",
     "no-global-import": "off",
-    "no-inline-assembly": "off",
+    "no-inline-assembly": "warn",
+    "no-unused-import": "warn",
+    "no-unused-vars": "warn",
+    "not-rely-on-block-hash": "warn",
     "not-rely-on-time": "off",
+    "one-contract-per-file": "warn",
+    "ordering": "warn",
+    "payable-fallback": "warn",
     "prettier/prettier": "error",
+    "private-vars-leading-underscore": [
+      "warn",
+      {
+        "strict": false
+      }
+    ],
     "quotes": "off",
     "reason-string": [
       "warn",
@@ -31,7 +65,10 @@
         "maxLength": 64
       }
     ],
-    "state-visibility": "off",
-    "var-name-mixedcase": "off"
+    "reentrancy": "warn",
+    "state-visibility": "warn",
+    "use-forbidden-name": "warn",
+    "var-name-mixedcase": "warn",
+    "visibility-modifier-order": "warn"
   }
 }

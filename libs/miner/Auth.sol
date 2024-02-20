@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.19;
 
 abstract contract Auth {
-    address internal owner;
-    mapping(address => bool) internal authorizations;
-
-    constructor(address _owner) {
-        owner = _owner;
-        authorizations[_owner] = true;
-    }
+    address internal _owner;
+    mapping(address => bool) internal _authorizations;
 
     /**
      * Function modifier to require caller to be contract owner
@@ -26,40 +21,45 @@ abstract contract Auth {
         _;
     }
 
+    constructor(address owner) {
+        _owner = owner;
+        _authorizations[owner] = true;
+    }
+
     /**
      * Authorize address. Owner only
      */
     function authorize(address adr) public onlyOwner {
-        authorizations[adr] = true;
+        _authorizations[adr] = true;
     }
 
     /**
      * Remove address' authorization. Owner only
      */
     function unauthorize(address adr) public onlyOwner {
-        authorizations[adr] = false;
+        _authorizations[adr] = false;
     }
 
     /**
      * Check if address is owner
      */
-    function isOwner(address account) public view returns (bool) {
-        return account == owner;
+    function isOwner(address account) public view returns (bool isOwners) {
+        return account == _owner;
     }
 
     /**
      * Return address' authorization status
      */
-    function isAuthorized(address adr) public view returns (bool) {
-        return authorizations[adr];
+    function isAuthorized(address adr) public view returns (bool isAuth) {
+        return _authorizations[adr];
     }
 
     /**
      * Transfer ownership to new address. Caller must be owner. Leaves old owner authorized
      */
     function transferOwnership(address payable adr) public onlyOwner {
-        owner = adr;
-        authorizations[adr] = true;
+        _owner = adr;
+        _authorizations[adr] = true;
         emit OwnershipTransferred(adr);
     }
 

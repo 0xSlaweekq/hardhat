@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.19;
 
 import "./Auth.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
  */
 contract Timer is Auth {
     using SafeMath for uint256;
-    uint256 private currentTime;
+    uint256 private _currentTime;
 
-    bool enabled = false;
+    bool public enabled = false;
 
     constructor() Auth(msg.sender) {}
 
@@ -21,8 +21,8 @@ contract Timer is Auth {
      * @param time timestamp to set `currentTime` to.
      */
     function setCurrentTime(uint256 time) external authorized {
-        require(time >= currentTime, "Return to the future Doc!");
-        currentTime = time;
+        require(time >= _currentTime, "Return to the future Doc!");
+        _currentTime = time;
     }
 
     function enable(bool _enabled) external authorized {
@@ -31,24 +31,24 @@ contract Timer is Auth {
     }
 
     function increaseDays(uint256 _days) external authorized {
-        currentTime = getCurrentTime().add(uint256(1 days).mul(_days));
+        _currentTime = getCurrentTime().add(uint256(1 days).mul(_days));
     }
 
     function increaseMinutes(uint256 _minutes) external authorized {
-        currentTime = getCurrentTime().add(uint256(1 minutes).mul(_minutes));
+        _currentTime = getCurrentTime().add(uint256(1 minutes).mul(_minutes));
     }
 
     function increaseSeconds(uint256 _seconds) external authorized {
-        currentTime = getCurrentTime().add(uint256(1 seconds).mul(_seconds));
+        _currentTime = getCurrentTime().add(uint256(1 seconds).mul(_seconds));
     }
 
     /**
      * @notice Gets the current time. Will return the last time set in `setCurrentTime` if running in test mode.
      * Otherwise, it will return the block timestamp.
-     * @return uint256 for the current Testable timestamp.
+     * @return currentTime for the current Testable timestamp.
      */
-    function getCurrentTime() public view returns (uint256) {
-        if (enabled) return currentTime;
+    function getCurrentTime() public view returns (uint256 currentTime) {
+        if (enabled) return _currentTime;
         else return block.timestamp;
     }
 }
