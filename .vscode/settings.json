@@ -52,6 +52,7 @@
     "source.fixAll": "explicit"
   },
   "editor.codeLensFontFamily": "JetBrains Mono",
+  // "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.detectIndentation": false,
   "editor.foldingImportsByDefault": true,
@@ -61,6 +62,8 @@
   "editor.fontVariations": false,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.formatOnType": false,
   "editor.guides.bracketPairs": "active", // color helpers for bracket pairss
   "editor.inlayHints.fontFamily": "JetBrains Mono",
   "editor.inlineSuggest.enabled": true,
@@ -91,8 +94,8 @@
   // explorer settings
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  // work on files
   "files.autoSave": "onFocusChange",
+  // work on files
   "files.defaultLanguage": "markdown",
   // git settings
   "git.autofetch": true,
@@ -113,9 +116,6 @@
   "notebook.output.fontFamily": "JetBrains Mono",
   //prettier settings
   "prettier.arrowParens": "avoid",
-  "prettier.bracketSameLine": false,
-  "prettier.bracketSpacing": true,
-  "prettier.embeddedLanguageFormatting": "auto",
   "prettier.endOfLine": "auto",
   "prettier.jsxSingleQuote": true,
   "prettier.printWidth": 140,
@@ -146,15 +146,17 @@
   ],
   "redhat.telemetry.enabled": true,
   "scm.inputFontFamily": "JetBrains Mono",
-  "security.workspace.trust.untrustedFiles": "open",
+  "solidity.linter": "solhint",
   // tips alt settings
   // Solidity settings
+  "solidity.nodemodulespackage": "solc",
   "solidity.compileUsingRemoteVersion": "v0.8.22",
   "solidity.compilerOptimization": 1000,
   "solidity.defaultCompiler": "remote",
+  // Enables as you type compilation of the document and error highlighting
   "solidity.enabledAsYouTypeCompilationErrorCheck": true,
+  // Enables / disables the solidity formatter prettier (default) or forge (note it needs to be installed)
   "solidity.formatter": "prettier",
-  "solidity.linter": "solhint",
   "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
     "avoid-call-value": "warn",
@@ -236,6 +238,7 @@
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.tabs.location": "left",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "vs-code-prettier-eslint.prettierLast": false,
   "window.confirmSaveUntitledWorkspace": false,
   "window.zoomLevel": 0.25,
   // workbench settings
