@@ -12,30 +12,6 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[shellscript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.insertSpaces": true,
-    "editor.rulers": [
-      {
-        "color": "#1e751633",
-        "column": 72
-      },
-      {
-        "color": "#c2790b99",
-        "column": 80
-      },
-      {
-        "color": "#a10d2d99",
-        "column": 132
-      }
-    ],
-    "editor.tabCompletion": "on",
-    "editor.tabSize": 2,
-    "files.eol": "\n",
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true
-  },
   "[solidity]": {
     "editor.defaultFormatter": "JuanBlanco.solidity",
     "editor.formatOnSave": true,
@@ -61,13 +37,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "[yml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "chat.editor.fontFamily": "JetBrains Mono",
-  "conventionalCommits.lineBreak": "\\n",
   "debug.onTaskErrors": "abort",
   "diffEditor.ignoreTrimWhitespace": false,
   // editor settings
@@ -117,10 +92,6 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   // work on files
-  "files.associations": {
-    "*.svg": "html",
-    "*.xml": "html"
-  },
   "files.autoSave": "onFocusChange",
   "files.defaultLanguage": "markdown",
   // git settings
@@ -139,6 +110,7 @@
   "markdown.extension.print.theme": "dark",
   "nginx-conf-hint.format.align": true,
   "notebook.formatOnSave.enabled": true,
+  "notebook.output.fontFamily": "JetBrains Mono",
   //prettier settings
   "prettier.arrowParens": "avoid",
   "prettier.bracketSameLine": false,
@@ -154,34 +126,20 @@
   "prettier.tabWidth": 2,
   "prettier.trailingComma": "none",
   "prettier.useTabs": false,
-  "projectManager.any.ignoredFolders": [
-    "node_modules",
-    "out",
-    "typings",
-    "build",
-    "build",
-    ".env",
-    ".git"
-  ],
-  "projectManager.git.ignoredFolders": [
-    "node_modules",
-    "out",
-    "typings",
-    "build",
-    "build",
-    ".git",
-    ".env"
-  ],
+  "projectManager.any.ignoredFolders": ["node_modules", "out", "typings", "build", "build", ".env", ".git"],
+  "projectManager.git.ignoredFolders": ["node_modules", "out", "typings", "build", "build", ".git", ".env"],
   "redhat.telemetry.enabled": true,
   "scm.inputFontFamily": "JetBrains Mono",
+  "security.workspace.trust.untrustedFiles": "open",
+  // tips alt settings
   // Solidity settings
-  "solidity.compileUsingRemoteVersion": "0.8.22",
+  "solidity.compileUsingRemoteVersion": "v0.8.22",
   "solidity.compilerOptimization": 1000,
   "solidity.defaultCompiler": "remote",
   "solidity.enabledAsYouTypeCompilationErrorCheck": true,
+  "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.formatter": "prettier",
   "solidity.linter": "solhint",
-  "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
     "avoid-call-value": "warn",
     "avoid-low-level-calls": "warn",
@@ -263,6 +221,7 @@
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.tabs.location": "left",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.zoomLevel": 0.3,
   "window.confirmSaveUntitledWorkspace": false,
   // workbench settings
   "workbench.colorCustomizations": {
