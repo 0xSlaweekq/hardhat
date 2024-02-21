@@ -35,7 +35,7 @@
     },
     {
       "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base", "prettier"],
-      "files": ["**/*.js"],
+      "files": [".js"],
       "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"

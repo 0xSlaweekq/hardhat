@@ -1,8 +1,9 @@
 const { artifacts, ethereum, web3 } = require('hardhat');
 const chai = require('chai');
+
 const { assert, use } = chai;
 
-const BN = web3.utils.BN;
+const { BN } = web3.utils;
 
 use(require('chai-as-promised')).should();
 
@@ -146,8 +147,12 @@ contract(
     nonMemberAccount,
     ...otherAccounts
   ]) => {
-    let moloch, tokenAlpha, submitter;
-    let proposal1, proposal2, depositToken;
+    let moloch;
+    let tokenAlpha;
+    let submitter;
+    let proposal1;
+    let proposal2;
+    let depositToken;
 
     const initSummonerBalance = 100;
 
@@ -167,7 +172,7 @@ contract(
     let snapshotId;
 
     const fundAndApproveToMoloch = async ({ to, from, value }) => {
-      await tokenAlpha.transfer(to, value, { from: from });
+      await tokenAlpha.transfer(to, value, { from });
       await tokenAlpha.approve(moloch.address, value, { from: to });
     };
 
@@ -297,11 +302,11 @@ contract(
           deploymentConfig.DILUTION_BOUND,
           deploymentConfig.PROCESSING_REWARD
         );
-        const transactionHash = newContract.transactionHash;
+        const { transactionHash } = newContract;
 
         const transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
 
-        const blockNumber = transactionReceipt.blockNumber;
+        const { blockNumber } = transactionReceipt;
 
         const logs = await newContract.getPastEvents('allEvents', {
           fromBlock: blockNumber,
@@ -310,7 +315,7 @@ contract(
 
         const log = logs[0];
 
-        //event SummonComplete(address indexed summoner, address[] tokens, uint256 summoningTime, uint256 periodDuration, uint256 votingPeriodLength, uint256 gracePeriodLength, uint256 proposalDeposit, uint256 dilutionBound, uint256 processingReward);
+        // event SummonComplete(address indexed summoner, address[] tokens, uint256 summoningTime, uint256 periodDuration, uint256 votingPeriodLength, uint256 gracePeriodLength, uint256 proposalDeposit, uint256 dilutionBound, uint256 processingReward);
         assert.equal(log.event, 'SummonComplete');
 
         const molochSummoner = log.args.summoner;
@@ -382,15 +387,15 @@ contract(
         assert.equal(+countAfter, +countBefore.add(_1));
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -411,7 +416,7 @@ contract(
 
         // ESCROW balance has been updated
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: tokenAlpha,
           user: ESCROW,
           expectedBalance: proposal1.tributeOffered
@@ -420,7 +425,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -477,7 +482,7 @@ contract(
         assert.equal(+countAfter, +countBefore.add(_1));
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -485,7 +490,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -506,7 +511,7 @@ contract(
 
         // ESCROW balance has been updated
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: tokenAlpha,
           user: ESCROW,
           expectedBalance: proposal1.tributeOffered
@@ -515,7 +520,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -552,7 +557,7 @@ contract(
         await moloch.updateDelegateKey(processor, { from: summoner });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: summoner,
           expectedDelegateKey: processor,
           expectedShares: 1,
@@ -587,7 +592,7 @@ contract(
         const countAfter = await moloch.proposalCount();
         assert.equal(+countAfter, +countBefore.add(_1));
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
           proposer: processor,
@@ -595,7 +600,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -616,7 +621,7 @@ contract(
 
         // ESCROW balance has been updated
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: tokenAlpha,
           user: ESCROW,
           expectedBalance: proposal1.tributeOffered
@@ -625,7 +630,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         assert.equal(log.event, 'SubmitProposal');
         const {
           applicant,
@@ -690,15 +695,15 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, true, false] // whitelist flag set to true after proposal
         });
@@ -720,7 +725,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -778,7 +783,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -786,7 +791,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, true, false] // whitelist flag set to true after proposal
         });
@@ -808,7 +813,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -868,7 +873,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: processor,
@@ -876,7 +881,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, true, false] // whitelist flag set to true after proposal
         });
@@ -898,7 +903,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -931,7 +936,8 @@ contract(
     });
 
     describe('submitGuildKickProposal events', () => {
-      let proposer, applicant;
+      let proposer;
+      let applicant;
       beforeEach(async () => {
         // cant kick the summoner, so we have to vote in a new member
         await fundAndApproveToMoloch({
@@ -969,7 +975,7 @@ contract(
         await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -1005,7 +1011,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: guildKickProposal,
           proposalId: secondProposalIndex,
           proposer: nonMemberProposer,
@@ -1014,7 +1020,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [false, false, false, false, false, true] // guild kick flag set to true after proposal
         });
@@ -1034,14 +1040,14 @@ contract(
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: ESCROW,
           expectedBalance: 0
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: GUILD,
           expectedBalance: proposal1.tributeOffered
@@ -1050,7 +1056,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -1085,7 +1091,7 @@ contract(
         const proposer = proposal1.applicant;
         const guildKickProposal = {
           applicant: proposal1.applicant,
-          proposer: proposer,
+          proposer,
           sharesRequested: 0,
           tributeOffered: 0,
           tributeToken: zeroAddress,
@@ -1108,16 +1114,16 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: guildKickProposal,
           proposalId: secondProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 2,
           expectedProposalQueueLength: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [false, false, false, false, false, true] // guild kick flag set to true after proposal
         });
@@ -1137,14 +1143,14 @@ contract(
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: ESCROW,
           expectedBalance: 0
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: GUILD,
           expectedBalance: proposal1.tributeOffered
@@ -1153,7 +1159,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -1190,7 +1196,7 @@ contract(
         const proposer = processor;
         const guildKickProposal = {
           applicant: proposal1.applicant,
-          proposer: proposer,
+          proposer,
           sharesRequested: 0,
           tributeOffered: 0,
           tributeToken: zeroAddress,
@@ -1213,16 +1219,16 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: guildKickProposal,
           proposalId: secondProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 2,
           expectedProposalQueueLength: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [false, false, false, false, false, true] // guild kick flag set to true after proposal
         });
@@ -1242,14 +1248,14 @@ contract(
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: ESCROW,
           expectedBalance: 0
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: GUILD,
           expectedBalance: proposal1.tributeOffered
@@ -1258,7 +1264,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
+        // event SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
         const {
           applicant,
           sharesRequested,
@@ -1341,7 +1347,7 @@ contract(
         assert.equal(+countAfter, +countBefore.add(_1));
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -1349,7 +1355,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -1370,7 +1376,7 @@ contract(
 
         // ESCROW balance has been updated
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: tokenAlpha,
           user: ESCROW,
           expectedBalance: proposal1.tributeOffered
@@ -1379,14 +1385,14 @@ contract(
         const emittedLogs = await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, false, false] // sponsored flag set
         });
 
         // deposit has moved
         await verifyBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           address: summoner,
           expectedBalance: initSummonerBalance
@@ -1394,7 +1400,7 @@ contract(
 
         // moloch has the deposit
         await verifyBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           address: moloch.address,
           expectedBalance: deploymentConfig.PROPOSAL_DEPOSIT + proposal1.tributeOffered
@@ -1447,7 +1453,7 @@ contract(
         await moloch.submitWhitelistProposal(newToken.address, 'whitelist me!', { from: summoner });
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -1455,7 +1461,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, true, false] // whitelist flag set to true after proposal
         });
@@ -1478,7 +1484,7 @@ contract(
         const emittedLogs = await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -1489,7 +1495,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, true, false] // sponsored flag set
         });
@@ -1503,7 +1509,7 @@ contract(
 
         // moloch has the deposit
         await verifyBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           address: moloch.address,
           expectedBalance: deploymentConfig.PROPOSAL_DEPOSIT
@@ -1541,7 +1547,7 @@ contract(
 
         // submit
         const proposer = proposal1.applicant;
-        const applicant = proposal1.applicant;
+        const { applicant } = proposal1;
         await moloch.submitProposal(
           applicant,
           proposal1.sharesRequested,
@@ -1568,7 +1574,7 @@ contract(
         await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -1578,7 +1584,7 @@ contract(
 
         const guildKickProposal = {
           applicant: proposal1.applicant,
-          proposer: proposer,
+          proposer,
           sharesRequested: 0,
           tributeOffered: 0,
           tributeToken: zeroAddress,
@@ -1601,16 +1607,16 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: guildKickProposal,
           proposalId: secondProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 2,
           expectedProposalQueueLength: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [false, false, false, false, false, true] // guild kick flag set to true after proposal
         });
@@ -1630,14 +1636,14 @@ contract(
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: ESCROW,
           expectedBalance: 0
         });
 
         await verifyInternalBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           user: GUILD,
           expectedBalance: proposal1.tributeOffered
@@ -1651,14 +1657,14 @@ contract(
         const emittedLogs = await moloch.sponsorProposal(secondProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [true, false, false, false, false, true] // sponsored flag set
         });
 
         // deposit has moved
         await verifyBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           address: summoner,
           expectedBalance:
@@ -1667,7 +1673,7 @@ contract(
 
         // moloch has the deposit
         await verifyBalance({
-          moloch: moloch,
+          moloch,
           token: depositToken,
           address: moloch.address,
           expectedBalance:
@@ -1724,10 +1730,10 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
-          proposer: proposer,
+          proposer,
           sponsor: zeroAddress,
           expectedStartingPeriod: 0,
           expectedProposalCount: 1,
@@ -1735,7 +1741,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -1749,10 +1755,10 @@ contract(
         await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
-          proposer: proposer,
+          proposer,
           sponsor: summoner,
           expectedStartingPeriod: 1,
           expectedProposalCount: 1,
@@ -1760,7 +1766,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, false, false]
         });
@@ -1771,7 +1777,7 @@ contract(
         const emittedLogs = await moloch.submitVote(firstProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedVote: yes,
@@ -1782,7 +1788,7 @@ contract(
         const log = logs[0];
 
         assert.equal(log.event, 'SubmitVote');
-        //event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
+        // event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
 
         const { proposalId, proposalIndex, delegateKey, memberAddress, uintVote } = log.args;
         assert.equal(proposalId, 0);
@@ -1799,7 +1805,7 @@ contract(
         const emittedLogs = await moloch.submitVote(firstProposalIndex, no, { from: processor });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedVote: no,
@@ -1810,7 +1816,7 @@ contract(
         const log = logs[0];
 
         assert.equal(log.event, 'SubmitVote');
-        //event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
+        // event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
 
         const { proposalId, proposalIndex, delegateKey, memberAddress, uintVote } = log.args;
         assert.equal(proposalId, 0);
@@ -1822,7 +1828,8 @@ contract(
     });
 
     describe('processProposal events', () => {
-      let proposer, applicant;
+      let proposer;
+      let applicant;
       beforeEach(async () => {
         await fundAndApproveToMoloch({
           to: proposal1.applicant,
@@ -1855,7 +1862,7 @@ contract(
         await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, false, false]
         });
@@ -1867,7 +1874,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 1,
@@ -1888,7 +1895,7 @@ contract(
         const emittedLogs = await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedYesVotes: 1,
           expectedTotalShares: proposal1.sharesRequested + summonerShares, // add the 1 the summoner has
@@ -1897,7 +1904,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, true, false, false, false]
         });
@@ -1922,7 +1929,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -1933,7 +1940,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
         assert.equal(log.event, 'ProcessProposal');
-        //event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
 
         const proposalQueueLength = 0;
         const { proposalIndex, proposalId, didPass } = log.args;
@@ -1946,7 +1953,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, no, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 0,
@@ -1957,7 +1964,7 @@ contract(
         await moveForwardPeriods(deploymentConfig.GRACE_DURATON_IN_PERIODS);
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedShares: 0,
           expectedLoot: 0,
@@ -1975,7 +1982,7 @@ contract(
         const emittedLogs = await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedYesVotes: 0,
           expectedNoVotes: 1,
@@ -1984,7 +1991,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, false, false, false, false]
         });
@@ -2010,7 +2017,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: zeroAddress,
           expectedShares: 0,
@@ -2021,7 +2028,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
         assert.equal(log.event, 'ProcessProposal');
-        //event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
 
         const proposalQueueLength = 0;
         const { proposalIndex, proposalId, didPass } = log.args;
@@ -2032,7 +2039,8 @@ contract(
     });
 
     describe('processWhitelistProposal events', () => {
-      let proposer, applicant;
+      let proposer;
+      let applicant;
       beforeEach(async () => {
         await fundAndApproveToMoloch({
           to: summoner,
@@ -2056,7 +2064,7 @@ contract(
         await moloch.submitWhitelistProposal(newToken.address, 'whitelist me!', { from: summoner });
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -2064,7 +2072,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, true, false] // whitelist flag set to true after proposal
         });
@@ -2078,7 +2086,7 @@ contract(
         await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: whitelistProposal,
           proposalId: firstProposalIndex,
           proposer: summoner,
@@ -2089,7 +2097,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, true, false] // sponsored flag set
         });
@@ -2101,7 +2109,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 1,
@@ -2124,7 +2132,7 @@ contract(
         });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedYesVotes: 1,
           expectedTotalShares: summonerShares, // add the 1 the summoner has
@@ -2133,7 +2141,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, true, false, true, false]
         });
@@ -2160,7 +2168,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
         assert.equal(log.event, 'ProcessWhitelistProposal');
-        //event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
 
         const proposalQueueLength = 0;
         const { proposalIndex, proposalId, didPass } = log.args;
@@ -2173,7 +2181,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, no, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 0,
@@ -2196,7 +2204,7 @@ contract(
         });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedNoVotes: 1,
           expectedTotalShares: summonerShares, // add the 1 the summoner has
@@ -2205,7 +2213,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, false, false, true, false]
         });
@@ -2232,7 +2240,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
         assert.equal(log.event, 'ProcessWhitelistProposal');
-        //event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
 
         const proposalQueueLength = 0;
         const { proposalIndex, proposalId, didPass } = log.args;
@@ -2243,7 +2251,8 @@ contract(
     });
 
     describe('processGuildKickProposal events', () => {
-      let proposer, applicant;
+      let proposer;
+      let applicant;
       beforeEach(async () => {
         // cant kick the summoner, so we have to vote in a new member
         await fundAndApproveToMoloch({
@@ -2254,7 +2263,7 @@ contract(
 
         // submit
         const proposer = proposal1.applicant;
-        const applicant = proposal1.applicant;
+        const { applicant } = proposal1;
         await moloch.submitProposal(
           applicant,
           proposal1.sharesRequested,
@@ -2281,7 +2290,7 @@ contract(
         await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -2291,7 +2300,7 @@ contract(
 
         const guildKickProposal = {
           applicant: proposal1.applicant,
-          proposer: proposer,
+          proposer,
           sharesRequested: 0,
           tributeOffered: 0,
           tributeToken: zeroAddress,
@@ -2307,16 +2316,16 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: guildKickProposal,
           proposalId: secondProposalIndex,
-          proposer: proposer,
+          proposer,
           expectedProposalCount: 2,
           expectedProposalQueueLength: 1
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [false, false, false, false, false, true] // guild kick flag set to true after proposal
         });
@@ -2330,7 +2339,7 @@ contract(
         await moloch.sponsorProposal(secondProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [true, false, false, false, false, true] // sponsored flag set
         });
@@ -2342,7 +2351,7 @@ contract(
         await moloch.submitVote(secondProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: secondProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote:
@@ -2366,7 +2375,7 @@ contract(
         });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: secondProposalIndex,
           expectedYesVotes: 1,
           expectedTotalShares: summonerShares, // add the 1 the summoner has
@@ -2376,7 +2385,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [true, true, true, false, false, true]
         });
@@ -2404,7 +2413,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event ProcessGuildKickProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessGuildKickProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
         assert.equal(log.event, 'ProcessGuildKickProposal');
 
         const proposalQueueLength = 1;
@@ -2418,7 +2427,7 @@ contract(
         await moloch.submitVote(secondProposalIndex, no, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: secondProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 0,
@@ -2441,7 +2450,7 @@ contract(
         });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: secondProposalIndex,
           expectedNoVotes: 1,
           expectedTotalShares: summonerShares + proposal1.sharesRequested, // add the 1 the summoner has
@@ -2450,7 +2459,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [true, true, false, false, false, true]
         });
@@ -2478,7 +2487,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event ProcessGuildKickProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
+        // event ProcessGuildKickProposal(uint256 indexed proposalIndex, uint256 indexed proposalId, bool didPass);
         assert.equal(log.event, 'ProcessGuildKickProposal');
 
         const proposalQueueLength = 1;
@@ -2490,7 +2499,7 @@ contract(
     });
 
     describe('rageQuit events', () => {
-      //NOTE: add applicant1 as a member
+      // NOTE: add applicant1 as a member
       beforeEach(async () => {
         await fundAndApproveToMoloch({
           to: proposal1.applicant,
@@ -2519,7 +2528,7 @@ contract(
         await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, false, false]
         });
@@ -2528,7 +2537,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 1,
@@ -2541,7 +2550,7 @@ contract(
         await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedYesVotes: 1,
           expectedTotalShares: proposal1.sharesRequested + summonerShares, // add the 1 the summoner has
@@ -2550,7 +2559,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, true, false, false, false]
         });
@@ -2575,7 +2584,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -2591,7 +2600,7 @@ contract(
           { from: proposal1.applicant }
         );
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: 0,
@@ -2621,7 +2630,7 @@ contract(
         const log = logs[0];
 
         assert.equal(log.event, 'Ragequit');
-        //event Ragequit(address indexed memberAddress, uint256 sharesToBurn, uint256 lootToBurn);
+        // event Ragequit(address indexed memberAddress, uint256 sharesToBurn, uint256 lootToBurn);
 
         const { memberAddress, sharesToBurn, lootToBurn } = log.args;
         assert.equal(memberAddress, proposal1.applicant);
@@ -2635,7 +2644,7 @@ contract(
           from: proposal1.applicant
         });
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested - partialRageQuitShares,
@@ -2671,7 +2680,7 @@ contract(
         const log = logs[0];
 
         assert.equal(log.event, 'Ragequit');
-        //event Ragequit(address indexed memberAddress, uint256 sharesToBurn, uint256 lootToBurn);
+        // event Ragequit(address indexed memberAddress, uint256 sharesToBurn, uint256 lootToBurn);
 
         const { memberAddress, sharesToBurn, lootToBurn } = log.args;
         assert.equal(memberAddress, proposal1.applicant);
@@ -2709,7 +2718,7 @@ contract(
         await moloch.sponsorProposal(firstProposalIndex, { from: summoner });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, false, false, false, false, false]
         });
@@ -2718,7 +2727,7 @@ contract(
         await moloch.submitVote(firstProposalIndex, yes, { from: summoner });
 
         await verifySubmitVote({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           memberAddress: summoner,
           expectedMaxSharesAndLootAtYesVote: 1,
@@ -2731,7 +2740,7 @@ contract(
         await moloch.processProposal(firstProposalIndex, { from: processor });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: firstProposalIndex,
           expectedYesVotes: 1,
           expectedTotalShares: proposal1.sharesRequested + summonerShares, // add the 1 the summoner has
@@ -2740,7 +2749,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [true, true, true, false, false, false]
         });
@@ -2765,7 +2774,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -2816,14 +2825,14 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event Withdraw(address indexed memberAddress, address token, uint256 amount);
+        // event Withdraw(address indexed memberAddress, address token, uint256 amount);
         const { memberAddress, token, amount } = log.args;
         assert.equal(log.event, 'Withdraw');
         assert.equal(memberAddress, proposal1.applicant);
         assert.equal(token, depositToken.address);
         assert.equal(amount, withdrawAmount);
       });
-      //TODO: test withdrawBalances? should still be fine since it just calls withdraw internally and is covered in other tests
+      // TODO: test withdrawBalances? should still be fine since it just calls withdraw internally and is covered in other tests
     });
 
     describe('cancelProposal events', () => {
@@ -2846,7 +2855,7 @@ contract(
           { from: proposal1.applicant }
         );
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, false, false, false]
         });
@@ -2858,7 +2867,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: firstProposalIndex,
           expectedFlags: [false, false, false, true, false, false]
         });
@@ -2882,7 +2891,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event CancelProposal(uint256 indexed proposalId, address memberAddress, address applicantAddress);
+        // event CancelProposal(uint256 indexed proposalId, address memberAddress, address applicantAddress);
         const { proposalId, applicantAddress } = log.args;
         assert.equal(log.event, 'CancelProposal');
         assert.equal(proposalId, firstProposalIndex);
@@ -2903,7 +2912,7 @@ contract(
         const emittedLogs = await moloch.updateDelegateKey(processor, { from: summoner });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: summoner,
           expectedDelegateKey: processor,
           expectedShares: 1,
@@ -2913,7 +2922,7 @@ contract(
         const { logs } = emittedLogs;
         const log = logs[0];
 
-        //event UpdateDelegateKey(address indexed memberAddress, address newDelegateKey);
+        // event UpdateDelegateKey(address indexed memberAddress, address newDelegateKey);
         const { memberAddress, newDelegateKey } = log.args;
         assert.equal(log.event, 'UpdateDelegateKey');
         assert.equal(memberAddress, summoner);

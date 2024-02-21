@@ -10,12 +10,12 @@ let startTime = 0;
 
 let reinvestTime = 0;
 
-let UserInfo = [];
+const UserInfo = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const _getCurrentFarmed = time => {
-  let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
+  const dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
   console.log('_getCurrentFarmed:', currentFarmed);
   return currentFarmed;

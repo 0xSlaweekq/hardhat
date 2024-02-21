@@ -1,8 +1,9 @@
 const { artifacts, network, web3 } = require('hardhat');
 const chai = require('chai');
+
 const { assert, use } = chai;
 
-const BN = web3.utils.BN;
+const { BN } = web3.utils;
 
 const {
   verifyProposal,
@@ -88,9 +89,9 @@ async function moveForwardPeriods(periods) {
 
 function addressArray(length) {
   // returns an array of distinct non-zero addresses
-  let array = [];
+  const array = [];
   for (let i = 1; i <= length; i++) {
-    array.push('0x' + new BN(i).toString(16, 40));
+    array.push(`0x${new BN(i).toString(16, 40)}`);
   }
   return array;
 }
@@ -107,8 +108,17 @@ contract(
     nonMemberAccount,
     ...otherAccounts
   ]) => {
-    let moloch, tokenAlpha, tokenBeta, tokenGamma, tokenDelta, tokenEpsilon, tokenCount;
-    let proposal1, proposal2, proposal3, depositToken;
+    let moloch;
+    let tokenAlpha;
+    let tokenBeta;
+    let tokenGamma;
+    let tokenDelta;
+    let tokenEpsilon;
+    let tokenCount;
+    let proposal1;
+    let proposal2;
+    let proposal3;
+    let depositToken;
 
     const firstProposalIndex = 0;
     const secondProposalIndex = 1;
@@ -126,7 +136,7 @@ contract(
     let snapshotId;
 
     const fundAndApproveToMoloch = async ({ token, to, from, value }) => {
-      await token.transfer(to, value, { from: from });
+      await token.transfer(to, value, { from });
       await token.approve(moloch.address, value, { from: to });
     };
 
@@ -196,7 +206,7 @@ contract(
     });
 
     describe('collectTokens', () => {
-      let tokensToCollect = 100;
+      const tokensToCollect = 100;
 
       beforeEach(async () => {
         proposal1.tributeOffered = 69;
@@ -230,7 +240,7 @@ contract(
         const proposalData = await moloch.proposals(firstProposalIndex);
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: proposal1,
           proposalId: firstProposalIndex,
           proposer: proposal1.applicant,
@@ -424,7 +434,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: proposal1.sharesRequested,
@@ -514,7 +524,7 @@ contract(
         });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal2.applicant,
           expectedDelegateKey: proposal2.applicant,
           expectedShares: proposal2.sharesRequested,
@@ -536,7 +546,7 @@ contract(
 
         it('member shares reduced', async () => {
           await verifyMember({
-            moloch: moloch,
+            moloch,
             member: proposal1.applicant,
             expectedDelegateKey: proposal1.applicant,
             expectedShares: proposal1.sharesRequested - sharesToQuit,
@@ -597,8 +607,9 @@ contract(
         });
 
         describe('withdraw balances', () => {
-          let tokens, applicantTokenBalances;
-          let zeroesArray = [0, 0];
+          let tokens;
+          let applicantTokenBalances;
+          const zeroesArray = [0, 0];
 
           beforeEach(async () => {
             tokens = [depositToken.address, tokenBeta.address];
@@ -705,7 +716,7 @@ contract(
           });
 
           it('partial withdrawal', async () => {
-            let withdrawAmounts = [];
+            const withdrawAmounts = [];
             withdrawAmounts[0] = applicantTokenBalances[0].sub(_1);
             withdrawAmounts[1] = applicantTokenBalances[1].sub(new BN(37));
 
@@ -907,7 +918,7 @@ contract(
     });
 
     describe('token count limit - deploy with maximum token count', async () => {
-      let token_whitelist_limit = 10;
+      const token_whitelist_limit = 10;
 
       it('deploy with maximum token count', async () => {
         moloch = await Moloch.new(
@@ -1013,7 +1024,7 @@ contract(
         await moloch.processWhitelistProposal(secondProposalIndex, { from: summoner });
 
         await verifyProcessProposal({
-          moloch: moloch,
+          moloch,
           proposalIndex: secondProposalIndex,
           expectedYesVotes: summonerShares,
           expectedNoVotes: 0,
@@ -1022,7 +1033,7 @@ contract(
         });
 
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: secondProposalIndex,
           expectedFlags: [true, true, false, false, true, false] // failed
         });
@@ -1047,8 +1058,9 @@ contract(
     });
 
     describe('guild bank token limit', () => {
-      let token_guildbank_limit = 10;
-      let tokens, tokenAddresses;
+      const token_guildbank_limit = 10;
+      let tokens;
+      let tokenAddresses;
 
       beforeEach(async () => {
         // 1. create max tokens
@@ -1059,7 +1071,7 @@ contract(
 
         // mint max guildbank tokens, in addition to tokenAlpha this should provide us 1 extra whitelisted token to test the boundary
         for (let i = 0; i < token_guildbank_limit; i++) {
-          let token = await Token.new(deploymentConfig.TOKEN_SUPPLY, { from: creator });
+          const token = await Token.new(deploymentConfig.TOKEN_SUPPLY, { from: creator });
           tokens.push(token);
         }
 
@@ -1077,7 +1089,7 @@ contract(
           deploymentConfig.PROCESSING_REWARD
         );
 
-        let tokenCount = await moloch.getTokenCount();
+        const tokenCount = await moloch.getTokenCount();
         assert.equal(+tokenCount, tokens.length);
 
         await fundAndApproveToMoloch({
@@ -1090,10 +1102,10 @@ contract(
         // add some tribute in each token EXCEPT the last TWO
         // this will leave us with 1 slot open and 1 extra so we can test submit/sponsor/process boundary conditions
         for (let i = 0; i < tokens.length - 2; i++) {
-          let token = tokens[i];
+          const token = tokens[i];
 
           await fundAndApproveToMoloch({
-            token: token,
+            token,
             to: proposal1.applicant,
             from: creator,
             value: proposal1.tributeOffered
@@ -1112,7 +1124,7 @@ contract(
           );
 
           await verifyProposal({
-            moloch: moloch,
+            moloch,
             proposal: { ...proposal1, tributeToken: token.address },
             proposalId: i,
             proposer: proposal1.applicant,
@@ -1139,10 +1151,10 @@ contract(
         const totalGuildBankTokens = await moloch.totalGuildBankTokens();
         assert(totalGuildBankTokens, token_guildbank_limit - 1);
 
-        let token = tokens[tokens.length - 2];
+        const token = tokens[tokens.length - 2];
 
         await fundAndApproveToMoloch({
-          token: token,
+          token,
           to: proposal1.applicant,
           from: creator,
           value: proposal1.tributeOffered
@@ -1161,7 +1173,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: token.address },
           proposalId: initialProposalCount,
           proposer: proposal1.applicant,
@@ -1182,7 +1194,7 @@ contract(
         const totalGuildBankTokensAfter = await moloch.totalGuildBankTokens();
         assert(totalGuildBankTokensAfter, token_guildbank_limit);
 
-        let extraToken = tokens[tokens.length - 1];
+        const extraToken = tokens[tokens.length - 1];
         await fundAndApproveToMoloch({
           token: extraToken,
           to: proposal1.applicant,
@@ -1219,7 +1231,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: extraToken.address, tributeOffered: 0 },
           proposalId: initialProposalCount + 1,
           proposer: proposal1.applicant,
@@ -1236,8 +1248,8 @@ contract(
         assert(totalGuildBankTokens, token_guildbank_limit - 1);
 
         // fund/approve/submit both tribute tokens
-        let token1 = tokens[tokens.length - 2];
-        let token2 = tokens[tokens.length - 1];
+        const token1 = tokens[tokens.length - 2];
+        const token2 = tokens[tokens.length - 1];
 
         await fundAndApproveToMoloch({
           token: token1,
@@ -1266,7 +1278,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: token1.address },
           proposalId: initialProposalCount,
           proposer: proposal1.applicant,
@@ -1287,7 +1299,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: token2.address },
           proposalId: initialProposalCount + 1,
           proposer: proposal1.applicant,
@@ -1321,8 +1333,8 @@ contract(
         assert(totalGuildBankTokens, token_guildbank_limit - 1);
 
         // fund/approve/submit both tribute tokens
-        let token1 = tokens[tokens.length - 2];
-        let token2 = tokens[tokens.length - 1];
+        const token1 = tokens[tokens.length - 2];
+        const token2 = tokens[tokens.length - 1];
 
         await fundAndApproveToMoloch({
           token: token1,
@@ -1351,7 +1363,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: token1.address },
           proposalId: initialProposalCount,
           proposer: proposal1.applicant,
@@ -1372,7 +1384,7 @@ contract(
         );
 
         await verifyProposal({
-          moloch: moloch,
+          moloch,
           proposal: { ...proposal1, tributeToken: token2.address },
           proposalId: initialProposalCount + 1,
           proposer: proposal1.applicant,
@@ -1403,7 +1415,7 @@ contract(
 
         // the proposal should have simply failed
         await verifyFlags({
-          moloch: moloch,
+          moloch,
           proposalId: initialProposalCount + 1,
           expectedFlags: [true, true, false, false, false, false]
         });
@@ -1411,7 +1423,10 @@ contract(
     });
 
     describe('RAGEQUIT AND WITHDRAW TOKENS AT MAXIMUM TOKEN LIMITS', () => {
-      let tokens, tokenAddresses, guildbank_tokens, guildbank_token_addresses;
+      let tokens;
+      let tokenAddresses;
+      let guildbank_tokens;
+      let guildbank_token_addresses;
 
       beforeEach(async function () {
         this.timeout(1200000);
@@ -1424,7 +1439,7 @@ contract(
 
         // mint max whitelist minus 1 (deposit token)
         for (let i = 0; i < MAX_TOKEN_WHITELIST_COUNT - 1; i++) {
-          let token = await Token.new(deploymentConfig.TOKEN_SUPPLY, { from: creator });
+          const token = await Token.new(deploymentConfig.TOKEN_SUPPLY, { from: creator });
           tokens.push(token);
         }
 
@@ -1454,7 +1469,7 @@ contract(
         // whitelist all the tokens
         for (let i = 1; i < tokens.length; i++) {
           // start at i=1, skip deposit token
-          let token = tokens[i];
+          const token = tokens[i];
 
           await moloch.submitWhitelistProposal(token.address, 'whitelist this token!', {
             from: proposal1.applicant
@@ -1471,7 +1486,7 @@ contract(
           await moloch.processWhitelistProposal(i - 1, { from: processor });
         }
 
-        let tokenCount = +(await moloch.getTokenCount());
+        const tokenCount = +(await moloch.getTokenCount());
         assert.equal(tokenCount, tokens.length);
 
         await fundAndApproveToMoloch({
@@ -1483,10 +1498,10 @@ contract(
 
         // max out the tokens with a guild bank balance
         for (let i = 0; i < MAX_TOKEN_GUILDBANK_COUNT; i++) {
-          let token = tokens[i];
+          const token = tokens[i];
 
           await fundAndApproveToMoloch({
-            token: token,
+            token,
             to: proposal1.applicant,
             from: creator,
             value: proposal1.tributeOffered
@@ -1516,7 +1531,7 @@ contract(
 
           await verifyInternalBalances({
             moloch,
-            token: token,
+            token,
             userBalances: {
               [GUILD]: _1e18,
               [ESCROW]: 0,
@@ -1531,12 +1546,12 @@ contract(
 
         const memberData = await moloch.members(proposal1.applicant);
 
-        let sharesToQuit = new BN(MAX_TOKEN_GUILDBANK_COUNT); // 1 share per guildbank token
-        let initialShares = sharesToQuit.add(_1);
+        const sharesToQuit = new BN(MAX_TOKEN_GUILDBANK_COUNT); // 1 share per guildbank token
+        const initialShares = sharesToQuit.add(_1);
         await moloch.ragequit(sharesToQuit, 0, { from: proposal1.applicant });
 
         await verifyMember({
-          moloch: moloch,
+          moloch,
           member: proposal1.applicant,
           expectedDelegateKey: proposal1.applicant,
           expectedShares: 0,
@@ -1572,7 +1587,7 @@ contract(
           });
         }
 
-        let zeroesArray = guildbank_tokens.map(a => 0);
+        const zeroesArray = guildbank_tokens.map(a => 0);
         await moloch.withdrawBalances(guildbank_token_addresses, zeroesArray, true, {
           from: proposal1.applicant
         });

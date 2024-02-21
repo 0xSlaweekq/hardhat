@@ -5,21 +5,21 @@ let totalWeight = 0;
 
 let started = false;
 
-let ReinvestInfo = [];
+const ReinvestInfo = [];
 let season = 0;
 let reinvestTime = 0;
-let currentFarmed = 0;
+const currentFarmed = 0;
 let lastUpdateTime = 0;
 
-let UserInfo = [];
-let percents = [];
+const UserInfo = [];
+const percents = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const updateInfo = (type, id, amountLP, time) => {
   if (!started) {
     ReinvestInfo[season] = {
-      season: season,
+      season,
       startTime: time,
       reinvestTime: 0,
       startTotalWeight: 0,
@@ -112,12 +112,12 @@ const sendTransaction = (type, id, amountLP) => {
         amountLP: 0,
         weight: 0,
         lastTotalWeight: 0,
-        season: season
+        season
       };
     }
   }
 
-  console.log(type + ' user:', id);
+  console.log(`${type} user:`, id);
   console.log('before:', UserInfo[id]);
 
   if (type === 'withdraw') {
@@ -126,9 +126,9 @@ const sendTransaction = (type, id, amountLP) => {
     if (UserInfo[id].amountLP < amountLP) return console.error('Insufficient LP amount');
   }
   if (updateInfo(type, id, amountLP, time)) {
-    //tranfer
+    // tranfer
     console.log('Done\n');
-    //emit
+    // emit
   } else return console.error('hz tut potom uzhe dumat');
 };
 
@@ -146,7 +146,7 @@ const getPercents = time => {
 };
 
 const _getCurrentFarmed = time => {
-  let dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
+  const dTime = reinvestTime === 0 ? time - startTime : time - reinvestTime;
   const currentFarmed = farmedByDay * dTime;
   console.log('_getCurrentFarmed:\n', currentFarmed);
   return currentFarmed;
@@ -160,20 +160,20 @@ const reInvest = () => {
   totalLP += currentFarmed;
 
   ReinvestInfo[season] = {
-    season: season,
+    season,
     startTime: reinvestTime,
     reinvestTime: time,
     startTotalWeight: ReinvestInfo[season].startTotalWeightЖReinvestInfo,
     endTotalWeight: totalWeight,
     totalFarmed: currentFarmed,
-    totalLP: totalLP
+    totalLP
   };
 
   reinvestTime = time;
   season++;
 
   ReinvestInfo[season] = {
-    season: season,
+    season,
     startTime: reinvestTime,
     reinvestTime: 0,
     startTotalWeight: totalWeight,

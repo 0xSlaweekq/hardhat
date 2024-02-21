@@ -10,7 +10,7 @@ let startTime = 0;
 let reinvestTime = 0;
 let lastUpdateTime = 0;
 
-let UserInfo = [];
+const UserInfo = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 

@@ -1,6 +1,7 @@
 const zeroAddress = '0x0000000000000000000000000000000000000000';
 
 const chai = require('chai');
+
 const { assert } = chai;
 
 const verifyBalance = async ({ token, address, expectedBalance }) => {
@@ -23,7 +24,7 @@ const verifyInternalBalance = async ({ moloch, token, user, expectedBalance }) =
 
 const verifyInternalBalances = async ({ moloch, token, userBalances }) => {
   const users = Object.keys(userBalances);
-  for (i = 0; i < users.length; i++) {
+  for (let i = 0; i < users.length; i++) {
     await verifyInternalBalance({
       moloch,
       token,

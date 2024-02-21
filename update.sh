@@ -36,19 +36,42 @@ npm i typescript@4.4.2 \
   ts-node@10.2.1 \
   typechain@5.1.2 --save-dev --legacy-peer-deps
 
-npm i eslint@7.32.0 \
+npm i eslint@8.56.0 \
   eslint-config-airbnb-base \
   eslint-config-airbnb-typescript@14.0.0 \
-  eslint-config-prettier@8.3.0 \
-  eslint-plugin-import@2.24.2 \
-  eslint-plugin-prettier@4.0.0 \
-  eslint-plugin-simple-import-sort@10.0.0 \
+  eslint-config-prettier@9.1.0 \
+  eslint-plugin-import@2.29.1 \
+  eslint-plugin-prettier@5.1.3 \
+  eslint-plugin-simple-import-sort@12.0.0 \
   eslint-plugin-unused-imports@1.1.5 \
-  prettier@2.5.1 \
+  @typescript-eslint/eslint-plugin@6.21.0 \
+  @typescript-eslint/parser@6.21.0 \
+  prettier@3.2.5 \
   prettier-plugin-solidity@1.0.0-beta.18 \
-  solhint@^3.3.6 \
-  solhint-plugin-prettier@0.0.5 \
+  solhint@4.1.1 \
+  solhint-community \
+  solhint-plugin-prettier@0.1.0 \
   solidity-coverage@0.7.20 --save-dev --legacy-peer-deps
+
+npm i eslint \
+  eslint-config-airbnb-base \
+  eslint-config-airbnb-typescript \
+  eslint-config-prettier\
+  eslint-plugin-import \
+  eslint-plugin-prettier\
+  eslint-plugin-simple-import-sort \
+  eslint-plugin-unused-imports \
+  eslint-plugin-node \
+  eslint-plugin-jest \
+  @typescript-eslint/eslint-plugin \
+  @typescript-eslint/parser \
+  prettier \
+  prettier-plugin-packagejson \
+  prettier-plugin-solidity \
+  solhint \
+  solhint-community \
+  solhint-plugin-prettier \
+  solidity-coverage --save-dev --legacy-peer-deps
 
 npm i hardhat@^2.19.1 \
   @truffle/hdwallet-provider@1.5.1 \

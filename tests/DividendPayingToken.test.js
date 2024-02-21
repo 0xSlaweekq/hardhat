@@ -6,11 +6,12 @@ const {
   expectEvent,
   shouldFail
 } = require('openzeppelin-test-helpers');
+
 const { ZERO_ADDRESS } = constants;
 
 const DividendPayingToken = artifacts.require('DividendPayingToken');
 
-contract('DividendPayingToken', function (accounts) {
+contract('DividendPayingToken', accounts => {
   const [owner, tokenHolder1, tokenHolder2, tokenHolder3, anyone] = accounts;
   const gasPrice = new BN('1');
 
@@ -19,21 +20,21 @@ contract('DividendPayingToken', function (accounts) {
     this.token = await DividendPayingToken.new();
   });
 
-  describe('mint', function () {
-    describe('when someone other than the owner tries to mint tokens', function () {
+  describe('mint', () => {
+    describe('when someone other than the owner tries to mint tokens', () => {
       it('reverts', async function () {
         await shouldFail.reverting(this.token.mint(anyone, ether('1'), { from: anyone }));
       });
     });
 
-    describe('when the contract owner tries to mint tokens', function () {
-      describe('when the recipient is the zero address', function () {
+    describe('when the contract owner tries to mint tokens', () => {
+      describe('when the recipient is the zero address', () => {
         it('reverts', async function () {
           await shouldFail.reverting(this.token.mint(ZERO_ADDRESS, ether('1'), { from: owner }));
         });
       });
 
-      describe('when the recipient is not the zero address', function () {
+      describe('when the recipient is not the zero address', () => {
         it('mint tokens to the recipient', async function () {
           await this.token.mint(tokenHolder1, ether('1'), { from: owner });
 
@@ -52,9 +53,9 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('distributeDividends', function () {
-    describe('when anyone tries to pay and distribute dividends', function () {
-      describe('when the total supply is 0', function () {
+  describe('distributeDividends', () => {
+    describe('when anyone tries to pay and distribute dividends', () => {
+      describe('when the total supply is 0', () => {
         it('reverts', async function () {
           await shouldFail.reverting(
             this.token.distributeDividends({ from: anyone, value: ether('1') })
@@ -62,7 +63,7 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when paying 0 ether', function () {
+      describe('when paying 0 ether', () => {
         it('should succeed but nothing happens', async function () {
           await this.token.mint(tokenHolder1, ether('1'), { from: owner });
 
@@ -80,7 +81,7 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when the total supply is not 0', function () {
+      describe('when the total supply is not 0', () => {
         it('should pay and distribute dividends to token holders', async function () {
           await this.token.mint(tokenHolder1, ether('1'), { from: owner });
           await this.token.mint(tokenHolder2, ether('3'), { from: owner });
@@ -119,8 +120,8 @@ contract('DividendPayingToken', function (accounts) {
       });
     });
 
-    describe('when anyone tries to pay and distribute dividends by sending ether to the contract', function () {
-      describe('when the total supply is 0', function () {
+    describe('when anyone tries to pay and distribute dividends by sending ether to the contract', () => {
+      describe('when the total supply is 0', () => {
         it('reverts', async function () {
           await shouldFail.reverting(
             this.token.sendTransaction({ from: anyone, value: ether('1') })
@@ -128,7 +129,7 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when paying 0 ether', function () {
+      describe('when paying 0 ether', () => {
         it('should succeed but nothing happens', async function () {
           await this.token.mint(tokenHolder1, ether('1'), { from: owner });
 
@@ -146,7 +147,7 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when the total supply is not 0', function () {
+      describe('when the total supply is not 0', () => {
         it('should pay and distribute dividends to token holders', async function () {
           await this.token.mint(tokenHolder1, ether('1'), { from: owner });
           await this.token.mint(tokenHolder2, ether('3'), { from: owner });
@@ -168,12 +169,12 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('transfer', function () {
+  describe('transfer', () => {
     beforeEach(async function () {
       await this.token.mint(tokenHolder1, ether('1'), { from: owner });
     });
 
-    describe('when the recipient is the zero address', function () {
+    describe('when the recipient is the zero address', () => {
       it('reverts', async function () {
         await shouldFail.reverting(
           this.token.transfer(ZERO_ADDRESS, ether('0.5'), { from: tokenHolder1 })
@@ -181,8 +182,8 @@ contract('DividendPayingToken', function (accounts) {
       });
     });
 
-    describe('when the recipient is not the zero address', function () {
-      describe('when the sender does not have enough balance', function () {
+    describe('when the recipient is not the zero address', () => {
+      describe('when the sender does not have enough balance', () => {
         it('reverts', async function () {
           await shouldFail.reverting(
             this.token.transfer(tokenHolder2, ether('2'), { from: tokenHolder1 })
@@ -190,7 +191,7 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when the sender has enough balance', function () {
+      describe('when the sender has enough balance', () => {
         it('transfers the requested amount', async function () {
           await this.token.transfer(tokenHolder2, ether('0.25'), { from: tokenHolder1 });
 
@@ -213,7 +214,7 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('transfer from', function () {
+  describe('transfer from', () => {
     const mintAmount = ether('9');
     const approveAmount = ether('3');
     const transferAmount = ether('1');
@@ -223,13 +224,13 @@ contract('DividendPayingToken', function (accounts) {
       await this.token.mint(tokenHolder1, mintAmount, { from: owner });
     });
 
-    describe('when the recipient is not the zero address', function () {
-      describe('when the spender has enough approved balance', function () {
+    describe('when the recipient is not the zero address', () => {
+      describe('when the spender has enough approved balance', () => {
         beforeEach(async function () {
           await this.token.approve(spender, approveAmount, { from: tokenHolder1 });
         });
 
-        describe('when the initial holder has enough balance', function () {
+        describe('when the initial holder has enough balance', () => {
           let logs;
 
           beforeEach(async function () {
@@ -255,7 +256,7 @@ contract('DividendPayingToken', function (accounts) {
             );
           });
 
-          it('emits a transfer event', async function () {
+          it('emits a transfer event', async () => {
             expectEvent.inLogs(logs, 'Transfer', {
               from: tokenHolder1,
               to: tokenHolder2,
@@ -263,16 +264,16 @@ contract('DividendPayingToken', function (accounts) {
             });
           });
 
-          it('emits an approval event', async function () {
+          it('emits an approval event', async () => {
             expectEvent.inLogs(logs, 'Approval', {
               owner: tokenHolder1,
-              spender: spender,
+              spender,
               value: approveAmount.sub(transferAmount)
             });
           });
         });
 
-        describe('when the initial holder does not have enough balance', function () {
+        describe('when the initial holder does not have enough balance', () => {
           const _approveAmount = mintAmount.addn(1);
           const _transferAmount = _approveAmount;
 
@@ -290,12 +291,12 @@ contract('DividendPayingToken', function (accounts) {
         });
       });
 
-      describe('when the spender does not have enough approved balance', function () {
+      describe('when the spender does not have enough approved balance', () => {
         beforeEach(async function () {
           await this.token.approve(spender, approveAmount, { from: tokenHolder1 });
         });
 
-        describe('when the initial holder has enough balance', function () {
+        describe('when the initial holder has enough balance', () => {
           const _transferAmount = approveAmount.addn(1);
 
           it('reverts', async function () {
@@ -307,7 +308,7 @@ contract('DividendPayingToken', function (accounts) {
           });
         });
 
-        describe('when the initial holder does not have enough balance', function () {
+        describe('when the initial holder does not have enough balance', () => {
           const _transferAmount = mintAmount.addn(1);
 
           it('reverts', async function () {
@@ -321,7 +322,7 @@ contract('DividendPayingToken', function (accounts) {
       });
     });
 
-    describe('when the recipient is the zero address', function () {
+    describe('when the recipient is the zero address', () => {
       beforeEach(async function () {
         await this.token.approve(spender, approveAmount, { from: tokenHolder1 });
       });
@@ -334,7 +335,7 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('withdrawDividend', function () {
+  describe('withdrawDividend', () => {
     it('should be able to withdraw dividend', async function () {
       await this.token.mint(tokenHolder1, ether('1'), { from: owner });
       await this.token.mint(tokenHolder2, ether('3'), { from: owner });
@@ -349,7 +350,7 @@ contract('DividendPayingToken', function (accounts) {
       (await this.token.withdrawnDividendOf(tokenHolder1)).should.be.bignumber.equal(ether('0'));
 
       const balance1 = await balance.current(tokenHolder1);
-      const receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice: gasPrice });
+      const receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice });
       expectEvent.inLogs(receipt.logs, 'DividendWithdrawn', {
         to: tokenHolder1,
         weiAmount: ether('0.25')
@@ -368,7 +369,7 @@ contract('DividendPayingToken', function (accounts) {
       // withdraw again. should succeed and withdraw nothing
       const receipt2 = await this.token.withdrawDividend({
         from: tokenHolder1,
-        gasPrice: gasPrice
+        gasPrice
       });
       const balance3 = await balance.current(tokenHolder1);
       const fee2 = gasPrice.mul(new BN(receipt2.receipt.gasUsed));
@@ -382,7 +383,7 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('keep dividends unchanged in several cases', function () {
+  describe('keep dividends unchanged in several cases', () => {
     it('should keep dividends unchanged after minting tokens', async function () {
       await this.token.mint(tokenHolder1, ether('1'), { from: owner });
       await this.token.mint(tokenHolder2, ether('3'), { from: owner });
@@ -474,7 +475,7 @@ contract('DividendPayingToken', function (accounts) {
     });
   });
 
-  describe('end-to-end test', function () {
+  describe('end-to-end test', () => {
     it('should pass end-to-end test', async function () {
       let balanceBefore;
       let balanceAfter;
@@ -510,7 +511,7 @@ contract('DividendPayingToken', function (accounts) {
 
       // tokenHolder1 withdraw
       balanceBefore = await balance.current(tokenHolder1);
-      receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice: gasPrice });
+      receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice });
       balanceAfter = await balance.current(tokenHolder1);
       fee = gasPrice.mul(new BN(receipt.receipt.gasUsed));
       balanceAfter.should.be.bignumber.equal(balanceBefore.add(ether('10')).sub(fee));
@@ -605,7 +606,7 @@ contract('DividendPayingToken', function (accounts) {
 
       // tokenHolder1 withdraw
       balanceBefore = await balance.current(tokenHolder1);
-      receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice: gasPrice });
+      receipt = await this.token.withdrawDividend({ from: tokenHolder1, gasPrice });
       balanceAfter = await balance.current(tokenHolder1);
       fee = gasPrice.mul(new BN(receipt.receipt.gasUsed));
       balanceAfter.should.be.bignumber.equal(balanceBefore.add(ether('9')).sub(fee));
@@ -617,7 +618,7 @@ contract('DividendPayingToken', function (accounts) {
 
       // tokenHolder2 withdraw
       balanceBefore = await balance.current(tokenHolder2);
-      receipt = await this.token.withdrawDividend({ from: tokenHolder2, gasPrice: gasPrice });
+      receipt = await this.token.withdrawDividend({ from: tokenHolder2, gasPrice });
       balanceAfter = await balance.current(tokenHolder2);
       fee = gasPrice.mul(new BN(receipt.receipt.gasUsed));
       balanceAfter.should.be.bignumber.equal(balanceBefore.add(ether('15')).sub(fee));
@@ -629,7 +630,7 @@ contract('DividendPayingToken', function (accounts) {
 
       // tokenHolder3 withdraw
       balanceBefore = await balance.current(tokenHolder3);
-      receipt = await this.token.withdrawDividend({ from: tokenHolder3, gasPrice: gasPrice });
+      receipt = await this.token.withdrawDividend({ from: tokenHolder3, gasPrice });
       balanceAfter = await balance.current(tokenHolder3);
       fee = gasPrice.mul(new BN(receipt.receipt.gasUsed));
       balanceAfter.should.be.bignumber.equal(balanceBefore.add(ether('6')).sub(fee));
