@@ -11,10 +11,10 @@
     {
       "extends": [
         "eslint:recommended",
-        "airbnb-typescript",
-        "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
-        "prettier"
+        "prettier",
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended"
       ],
       "files": [".ts"],
       "parser": "@typescript-eslint/parser",
@@ -22,16 +22,7 @@
         "ecmaVersion": "latest",
         "project": "tsconfig.json",
         "sourceType": "module"
-      },
-      "plugins": [
-        "@typescript-eslint",
-        "prettier",
-        "simple-import-sort",
-        "unused-imports",
-        "import",
-        "node",
-        "jest"
-      ]
+      }
     },
     {
       "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base", "prettier"],
@@ -39,9 +30,17 @@
       "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
-      },
-      "plugins": ["prettier", "simple-import-sort", "unused-imports", "import", "node", "jest"]
+      }
     }
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "simple-import-sort",
+    "unused-imports",
+    "import",
+    "node",
+    "jest"
   ],
   "root": true,
   "rules": {
@@ -103,22 +102,7 @@
     "object-curly-spacing": ["error", "always"],
     "prefer-const": "off",
     "prefer-destructuring": "off",
-    // "@typescript-eslint/no-unused-vars": [
-    //   "error",
-    //   {
-    //     vars: "all",
-    //     args: "all",
-    //     ignoreRestSiblings: false,
-    //     argsIgnorePattern: "^_"
-    //   }
-    // ],
-    // "@typescript-eslint/naming-convention": [
-    //   "error",
-    //   {
-    //     "format": ["UPPER_CASE"],
-    //     "selector": "enumMember"
-    //   }
-    // ],
+    // "no-unused-vars": "warn",
     "quotes": "off",
     // "quotes": ["error", "single"],
     "radix": ["warn", "as-needed"],

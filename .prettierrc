@@ -36,5 +36,5 @@
       }
     }
   ],
-  "plugins": ["prettier-plugin-solidity"]
+  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-solidity"]
 }

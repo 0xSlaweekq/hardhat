@@ -9,21 +9,31 @@ import 'solidity-coverage';
 import '@openzeppelin/hardhat-upgrades';
 import 'hardhat-deploy';
 
+import path from 'path';
 import { HardhatUserConfig } from 'hardhat/config';
 
 // import * as tdly from '@tenderly/hardhat-tenderly';
 // tdly.setup({ automaticVerifications: false });
 
-import {
-  apiKeys,
-  customChains,
-  networks,
+const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
+const {
+  POLYGONSCAN_API_KEY,
+  INFURA_API_KEY,
+  MNEMONIC,
+  NODE_HOST,
+  FORKING_BLOCKNUMBER,
+  PORT,
+  FORKING_NETWORK_ID,
+  TENDERLY_API_KEY,
+  BSCSCAN_API_KEY,
+  ETHERSCAN_API_KEY,
   REPORT_GAS,
   TOKEN,
   GAS_PRICE_API,
-  COINMARKETCAP_API_KEY,
-  DEFAULT_COMPILER_SETTINGS
-} from './config';
+  COINMARKETCAP_API_KEY
+} = envConfig.parsed || {};
+
+import { apiKeys, customChains, networks, DEFAULT_COMPILER_SETTINGS } from './config';
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
@@ -38,11 +48,15 @@ const config: HardhatUserConfig = {
     outDir: './build/typechain',
     target: 'ethers-v5'
   },
-  networks: {
-    hardhat: networks.hardhat,
-    localhost: networks.localhost,
-    tenderly: networks.tenderly
-  },
+  networks: networks(
+    INFURA_API_KEY,
+    MNEMONIC,
+    NODE_HOST,
+    FORKING_BLOCKNUMBER,
+    PORT,
+    FORKING_NETWORK_ID,
+    TENDERLY_API_KEY
+  ),
   // tenderly: {
   //   project: 'project',
   //   username: 'slaweekq',
@@ -52,15 +66,7 @@ const config: HardhatUserConfig = {
   //   accessKey: process.env.TENDERLY_ACCESS_KEY
   // },
   etherscan: {
-    apiKey: {
-      hardhat: apiKeys.hardhat,
-      localhost: apiKeys.localhost,
-      mainnet: apiKeys.mainnet,
-      goerli: apiKeys.goerli,
-      bsc: apiKeys.bsc,
-      bscTestnet: apiKeys.bscTestnet,
-      polygon: apiKeys.polygon
-    },
+    apiKey: apiKeys(ETHERSCAN_API_KEY, POLYGONSCAN_API_KEY, BSCSCAN_API_KEY),
     customChains: customChains
   },
   solidity: DEFAULT_COMPILER_SETTINGS,

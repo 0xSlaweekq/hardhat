@@ -1,7 +1,44 @@
 {
-  "author": "slaweekq",
+  "name": "hardhat",
+  "version": "0.9.7",
+  "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.",
+  "homepage": "https://github.com/NarcoNik/hardhat#readme",
   "bugs": {
     "url": "https://github.com/NarcoNik/hardhat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NarcoNik/hardhat.git"
+  },
+  "license": "MIT",
+  "author": "slaweekq",
+  "main": "index.js",
+  "directories": {
+    "build": "build",
+    "contracts": "contracts",
+    "deployments": "deployments",
+    "scripts": "scripts",
+    "tests": "tests"
+  },
+  "scripts": {
+    "auto-test": "slither .",
+    "clean": "rm -rf node_modules build package-lock.json",
+    "compile": "npx hardhat compile",
+    "coverage:Profit": "npx hardhat coverage ./tests/Profit.test.ts --network localhost --show-stack-traces",
+    "deploy:hardhat": "npx hardhat run scripts/deploy.ts --network hardhat",
+    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost --show-stack-traces",
+    "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
+    "format": "npx prettier --write ./ && eslint --fix ./",
+    "gui": "npx hardhat gui",
+    "lint": "npx solhint **/*.sol",
+    "ln": "docker-compose -f ./docker-compose.yml up -d",
+    "ln-reboot": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v && docker-compose -f ./docker-compose.yml up -d",
+    "ln-stop": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v",
+    "push": "git add ./ && git commit -m 'refactoring' -a && git push origin",
+    "test": "npx hardhat test --network localhost",
+    "test:Profit": "npx hardhat test ./tests/Profit.test.ts --network localhost --show-stack-traces",
+    "verify": "npx hardhat run scripts/verify.ts",
+    "verify:tenderly": "npx hardhat tenderly:verify --network tenderly"
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.5.1",
@@ -10,7 +47,6 @@
     "ganache-core": "^2.13.2",
     "truffle-plugin-verify": "^0.5.15"
   },
-  "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.",
   "devDependencies": {
     "@nomiclabs/buidler": "1.4.8",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
@@ -71,43 +107,7 @@
     "typescript": "4.4.4",
     "web3": "^4.3.0"
   },
-  "directories": {
-    "build": "build",
-    "contracts": "contracts",
-    "deployments": "deployments",
-    "scripts": "scripts",
-    "tests": "tests"
-  },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "homepage": "https://github.com/NarcoNik/hardhat#readme",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "hardhat",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NarcoNik/hardhat.git"
-  },
-  "scripts": {
-    "auto-test": "slither .",
-    "clean": "rm -rf node_modules build package-lock.json",
-    "compile": "npx hardhat compile",
-    "coverage:Profit": "npx hardhat coverage ./tests/Profit.test.ts --network localhost --show-stack-traces",
-    "deploy:hardhat": "npx hardhat run scripts/deploy.ts --network hardhat",
-    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost --show-stack-traces",
-    "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
-    "format": "npx prettier --write ./ && eslint --fix ./",
-    "gui": "npx hardhat gui",
-    "lint": "npx solhint **/*.sol",
-    "ln": "docker-compose -f ./docker-compose.yml up -d",
-    "ln-reboot": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v && docker-compose -f ./docker-compose.yml up -d",
-    "ln-stop": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v",
-    "push": "git add ./ && git commit -m 'refactoring' -a && git push origin",
-    "test": "npx hardhat test --network localhost",
-    "test:Profit": "npx hardhat test ./tests/Profit.test.ts --network localhost --show-stack-traces",
-    "verify": "npx hardhat run scripts/verify.ts",
-    "verify:tenderly": "npx hardhat tenderly:verify --network tenderly"
-  },
-  "version": "0.9.7"
+  }
 }
