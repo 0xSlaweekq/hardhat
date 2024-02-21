@@ -1,4 +1,6 @@
-account_id: 9e189845-b9ad-452b-a006-64a9442755c9
-project_slug: project
+access_key: ${TENDERLY_ACCESS_KEY}
+access_key_id: ""
+account_id: ${TENDERLY_ACCOUNT_ID}
+project_slug: test
 provider: ""
 username: slaweekq
