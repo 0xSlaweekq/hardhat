@@ -51,7 +51,7 @@
     "one-contract-per-file": "warn",
     "ordering": "warn",
     "payable-fallback": "warn",
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     "private-vars-leading-underscore": [
       "warn",
       {

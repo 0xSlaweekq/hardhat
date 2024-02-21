@@ -11,9 +11,9 @@
     {
       "extends": [
         "eslint:recommended",
+        "airbnb-typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
-        "airbnb-typescript",
         "prettier"
       ],
       "files": [".ts"],
@@ -28,8 +28,8 @@
         "prettier",
         "simple-import-sort",
         "unused-imports",
-        "import", 
-        "node", 
+        "import",
+        "node",
         "jest"
       ]
     },

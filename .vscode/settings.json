@@ -126,8 +126,24 @@
   "prettier.tabWidth": 2,
   "prettier.trailingComma": "none",
   "prettier.useTabs": false,
-  "projectManager.any.ignoredFolders": ["node_modules", "out", "typings", "build", "build", ".env", ".git"],
-  "projectManager.git.ignoredFolders": ["node_modules", "out", "typings", "build", "build", ".git", ".env"],
+  "projectManager.any.ignoredFolders": [
+    "node_modules",
+    "out",
+    "typings",
+    "build",
+    "build",
+    ".env",
+    ".git"
+  ],
+  "projectManager.git.ignoredFolders": [
+    "node_modules",
+    "out",
+    "typings",
+    "build",
+    "build",
+    ".git",
+    ".env"
+  ],
   "redhat.telemetry.enabled": true,
   "scm.inputFontFamily": "JetBrains Mono",
   "security.workspace.trust.untrustedFiles": "open",
@@ -137,9 +153,9 @@
   "solidity.compilerOptimization": 1000,
   "solidity.defaultCompiler": "remote",
   "solidity.enabledAsYouTypeCompilationErrorCheck": true,
-  "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.formatter": "prettier",
   "solidity.linter": "solhint",
+  "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
     "avoid-call-value": "warn",
     "avoid-low-level-calls": "warn",
@@ -190,7 +206,6 @@
     "one-contract-per-file": "warn",
     "ordering": "warn",
     "payable-fallback": "warn",
-    "prettier/prettier": "error",
     "private-vars-leading-underscore": [
       "warn",
       {
@@ -221,8 +236,8 @@
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.tabs.location": "left",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "window.zoomLevel": 0.3,
   "window.confirmSaveUntitledWorkspace": false,
+  "window.zoomLevel": 0.25,
   // workbench settings
   "workbench.colorCustomizations": {
     "tab.activeBackground": "#89ff892d"
