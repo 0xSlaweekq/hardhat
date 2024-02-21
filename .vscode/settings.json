@@ -128,9 +128,6 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "git.openRepositoryInParentFolders": "never",
-  "gpttoolbox.apiKey": "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",
-  "haselerdev.aiquickfix.apiKey": "zEIGlN5CZXPbwzN5yGV1nO5M",
-  //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 API openai
   // helper tips js
   "javascript.inlayHints.enumMemberValues.enabled": true,
   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
@@ -186,27 +183,62 @@
   "solidity.linter": "solhint",
   "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
-    "avoid-low-level-calls": "off",
-    "avoid-tx-origin": "off",
-    "compiler-version": "off",
-    "const-name-snakecase": "off",
-    "contract-name-camelcase": "off",
-    "custom-errors": "off",
-    "explicit-types": "off",
-    "func-name-mixedcase": "off",
+    "avoid-call-value": "warn",
+    "avoid-low-level-calls": "warn",
+    "avoid-sha3": "warn",
+    "avoid-suicide": "warn",
+    "avoid-throw": "warn",
+    "avoid-tx-origin": "warn",
+    "check-send-result": "warn",
+    "code-complexity": ["warn", 7],
+    "compiler-version": ["off"],
+    "const-name-snakecase": "warn",
+    "constructor-syntax": "warn",
+    "contract-name-camelcase": "warn",
+    "custom-errors": "warn",
+    "event-name-camelcase": "warn",
+    "explicit-types": ["warn", "explicit"],
+    "foundry-test-functions": ["off", ["setUp"]],
+    "func-name-mixedcase": "warn",
+    "func-named-parameters": ["warn", 6],
+    "func-param-name-mixedcase": "warn",
     "func-visibility": [
       "warn",
       {
         "ignoreConstructors": true
       }
     ],
-    "max-states-count": "off",
-    "no-console": "off",
-    "no-empty-blocks": "off",
+    "function-max-lines": ["warn", 50],
+    "immutable-vars-naming": [
+      "warn",
+      {
+        "immutablesAsConstants": true
+      }
+    ],
+    "imports-on-top": "warn",
+    "max-line-length": ["error", 120],
+    "max-states-count": ["warn", 15],
+    "modifier-name-mixedcase": "warn",
+    "named-parameters-mapping": "off",
+    "no-complex-fallback": "warn",
+    "no-console": "warn",
+    "no-empty-blocks": "warn",
     "no-global-import": "off",
-    "no-inline-assembly": "off",
+    "no-inline-assembly": "warn",
+    "no-unused-import": "warn",
+    "no-unused-vars": "warn",
+    "not-rely-on-block-hash": "warn",
     "not-rely-on-time": "off",
+    "one-contract-per-file": "warn",
+    "ordering": "warn",
+    "payable-fallback": "warn",
     "prettier/prettier": "error",
+    "private-vars-leading-underscore": [
+      "warn",
+      {
+        "strict": false
+      }
+    ],
     "quotes": "off",
     "reason-string": [
       "warn",
@@ -214,8 +246,11 @@
         "maxLength": 64
       }
     ],
-    "state-visibility": "off",
-    "var-name-mixedcase": "off"
+    "reentrancy": "warn",
+    "state-visibility": "warn",
+    "use-forbidden-name": "warn",
+    "var-name-mixedcase": "warn",
+    "visibility-modifier-order": "warn"
   },
   "solidity.validationDelay": 500,
   "tabnine.experimentalAutoImports": true,

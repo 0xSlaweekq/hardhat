@@ -28,17 +28,19 @@
         "prettier",
         "simple-import-sort",
         "unused-imports",
-        "import"
+        "import", 
+        "node", 
+        "jest"
       ]
     },
     {
       "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base", "prettier"],
-      "files": [".js"],
+      "files": ["**/*.js"],
       "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
       },
-      "plugins": ["prettier", "simple-import-sort", "unused-imports", "import"]
+      "plugins": ["prettier", "simple-import-sort", "unused-imports", "import", "node", "jest"]
     }
   ],
   "root": true,
