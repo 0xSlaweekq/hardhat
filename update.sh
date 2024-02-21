@@ -68,3 +68,8 @@ npm i chai@4.3.4 \
   standard-version@9.3.0 \
   dotenv \
   hardhat-gas-reporter --save-dev --legacy-peer-deps
+
+    "@chainlink/hardhat-chainlink": "^0.0.4",
+    "hardhat-chainlink-plugin": "^0.1.0",
+    "hardhat-gui": "^0.0.14",
+    "@chainlink/contracts": "^0.8.0",
