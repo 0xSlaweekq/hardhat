@@ -59,33 +59,3 @@ Private Key: 0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0
 Account #19: 0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199 (10000 ETH)
 Private Key: 0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e
 
-========================================================================
-WarpSpeed installation successful! 
-------------------------------------------------------------------------
-
-Check service status      : sudo systemctl status warpspeed
-Watch service logs        : sudo journalctl --unit warpspeed --follow
-View service config       : sudo cat /warpspeed/warpspeed.conf
-Backup service data       : /warpspeed
-Initial admin credentials : cat /root/.secrets
-
-Required Firewall Ports
-------------------------------------------------------------------------
-Service                Direction  Port   Protocol  Source
--------                ---------  ----   --------  ----------------------
-HTTP TLS verification  Inbound    80     TCP       Any
-HTTP Control Panel     Inbound    443    TCP       Any
-WireGuard VPN          Inbound    51820  UDP       Any
-
-Sign in to WarpSpeed
-------------------------------------------------------------------------
-
-WarpSpeed URL: https://vpn-146-190-23-118.warpspeedvpn.com
-Admin Email: celesik@gmail.com
-Admin Password: CHWW9RPWRF4G
-
-For assistance, email: support@bunker.services
-========================================================================
-
-* Please wait! Checking for DNS record vpn-146-190-23-118.warpspeedvpn.com (#1)...
-* DNS record has resolved successfully. Proceed to WarpSpeed!
