@@ -13,7 +13,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[solidity]": {
-    "editor.defaultFormatter": "JuanBlanco.solidity",
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
@@ -152,14 +152,13 @@
   "scm.inputFontFamily": "JetBrains Mono",
   // Solidity settings
   "solidity.compileUsingRemoteVersion": "v0.8.22",
-  "solidity.compilerOptimization": 1000,
+  "solidity.compilerOptimization": 200,
   "solidity.defaultCompiler": "remote",
   // Enables as you type compilation of the document and error highlighting
   "solidity.enabledAsYouTypeCompilationErrorCheck": true,
   // Enables / disables the solidity formatter prettier (default) or forge (note it needs to be installed)
   "solidity.formatter": "prettier",
   "solidity.linter": "solhint",
-  "solidity.nodemodulespackage": "solc",
   "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
     "avoid-call-value": "warn",
@@ -169,33 +168,17 @@
     "avoid-throw": "warn",
     "avoid-tx-origin": "warn",
     "check-send-result": "warn",
-    "code-complexity": [
-      "off",
-      7
-    ],
-    "compiler-version": [
-      "off"
-    ],
+    "code-complexity": ["off", 7],
+    "compiler-version": ["off"],
     "const-name-snakecase": "warn",
     "constructor-syntax": "warn",
     "contract-name-camelcase": "warn",
     "custom-errors": "warn",
     "event-name-camelcase": "warn",
-    "explicit-types": [
-      "off",
-      "explicit"
-    ],
-    "foundry-test-functions": [
-      "off",
-      [
-        "setUp"
-      ]
-    ],
+    "explicit-types": ["off", "explicit"],
+    "foundry-test-functions": ["off", ["setUp"]],
     "func-name-mixedcase": "warn",
-    "func-named-parameters": [
-      "off",
-      6
-    ],
+    "func-named-parameters": ["off", 6],
     "func-param-name-mixedcase": "warn",
     "func-visibility": [
       "warn",
@@ -203,10 +186,7 @@
         "ignoreConstructors": true
       }
     ],
-    "function-max-lines": [
-      "warn",
-      50
-    ],
+    "function-max-lines": ["warn", 50],
     "immutable-vars-naming": [
       "warn",
       {
@@ -214,14 +194,8 @@
       }
     ],
     "imports-on-top": "warn",
-    "max-line-length": [
-      "error",
-      140
-    ],
-    "max-states-count": [
-      "warn",
-      15
-    ],
+    "max-line-length": ["error", 140],
+    "max-states-count": ["warn", 15],
     "modifier-name-mixedcase": "warn",
     "named-parameters-mapping": "warn",
     "no-complex-fallback": "warn",
@@ -256,6 +230,7 @@
     "var-name-mixedcase": "warn",
     "visibility-modifier-order": "warn"
   },
+  "solidity.telemetry": true,
   "solidity.validationDelay": 500,
   "tabnine.experimentalAutoImports": true,
   // terminal settings
