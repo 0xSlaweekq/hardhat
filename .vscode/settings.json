@@ -14,7 +14,9 @@
   },
   "[solidity]": {
     "editor.defaultFormatter": "JuanBlanco.solidity",
+    "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
     "editor.insertSpaces": true,
     "editor.minimap.maxColumn": 140,
     "editor.rulers": [
@@ -52,7 +54,6 @@
     "source.fixAll": "explicit"
   },
   "editor.codeLensFontFamily": "JetBrains Mono",
-  // "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.detectIndentation": false,
   "editor.foldingImportsByDefault": true,
@@ -94,8 +95,8 @@
   // explorer settings
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "files.autoSave": "onFocusChange",
   // work on files
+  "files.autoSave": "onFocusChange",
   "files.defaultLanguage": "markdown",
   // git settings
   "git.autofetch": true,
@@ -116,6 +117,9 @@
   "notebook.output.fontFamily": "JetBrains Mono",
   //prettier settings
   "prettier.arrowParens": "avoid",
+  "prettier.bracketSameLine": false,
+  "prettier.bracketSpacing": true,
+  "prettier.embeddedLanguageFormatting": "auto",
   "prettier.endOfLine": "auto",
   "prettier.jsxSingleQuote": true,
   "prettier.printWidth": 140,
@@ -146,6 +150,7 @@
   ],
   "redhat.telemetry.enabled": true,
   "scm.inputFontFamily": "JetBrains Mono",
+  // Solidity settings
   "solidity.compileUsingRemoteVersion": "v0.8.22",
   "solidity.compilerOptimization": 1000,
   "solidity.defaultCompiler": "remote",
@@ -154,8 +159,6 @@
   // Enables / disables the solidity formatter prettier (default) or forge (note it needs to be installed)
   "solidity.formatter": "prettier",
   "solidity.linter": "solhint",
-  // tips alt settings
-  // Solidity settings
   "solidity.nodemodulespackage": "solc",
   "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "solidity.solhintRules": {
@@ -229,6 +232,7 @@
     "visibility-modifier-order": "warn"
   },
   "solidity.validationDelay": 500,
+  "sortJSON.excludedPaths": ["**/"],
   "tabnine.experimentalAutoImports": true,
   // terminal settings
   "terminal.integrated.defaultProfile.linux": "bash",

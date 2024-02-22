@@ -84,12 +84,11 @@ contract Profit {
         return true;
     }
 
-    function _updateUserInfo(
-        uint256 typeF,
-        address addr,
-        uint256 amountLP,
-        uint256 time
-    ) internal returns (bool result) {
+
+
+
+    function _updateUserInfo(uint256 typeF,
+    address addr, uint256 amountLP, uint256 time) internal returns (bool result) {
         if (!started) {
             startTime = time;
             started = true;
