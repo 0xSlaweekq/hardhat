@@ -12,9 +12,9 @@
       "extends": [
         "eslint:recommended",
         "plugin:prettier/recommended",
-        "prettier",
+        "plugin:@typescript-eslint/recommended",
         "airbnb-typescript",
-        "plugin:@typescript-eslint/recommended"
+        "prettier"
       ],
       "files": [".ts"],
       "parser": "@typescript-eslint/parser",
@@ -25,7 +25,12 @@
       }
     },
     {
-      "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base", "prettier"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "airbnb-base",
+        "prettier"
+      ],
       "files": [".js"],
       "parserOptions": {
         "ecmaVersion": "latest",

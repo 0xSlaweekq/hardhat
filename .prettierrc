@@ -9,7 +9,7 @@
         "embeddedLanguageFormatting": "auto",
         "endOfLine": "auto",
         "parser": "solidity-parse",
-        "printWidth": 120,
+        "printWidth": 140,
         "proseWrap": "always",
         "semi": true,
         "singleQuote": false,
@@ -18,7 +18,7 @@
       }
     },
     {
-      "files": ["*.js", "*.ts", "*.json"],
+      "files": ["*.js", "*.ts"],
       "options": {
         "arrowParens": "avoid",
         "bracketSameLine": false,

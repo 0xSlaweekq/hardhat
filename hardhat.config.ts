@@ -1,39 +1,42 @@
-import '@typechain/hardhat';
+import 'hardhat-deploy';
+import 'hardhat-abi-exporter';
+import 'hardhat-gas-reporter';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import '@nomiclabs/hardhat-etherscan';
-import 'hardhat-contract-sizer';
-import 'hardhat-abi-exporter';
-import 'hardhat-gas-reporter';
-import 'solidity-coverage';
 import '@openzeppelin/hardhat-upgrades';
-import 'hardhat-deploy';
+import '@typechain/hardhat';
+import 'solidity-coverage';
+import 'hardhat-contract-sizer';
 
 import path from 'path';
 import { HardhatUserConfig } from 'hardhat/config';
 
 // import * as tdly from '@tenderly/hardhat-tenderly';
+import { apiKeys, customChains, DEFAULT_COMPILER_SETTINGS, networks } from './config';
+
 // tdly.setup({ automaticVerifications: false });
 
-const envConfig = require('dotenv').config({ path: path.resolve('./', '.env') });
+const envConfig = require('dotenv').config({
+  path: path.resolve('./', '.env')
+});
+
 const {
-  POLYGONSCAN_API_KEY,
+  COINMARKETCAP_API_KEY,
+  ETHERSCAN_API_KEY,
+  FORKING_BLOCKNUMBER,
+  FORKING_NETWORK_ID,
+  GAS_PRICE_API,
   INFURA_API_KEY,
   MNEMONIC,
   NODE_HOST,
-  FORKING_BLOCKNUMBER,
   PORT,
-  FORKING_NETWORK_ID,
-  TENDERLY_API_KEY,
-  BSCSCAN_API_KEY,
-  ETHERSCAN_API_KEY,
   REPORT_GAS,
   TOKEN,
-  GAS_PRICE_API,
-  COINMARKETCAP_API_KEY
+  TENDERLY_API_KEY,
+  POLYGONSCAN_API_KEY,
+  BSCSCAN_API_KEY
 } = envConfig.parsed || {};
-
-import { apiKeys, customChains, networks, DEFAULT_COMPILER_SETTINGS } from './config';
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
@@ -88,18 +91,17 @@ const config: HardhatUserConfig = {
     flat: true,
     only: [],
     spacing: 2,
-    format: 'json'
+    pretty: true
   },
   gasReporter: {
     enabled: REPORT_GAS === ('true' || true) ? true : false,
+    outputFile: './build/gas_usage.md',
     currency: 'USD',
     coinmarketcap: COINMARKETCAP_API_KEY,
     token: TOKEN,
     gasPriceApi: GAS_PRICE_API,
     showTimeSpent: true,
-    maxMethodDiff: 10,
-    src: './build/reports',
-    outputFile: './build/gas_usage.md'
+    maxMethodDiff: 10
   },
   mocha: {
     timeout: 100000

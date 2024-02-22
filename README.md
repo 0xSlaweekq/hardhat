@@ -4,15 +4,26 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 Try running some of the following tasks:
 
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-cd scripts
-npx harhat run depGame.js
-npx hardhat run depCrystal.js
-```
+## Локальный деплой:
+
+1. `npm i`
+2. `cp .env.example .env`.
+3. `npm run ln` Запустить докер ноды
+4. `npm run compile;`
+5. `npm run deploy:local;` Деплой контракта
+
+## Starting tests:
+
+1.  Запуск теста в локальной форк ноде:  
+    `npm run test tests/uni-v3.test.ts`
+2.  npm run test + any file in ./tests - start only choose test
+    exapmle: npm run test tests/uni-v3.test.ts
+3.  npm run test - start all of the tests in folder ./tests
+
+## Code Formating:
+
+1.  `npm run format` - formatting code with prettier & check warn/err in code
+2.  `npm run lint` - formatting .sol & check warn/err in contracts
 
 The provided code snippet appears to be a JavaScript implementation of a financial calculation or investment system. However, without additional context or specific requirements, it is difficult to provide a detailed specification for the code.
 

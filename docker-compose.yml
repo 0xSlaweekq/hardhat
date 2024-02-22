@@ -16,13 +16,8 @@ services:
       retries: 30
     entrypoint:
       - anvil
-      - --prune-history
       - --host=${NODE_HOST}
       - -m=${MNEMONIC}
-      - --order=fifo
       - -f=${FORKING_URL}
-      - --timeout=3000
       - --fork-block-number=${FORKING_BLOCKNUMBER}
       - --fork-chain-id=${FORKING_NETWORK_ID}
-      - --auto-impersonate
-      - --hardfork=london
