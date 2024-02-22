@@ -1,5 +1,4 @@
 {
-  // tips alt settings
   "[dockerfile]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
@@ -65,7 +64,6 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "editor.formatOnType": false,
   "editor.guides.bracketPairs": "active", // color helpers for bracket pairss
   "editor.inlayHints.fontFamily": "JetBrains Mono",
   "editor.inlineSuggest.enabled": true,
@@ -113,7 +111,6 @@
   "javascript.inlayHints.variableTypes.enabled": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.extension.print.theme": "dark",
-  "nginx-conf-hint.format.align": true,
   "notebook.formatOnSave.enabled": true,
   "notebook.output.fontFamily": "JetBrains Mono",
   //prettier settings
@@ -169,7 +166,7 @@
     "avoid-throw": "warn",
     "avoid-tx-origin": "warn",
     "check-send-result": "warn",
-    "code-complexity": ["off", 7],
+    "code-complexity": ["warn", 7],
     "compiler-version": ["off"],
     "const-name-snakecase": "warn",
     "constructor-syntax": "warn",
@@ -179,7 +176,7 @@
     "explicit-types": ["off", "explicit"],
     "foundry-test-functions": ["off", ["setUp"]],
     "func-name-mixedcase": "warn",
-    "func-named-parameters": ["off", 6],
+    "func-named-parameters": ["warn", 6],
     "func-param-name-mixedcase": "warn",
     "func-visibility": [
       "warn",
@@ -198,12 +195,12 @@
     "max-line-length": ["error", 140],
     "max-states-count": ["warn", 15],
     "modifier-name-mixedcase": "warn",
-    "named-parameters-mapping": "warn",
+    "named-parameters-mapping": "off",
     "no-complex-fallback": "warn",
     "no-console": "off",
     "no-empty-blocks": "off",
     "no-global-import": "off",
-    "no-inline-assembly": "off",
+    "no-inline-assembly": "warn",
     "no-unused-import": "warn",
     "no-unused-vars": "warn",
     "not-rely-on-block-hash": "warn",
@@ -233,7 +230,6 @@
   },
   "solidity.telemetry": true,
   "solidity.validationDelay": 500,
-  "tabnine.experimentalAutoImports": true,
   // terminal settings
   "terminal.integrated.defaultProfile.linux": "bash",
   "terminal.integrated.defaultProfile.osx": "zsh",
@@ -243,7 +239,6 @@
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.tabs.location": "left",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "window.confirmSaveUntitledWorkspace": false,
   "window.zoomLevel": 0.25,
   // workbench settings
   "workbench.colorCustomizations": {
