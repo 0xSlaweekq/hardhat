@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.22;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../libs/SafeMathUint.sol";
@@ -17,6 +17,8 @@ contract Profit {
         uint256 lastTotalFarmed;
         uint256 lastTotalLP;
     }
+
+
 
     mapping(address => UserInfo) public userInfo;
     mapping(uint256 => address) public userAddresses;
