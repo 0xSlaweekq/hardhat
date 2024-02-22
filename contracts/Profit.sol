@@ -85,12 +85,7 @@ contract Profit {
         return true;
     }
 
-    function _updateUserInfo(
-        uint256 typeF,
-        address addr,
-        uint256 amountLP,
-        uint256 time
-    ) internal returns (bool result) {
+    function _updateUserInfo(uint256 typeF, address addr, uint256 amountLP, uint256 time) internal returns (bool result) {
         if (!started) {
             startTime = time;
             started = true;
@@ -103,9 +98,7 @@ contract Profit {
 
         UserInfo memory user = userInfo[addr];
 
-        uint256 weight = user.weight.add(
-            user.amountLP.mul(totalWeight.sub(user.lastTotalWeight))
-        );
+        uint256 weight = user.weight.add(user.amountLP.mul(totalWeight.sub(user.lastTotalWeight)));
 
         uint256 newAmountLP = user.amountLP;
 
@@ -124,19 +117,10 @@ contract Profit {
         if (totalFarmed != 0 && user.lastTotalFarmed != totalFarmed) {
             uint256 dTimeAll = time.sub(startTime);
             uint256 percent = weight.div(dTimeAll);
-            uint256 availibleToClaim = percent.mul(
-                totalFarmed.sub(user.lastTotalFarmed)
-            );
+            uint256 availibleToClaim = percent.mul(totalFarmed.sub(user.lastTotalFarmed));
             newAmountLP += availibleToClaim;
 
-            userInfo[addr] = UserInfo(
-                user.id,
-                newAmountLP,
-                weight,
-                totalWeight,
-                totalFarmed,
-                totalLP
-            );
+            userInfo[addr] = UserInfo(user.id, newAmountLP, weight, totalWeight, totalFarmed, totalLP);
         }
 
         lastUpdateTime = time;

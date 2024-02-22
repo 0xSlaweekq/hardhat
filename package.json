@@ -30,7 +30,7 @@
     "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
     "format": "npx prettier --write ./ && npx eslint --fix ./",
     "gui": "npx hardhat gui",
-    "lint": "npx solhint **/**/**/**/**/**/*.sol",
+    "lint": "npx solhint **/*.sol",
     "ln": "docker-compose -f ./docker-compose.yml up -d",
     "ln-reboot": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v && docker-compose -f ./docker-compose.yml up -d",
     "ln-stop": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v",
