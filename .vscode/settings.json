@@ -12,28 +12,22 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[solidity]": {
-    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity",
-    // "editor.defaultFormatter": "JuanBlanco.solidity",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
+    // "editor.defaultFormatter": "NomicFoundation.hardhat-solidity",
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+  "[sol]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode", // for [sol]
     "editor.insertSpaces": true,
-    "editor.minimap.maxColumn": 140,
     "editor.rulers": [
       {
         "color": "#1e751633",
-        "column": 73
+        "column": 80
       },
       {
         "color": "#c2790b99",
-        "column": 82
+        "column": 100
       }
-    ],
-    "editor.tabCompletion": "on",
-    "editor.tabSize": 2,
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true
+    ]
   },
   "[ts]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -97,6 +91,9 @@
   // work on files
   "files.autoSave": "onFocusChange",
   "files.defaultLanguage": "markdown",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
   // git settings
   "git.autofetch": true,
   "git.confirmSync": false,
@@ -113,39 +110,8 @@
   "markdown.extension.print.theme": "dark",
   "notebook.formatOnSave.enabled": true,
   "notebook.output.fontFamily": "JetBrains Mono",
-  //prettier settings
-  "prettier.arrowParens": "avoid",
-  "prettier.bracketSameLine": false,
-  "prettier.bracketSpacing": true,
-  "prettier.embeddedLanguageFormatting": "auto",
-  "prettier.endOfLine": "auto",
-  "prettier.jsxSingleQuote": true,
-  "prettier.printWidth": 140,
-  "prettier.proseWrap": "always",
-  "prettier.quoteProps": "as-needed",
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
-  "prettier.tabWidth": 2,
-  "prettier.trailingComma": "none",
-  "prettier.useTabs": false,
-  "projectManager.any.ignoredFolders": [
-    "node_modules",
-    "out",
-    "typings",
-    "build",
-    "build",
-    ".env",
-    ".git"
-  ],
-  "projectManager.git.ignoredFolders": [
-    "node_modules",
-    "out",
-    "typings",
-    "build",
-    "build",
-    ".git",
-    ".env"
-  ],
+  "projectManager.any.ignoredFolders": ["node_modules", "build", ".env", ".git"],
+  "projectManager.git.ignoredFolders": ["node_modules", "build", ".git", ".env"],
   "redhat.telemetry.enabled": true,
   "scm.inputFontFamily": "JetBrains Mono",
   // Solidity settings
@@ -157,77 +123,6 @@
   // Enables / disables the solidity formatter prettier (default) or forge (note it needs to be installed)
   "solidity.formatter": "prettier",
   "solidity.linter": "solhint",
-  "solidity.packageDefaultDependenciesDirectory": "node_modules",
-  "solidity.solhintRules": {
-    "avoid-call-value": "warn",
-    "avoid-low-level-calls": "warn",
-    "avoid-sha3": "warn",
-    "avoid-suicide": "warn",
-    "avoid-throw": "warn",
-    "avoid-tx-origin": "warn",
-    "check-send-result": "warn",
-    "code-complexity": ["warn", 7],
-    "compiler-version": ["off"],
-    "const-name-snakecase": "warn",
-    "constructor-syntax": "warn",
-    "contract-name-camelcase": "warn",
-    "custom-errors": "warn",
-    "event-name-camelcase": "warn",
-    "explicit-types": ["off", "explicit"],
-    "foundry-test-functions": ["off", ["setUp"]],
-    "func-name-mixedcase": "warn",
-    "func-named-parameters": ["warn", 6],
-    "func-param-name-mixedcase": "warn",
-    "func-visibility": [
-      "warn",
-      {
-        "ignoreConstructors": true
-      }
-    ],
-    "function-max-lines": ["warn", 50],
-    "immutable-vars-naming": [
-      "warn",
-      {
-        "immutablesAsConstants": true
-      }
-    ],
-    "imports-on-top": "warn",
-    "max-line-length": ["error", 140],
-    "max-states-count": ["warn", 15],
-    "modifier-name-mixedcase": "warn",
-    "named-parameters-mapping": "off",
-    "no-complex-fallback": "warn",
-    "no-console": "off",
-    "no-empty-blocks": "off",
-    "no-global-import": "off",
-    "no-inline-assembly": "warn",
-    "no-unused-import": "warn",
-    "no-unused-vars": "warn",
-    "not-rely-on-block-hash": "warn",
-    "not-rely-on-time": "off",
-    "one-contract-per-file": "warn",
-    "ordering": "warn",
-    "payable-fallback": "warn",
-    "prettier/prettier": "warn",
-    "private-vars-leading-underscore": [
-      "warn",
-      {
-        "strict": false
-      }
-    ],
-    "quotes": "off",
-    "reason-string": [
-      "warn",
-      {
-        "maxLength": 64
-      }
-    ],
-    "reentrancy": "warn",
-    "state-visibility": "warn",
-    "use-forbidden-name": "warn",
-    "var-name-mixedcase": "warn",
-    "visibility-modifier-order": "warn"
-  },
   "solidity.telemetry": true,
   "solidity.validationDelay": 500,
   // terminal settings

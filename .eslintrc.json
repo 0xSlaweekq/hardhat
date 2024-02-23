@@ -32,12 +32,7 @@
       ]
     },
     {
-      "extends": [
-        "eslint:recommended",
-        "plugin:prettier/recommended",
-        "airbnb-base",
-        "prettier"
-      ],
+      "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base", "prettier"],
       "files": [".js"],
       "parserOptions": {
         "ecmaVersion": "latest",
@@ -80,7 +75,6 @@
     "linebreak-style": ["error", "unix"],
     // Temporary rules. Remove as fast as it can be.
     "max-classes-per-file": "off",
-    "react/jsx-filename-extension": "off",
     // "no-console": [
     //   "warn",
     //   {
@@ -111,6 +105,7 @@
     "quotes": "off",
     // "quotes": ["error", "single"],
     "radix": ["warn", "as-needed"],
+    "react/jsx-filename-extension": "off",
     "semi": ["error", "always"],
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": "error",

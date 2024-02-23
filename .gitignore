@@ -1,6 +1,7 @@
 node_modules
 build
 .env
+.husky
 
 # Hardhat files
 **/cache

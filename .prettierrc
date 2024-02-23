@@ -14,11 +14,12 @@
         "semi": true,
         "singleQuote": false,
         "tabWidth": 4,
+        "trailingComma": "none",
         "useTabs": false
       }
     },
     {
-      "files": ["*.js", "*.ts"],
+      "files": ["*.js", "*.ts", "*.json"],
       "options": {
         "arrowParens": "avoid",
         "bracketSameLine": false,

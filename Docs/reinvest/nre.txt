@@ -1,0 +1,69 @@
+IDefiFacet
+interface func reinvestLiquidityUniswapV3
+
+IEvents
+event CompletedCommonReinvest
+event ReinvestDLP
+event ReinvestLiquidityUniswapV3
+
+IServiceFacet
+interface func getReinvestIsActive(uint256 defiId) returns (bool);
+
+CommonDto
+struct ReinvestInfo {
+  PoolInfo poolInfo;
+  TokensDto.TokenAndMin[] tokens;
+}
+
+Constants
+func reinvestIndex => uint8 private constant REINVEST = 2; // Index for the "reinvest" position method.
+
+ServiceFacet
+func getReinvestIsActive {
+  reinvestIndex
+  //return  Boolean indicating if the 'reinvest' method is active
+}
+
+DLP
+func reinvest { 
+  // This function can only be called by the contract itself. 
+  // The ID of the DLP token must be within the valid range.
+  // This function increases the LP count of the DLP token by the specified amount.
+  // Emits a `ReinvestDLP` event with information about the reinvested LP tokens.
+  emit ReinvestDLP 
+}
+
+
+
+
+1 MultiDelegateFacet
+func reinvestPool {
+  commonReinvest
+  DLP._reinvest
+}
+
+2 MultiDelegateFacet
+func commonReinvest {
+  IDefiFacet(address(this)).reinvestLiquidityUniswapV3
+  emit ReinvestLiquidityUniswapV3
+}
+
+3 UniswapV3Facet
+func reinvestLiquidityUniswapV3 {
+  _firstRequire
+  reinvestLiquidity
+}
+
+4 UniV3Helper
+func reinvestLiquidity {
+  collectAllFees
+  TokenAndAmountMin
+  investLiquidity
+  emit CompletedCommonReinvest
+}
+
+5 UniV3Helper
+collectAllFees {
+  _getPositionManager(_s.pools[poolInfo.poolId].defiId).collect(params) \
+  => INonfungiblePositionManager(_s.defis[defiId].addresses[0]).collect(params)
+}

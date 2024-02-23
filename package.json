@@ -1,6 +1,6 @@
 {
   "name": "hardhat",
-  "version": "0.9.7",
+  "version": "0.9.73",
   "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.",
   "homepage": "https://github.com/NarcoNik/hardhat#readme",
   "bugs": {
@@ -30,15 +30,24 @@
     "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
     "format": "npx prettier --write ./ && npx eslint --fix ./",
     "gui": "npx hardhat gui",
-    "lint": "npx solhint **/*.sol",
+    "lint": "npx solhint contracts/**/**/**/**/**/**/*.sol",
+    "linter": "npx solhint **/*.sol",
     "ln": "docker-compose -f ./docker-compose.yml up -d",
     "ln-reboot": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v && docker-compose -f ./docker-compose.yml up -d",
     "ln-stop": "docker-compose -f ./docker-compose.yml down -v && docker-compose -f ./docker-compose.yml rm -v",
+    "metrics": "npx solidity-code-metrics contracts/**/**/**/**/**/**/*.sol > Docs/MetricsAllContracts.md && npx solidity-code-metrics contracts/**/**/**/**/**/**/*.sol --html > Docs/MetricsAllContracts.html",
+    "metrics:html": "npx solidity-code-metrics contracts/**/**/**/**/**/**/*.sol --html > Docs/MetricsAllContracts.html",
+    "metrics:md": "npx solidity-code-metrics contracts/**/**/**/**/**/**/*.sol > Docs/MetricsAllContracts.md",
     "push": "git add ./ && git commit -m 'refactoring' -a && git push origin",
     "test": "npx hardhat test --network localhost",
     "test:Profit": "npx hardhat test ./tests/Profit.test.ts --network localhost --show-stack-traces",
     "verify": "npx hardhat run scripts/verify.ts",
     "verify:tenderly": "npx hardhat tenderly:verify --network tenderly"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run format"
+    }
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.5.1",
@@ -90,14 +99,17 @@
     "hardhat-contract-sizer": "^2.10.0",
     "hardhat-deploy": "0.11.4",
     "hardhat-gas-reporter": "1.0.8",
+    "husky": "^9.0.11",
     "path": "^0.12.7",
-    "prettier": "3.2.5",
+    "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.4.11",
     "prettier-plugin-solidity": "^1.3.1",
     "solhint": "^4.1.1",
     "solhint-community": "^3.7.0",
     "solhint-plugin-prettier": "^0.1.0",
+    "solidity-code-metrics": "^0.0.25",
     "solidity-coverage": "^0.8.7",
+    "solidity-metrics": "^0.0.5",
     "standard-version": "^9.3.0",
     "ts-generator": "0.1.1",
     "ts-node": "10.2.1",

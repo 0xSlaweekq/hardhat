@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "cschlosser.doxdocgen",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "acuarica.ethers-mode",
+    "mhutchie.git-graph",
+    "narasimapandiyan.jetbrainsmono",
+    "yzhang.markdown-all-in-one",
+    "ibm.output-colorizer",
+    "esbenp.prettier-vscode",
+    "tintinweb.solidity-metrics",
+    "richie5um2.vscode-sort-json",
+    "chakrounanas.turbo-console-log",
+    "alefragnani.project-manager",
+    "christian-kohler.path-intellisense",
+    "ionutvmi.path-autocomplete",
+    "aaron-bond.better-comments",
+    "juanblanco.solidity" // use version v0.0.170 in v0.0.172 bugs =(
+  ]
+}
