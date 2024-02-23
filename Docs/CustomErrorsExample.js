@@ -14,6 +14,7 @@ const decoded = interface.decodeFunctionData(
   interface.functions['InsufficientBalance(uint256,uint256)'],
   error_data
 );
+
 // Contents of decoded:
 // [
 //   BigNumber { _hex: '0x0100', _isBigNumber: true },
