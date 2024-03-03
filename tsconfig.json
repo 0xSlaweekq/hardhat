@@ -15,12 +15,13 @@
     "outDir": "dist",
     "removeComments": true,
     "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "es2021",
     "typeRoots": ["./node_modules/@types", "./@types", "./types"]
   },
-  "exclude": ["node_modules"],
-  "files": ["./hardhat.config.ts"],
-  "include": ["./typechain-types", "build"]
+  "exclude": ["node_modules", "contracts", "Docs", "build", "abi"],
+  "files": ["hardhat.config.ts"],
+  "include": ["hardhat.config.ts", "scripts", "tests", "tasks", "deploy", "test.config.d.ts"]
 }

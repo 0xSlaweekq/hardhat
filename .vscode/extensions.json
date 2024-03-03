@@ -2,7 +2,6 @@
   "recommendations": [
     "cschlosser.doxdocgen",
     "usernamehw.errorlens",
-    "dbaeumer.vscode-eslint",
     "acuarica.ethers-mode",
     "mhutchie.git-graph",
     "narasimapandiyan.jetbrainsmono",
@@ -16,6 +15,9 @@
     "christian-kohler.path-intellisense",
     "ionutvmi.path-autocomplete",
     "aaron-bond.better-comments",
-    "juanblanco.solidity" // use version v0.0.170 in v0.0.172 bugs =(
+    "juanblanco.solidity", // use version v0.0.170 in v0.0.172 bugs =(
+    "gruntfuggly.todo-tree",
+    "redhat.vscode-yaml",
+    "dbaeumer.vscode-eslint"
   ]
 }

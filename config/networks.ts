@@ -29,7 +29,6 @@ const networks = (
       }
     },
     tenderly: {
-      chainId: 1,
       url: `https://rpc.tenderly.co/fork/${TENDERLY_API_KEY}`,
       accounts: {
         count: 10,

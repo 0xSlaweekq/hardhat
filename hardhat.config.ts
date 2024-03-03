@@ -12,10 +12,10 @@ import 'hardhat-contract-sizer';
 import path from 'path';
 import { HardhatUserConfig } from 'hardhat/config';
 
-// import * as tdly from '@tenderly/hardhat-tenderly';
+import * as tdly from '@tenderly/hardhat-tenderly';
 import { apiKeys, customChains, DEFAULT_COMPILER_SETTINGS, networks } from './config';
 
-// tdly.setup({ automaticVerifications: false });
+tdly.setup({ automaticVerifications: true });
 
 const envConfig = require('dotenv').config({
   path: path.resolve('./', '.env')
@@ -60,14 +60,13 @@ const config: HardhatUserConfig = {
     FORKING_NETWORK_ID,
     TENDERLY_API_KEY
   ),
-  // tenderly: {
-  //   project: 'project',
-  //   username: 'slaweekq',
-  //   forkNetwork: '1',
-  //   privateVerification: false,
-  //   deploymentsDir: 'deployments',
-  //   accessKey: process.env.TENDERLY_ACCESS_KEY
-  // },
+  tenderly: {
+    project: 'testETH',
+    username: 'slaweekq',
+    privateVerification: false,
+    deploymentsDir: 'deployments',
+    accessKey: process.env.TENDERLY_ACCESS_KEY
+  },
   etherscan: {
     apiKey: apiKeys(ETHERSCAN_API_KEY, POLYGONSCAN_API_KEY, BSCSCAN_API_KEY),
     customChains: customChains

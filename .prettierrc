@@ -9,7 +9,7 @@
         "embeddedLanguageFormatting": "auto",
         "endOfLine": "auto",
         "parser": "solidity-parse",
-        "printWidth": 140,
+        "printWidth": 120,
         "proseWrap": "always",
         "semi": true,
         "singleQuote": false,
