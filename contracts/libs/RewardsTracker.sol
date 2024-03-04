@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.22;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -64,7 +64,12 @@ contract RewardsTracker is Ownable {
     )
         public
         view
-        returns (uint256 withdrawableUserDividends, uint256 totalUserDividends, uint256 lastUserClaimTime, uint256 withdrawnUserDividends)
+        returns (
+            uint256 withdrawableUserDividends,
+            uint256 totalUserDividends,
+            uint256 lastUserClaimTime,
+            uint256 withdrawnUserDividends
+        )
     {
         withdrawableUserDividends = withdrawableDividendOf(account);
         totalUserDividends = accumulativeDividendOf(account);
@@ -153,7 +158,9 @@ contract RewardsTracker is Ownable {
         path[0] = rewardRouter.wETH();
         path[1] = rewardToken;
 
-        try rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp) {
+        try
+            rewardRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: amt}(0, path, user, block.timestamp)
+        {
             return true;
         } catch {
             return false;
@@ -173,21 +180,27 @@ contract RewardsTracker is Ownable {
     }
 
     function accumulativeDividendOf(address _owner) public view returns (uint256) {
-        return uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) / magnitude;
+        return
+            uint256(int256(magnifiedDividendPerShare * userShares[_owner]) + magnifiedDividendCorrections[_owner]) /
+            magnitude;
     }
 
     function addShares(address account, uint256 value) internal {
         userShares[account] += value;
         totalShares += value;
 
-        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] - int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] =
+            magnifiedDividendCorrections[account] -
+            int256(magnifiedDividendPerShare * value);
     }
 
     function removeShares(address account, uint256 value) internal {
         userShares[account] -= value;
         totalShares -= value;
 
-        magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account] + int256(magnifiedDividendPerShare * value);
+        magnifiedDividendCorrections[account] =
+            magnifiedDividendCorrections[account] +
+            int256(magnifiedDividendPerShare * value);
     }
 
     function _setBalance(address account, uint256 newBalance) internal {

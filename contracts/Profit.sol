@@ -2,7 +2,7 @@
 pragma solidity ^0.8.22;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../libs/SafeMathUint.sol";
+import "./libs/SafeMathUint.sol";
 
 // import "hardhat/console.sol";
 
@@ -19,13 +19,6 @@ contract Profit {
         uint256 lastTotalLP;
     }
 
-    mapping(address => UserInfo) public userInfo;
-    mapping(uint256 => address) public userAddresses;
-
-    bool public started;
-
-    address public owner;
-
     uint256 public userCount;
     uint256 public startTime;
     uint256 public totalLP;
@@ -34,6 +27,13 @@ contract Profit {
     uint256 public reinvestTime;
     uint256 public lastUpdateTime;
     uint256 public farmedByDay = 100;
+
+    bool public started;
+
+    address public owner;
+
+    mapping(address => UserInfo) public userInfo;
+    mapping(uint256 => address) public userAddresses;
 
     event SendTransaction(uint256 typeF, UserInfo userInfo);
 
@@ -64,11 +64,8 @@ contract Profit {
             require(curAmountLP >= amountLP, "Insufficient LP amount");
         }
 
-        if (_updateUserInfo(typeF, addr, amountLP, time)) {
-            emit SendTransaction(typeF, userInfo[addr]);
-        } else {
-            revert("Unknown transaction type");
-        }
+        if (_updateUserInfo(typeF, addr, amountLP, time)) emit SendTransaction(typeF, userInfo[addr]);
+        else revert("Unknown transaction type");
     }
 
     function reinvest() public onlyOwner returns (bool result) {
@@ -85,7 +82,12 @@ contract Profit {
         return true;
     }
 
-    function _updateUserInfo(uint256 typeF, address addr, uint256 amountLP, uint256 time) internal returns (bool result) {
+    function _updateUserInfo(
+        uint256 typeF,
+        address addr,
+        uint256 amountLP,
+        uint256 time
+    ) internal returns (bool result) {
         if (!started) {
             startTime = time;
             started = true;

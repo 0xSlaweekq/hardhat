@@ -27,7 +27,7 @@
     "coverage:Profit": "npx hardhat coverage ./tests/Profit.test.ts --network localhost --show-stack-traces",
     "deploy:hardhat": "npx hardhat run scripts/deploy.ts --network hardhat",
     "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost --show-stack-traces",
-    "deploy:tenderly": "npx hardhat run scripts/deploy.ts --network tenderly --show-stack-traces",
+    "deploy:tenderly": "npx hardhat run scripts/deploy_tenderly.ts --network tenderly --show-stack-traces",
     "format": "npx prettier --write ./ && npx eslint --fix ./",
     "gui": "npx hardhat gui",
     "lint": "npx solhint contracts/**/**/**/**/**/**/*.sol",
@@ -49,6 +49,7 @@
     }
   },
   "dependencies": {
+    "@tenderly/hardhat-tenderly": "^2.2.2",
     "@truffle/hdwallet-provider": "^1.5.1",
     "@uniswap/v2-sdk": "^3.2.0",
     "@uniswap/v3-sdk": "^3.10.0",

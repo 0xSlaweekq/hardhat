@@ -1,6 +1,7 @@
 access_key: ${TENDERLY_ACCESS_KEY}
 access_key_id: ""
 account_id: ${TENDERLY_ACCOUNT_ID}
-project_slug: test
+project: "testETH"
+project_slug: ""
 provider: ""
 username: slaweekq

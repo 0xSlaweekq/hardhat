@@ -66,6 +66,7 @@ npm i eslint \
   @typescript-eslint/eslint-plugin \
   @typescript-eslint/parser \
   prettier \
+  prettier-eslint \
   prettier-plugin-packagejson \
   prettier-plugin-solidity \
   solhint \
