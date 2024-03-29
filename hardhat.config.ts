@@ -21,7 +21,6 @@ const envConfig = require('dotenv').config({
   path: path.resolve('./', '.env')
 });
 
-
 const {
   COINMARKETCAP_API_KEY,
   ETHERSCAN_API_KEY,
@@ -36,7 +35,8 @@ const {
   TOKEN,
   TENDERLY_API_KEY,
   POLYGONSCAN_API_KEY,
-  BSCSCAN_API_KEY,TENDERLY_ACCESS_KEY
+  BSCSCAN_API_KEY,
+  TENDERLY_ACCESS_KEY
 } = envConfig.parsed || {};
 
 /** @type import('hardhat/config').HardhatUserConfig */

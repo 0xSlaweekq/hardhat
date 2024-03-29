@@ -376,7 +376,7 @@ contract ERC20BABYUSH1 is ERC20, Ownable, RewardsTracker {
         router.swapExactTokensForETHSupportingFeeOnTransferTokens(
             tokenAmount,
             0, // accept any amount of ETH
-            path, // QWxsIHJpZ2h0cyBiZWxvbmcgdG8gQkFZVVNISS4gQ29weWluZyBhIGNvbnRyYWN0IGlzIGEgdmlvbGF0aW9uIGFuZCBzdWdnZXN0cyB0aGF0IHdob2V2ZXIgZGlkIGl0IGhhcyBzbW9vdGhpZXMgaW5zdGVhZCBvZiBicmFpbnMu
+            path,
             address(this),
             block.timestamp
         );
